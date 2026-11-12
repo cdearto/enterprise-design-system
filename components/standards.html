@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Standards · Enterprise Design System</title>
+<link rel="stylesheet" href="./_shared/tokens.css?v=20261112">
+<link rel="stylesheet" href="./_shared/docs.css?v=20261112">
+</head>
+<body>
+<div class="canvas with-example-panel" id="component-doc-canvas">
+  <nav class="left-sidebar" id="left-sidebar" data-active="standards"></nav>
+
+  <div class="content component-doc">
+    <header class="page-header">
+      <div class="page-header-eyebrow">Standards</div>
+      <h1 class="page-header-title">Standards</h1>
+      <p class="page-header-description">The behaviors every component must satisfy: accessibility floors, interaction states, voice. Read these before adding anything to the library — every primitive here ships with these baked in, not bolted on.</p>
+    </header>
+
+    <div class="component-doc-body">
+      <section id="accessibility">
+        <h2>Accessibility</h2>
+        <p>WCAG 2.1 AA is the floor, not the ceiling. Every component below ships with focus, keyboard, and screen-reader behavior baked in — you shouldn't need to layer accessibility on top of a finished component.</p>
+
+        <h3>Color contrast</h3>
+        <p>Body text must hit 4.5:1 against its background; large text (≥ 18 px or 14 px bold) must hit 3:1. Status pills and inline labels at ≥ 11 px are body text — they need 4.5:1 too.</p>
+
+        <h3>Focus + keyboard</h3>
+        <ul>
+          <li><strong>Every focusable element</strong> gets the same ring: <code>--accent-glow</code> (3 px primary-blue at 8% opacity).</li>
+          <li><strong>Use <code>:focus-visible</code></strong>, not <code>:focus</code>. Mouse clicks don't show the ring; keyboard focus does.</li>
+          <li><strong>Tab moves forward</strong> through focusable elements; Shift + Tab moves back. Enter and Space activate buttons; Space toggles checkboxes; Esc closes any overlay.</li>
+          <li><strong>32 px minimum hit target</strong> for any interactive element, even when visual size is smaller.</li>
+        </ul>
+
+        <h3>Reduced motion</h3>
+        <p>Respect <code>@media (prefers-reduced-motion: reduce)</code>: drop all non-essential transitions to <code>0.01ms</code>. Surface fades and slides become instant; state changes still work — they just don't animate.</p>
+
+        <h3>Screen readers</h3>
+        <ul>
+          <li><strong>Every icon-only button</strong> carries <code>aria-label</code> or <code>title</code>.</li>
+          <li><strong>Live regions</strong> for toasts: <code>aria-live="polite"</code> for confirmations, <code>"assertive"</code> for errors.</li>
+          <li><strong>Status changes</strong> are announced via <code>aria-live</code>, not just visual color shifts.</li>
+        </ul>
+      </section>
+
+      <section id="states">
+        <h2>Interaction states</h2>
+        <p>Universal state vocabulary: hover, active, focus, selected, checked, disabled, loading, error. Every interactive component implements as many of these as apply — same visual language across the whole library.</p>
+
+        <h3>State priority</h3>
+        <p>When multiple states are present, they layer in this order (top wins visually): <strong>disabled</strong> → <strong>error</strong> → <strong>loading</strong> → <strong>selected/checked</strong> → <strong>focus</strong> → <strong>active</strong> → <strong>hover</strong> → resting.</p>
+
+        <h3>Per-component application</h3>
+        <ul>
+          <li><strong>Buttons</strong>. All eight states; hover lift is a 1 px shadow on top of color shift; loading uses a <code>::after</code> spinner.</li>
+          <li><strong>Inputs</strong>. Hover none, focus required, selected n/a, disabled dims to 50 px text-help.</li>
+          <li><strong>List rows</strong>. Hover + selected only; selected is the canonical <code>--row-selected-bg</code> tint.</li>
+          <li><strong>Tabs</strong>. Active + hover only. Disabled tabs are an anti-pattern — remove the tab instead.</li>
+          <li><strong>Checkboxes &amp; toggles</strong>. Use focus, checked, disabled. State is communicated by the control's geometry, not just color.</li>
+        </ul>
+      </section>
+
+      <section id="content">
+        <h2>Voice &amp; tone</h2>
+        <p>How the system talks. Short, direct, second-person. Like a co-worker who knows what you're doing and helps you finish it — not a marketing site, not a chatbot.</p>
+
+        <h3>Buttons</h3>
+        <ul>
+          <li><strong>Verbs, not nouns.</strong> "Create workspace" beats "Workspace". "Approve" beats "Approval".</li>
+          <li><strong>Most-specific verb you can use.</strong> "Save changes" beats "Save". "Mark read" beats "Update". "Confirm delete" beats "Confirm".</li>
+          <li><strong>Pair primary with cancel, not OK.</strong> Cancel is a real "discard"; OK is a vague "I acknowledge". Consistency wins over cleverness.</li>
+          <li><strong>Sentence case.</strong> "Create workspace", not "Create Workspace". We save title case for headings.</li>
+        </ul>
+
+        <h3>Error messages</h3>
+        <ul>
+          <li><strong>State the problem, then the fix.</strong> "We couldn't reach the server. Check your connection and try again." Not "Error 503".</li>
+          <li><strong>Avoid blame.</strong> "You entered an invalid email" → "That doesn't look like a valid email." The user is the friend; the system owns the failure.</li>
+          <li><strong>Fail primary when you can.</strong> "Request timed out with status 502" is a log line. The user gets "Something went wrong. We're trying again."</li>
+        </ul>
+
+        <h3>Empty states</h3>
+        <ul>
+          <li><strong>Explain what would be here.</strong> "No workspaces yet" beats "Nothing to show".</li>
+          <li><strong>Offer the next step.</strong> An empty inbox almost always shows a "+ New message" button next to the empty-state copy. If a user can't see what to do next, that's a design bug.</li>
+        </ul>
+
+        <h3>Microcopy patterns</h3>
+        <ul>
+          <li><strong>Confirm destructive action.</strong> "Are you sure?" → "Delete this workspace? You can't undo this."</li>
+          <li><strong>Submit / save / publish.</strong> Use the most specific verb. "Send" for messages, "Publish" for posts, "Save" for drafts, "Submit" for requests.</li>
+          <li><strong>Async in flight.</strong> "Saving..." beats "Loading...". Be specific about what's happening.</li>
+          <li><strong>No results.</strong> Always say what was searched and offer a clearing affordance ("No results for 'foo'. Clear filters?").</li>
+          <li><strong>Permissions denied.</strong> "You don't have access to this workspace. Ask the admin to add you."</li>
+        </ul>
+      </section>
+    </div>
+  </div>
+
+  <div class="example-panel-resize" id="example-panel-resize"><div class="resize-handle-grip"></div></div>
+
+  <aside class="example-panel" id="example-panel" data-options='[
+    {"id":"contrast","label":"Color contrast samples"},
+    {"id":"focus","label":"Focus ring"},
+    {"id":"states-button","label":"Button — all states"},
+    {"id":"states-row","label":"List row — states"},
+    {"id":"voice-buttons","label":"Voice — button copy"},
+    {"id":"voice-errors","label":"Voice — error messages"},
+    {"id":"voice-empty","label":"Voice — empty state"}
+  ]'>
+
+    <div class="example-item" data-example-id="contrast" data-vert>
+      <div style="display:flex;flex-direction:column;gap:8px;width:100%">
+        <div style="padding:14px;background:var(--card-bg);border-radius:6px"><div style="color:var(--text-primary);font-size:14px;font-weight:600">Primary on body</div><div style="font-size:11px;color:var(--text-help);font-family:'SF Mono',monospace">14.62 : 1 · AAA</div></div>
+        <div style="padding:14px;background:var(--card-bg);border-radius:6px"><div style="color:var(--text-secondary);font-size:14px;font-weight:600">Secondary on body</div><div style="font-size:11px;color:var(--text-help);font-family:'SF Mono',monospace">5.18 : 1 · AA</div></div>
+        <div style="padding:14px;background:var(--btn-primary);border-radius:6px"><div style="color:#fff;font-size:14px;font-weight:600">White on primary</div><div style="font-size:11px;color:rgba(255,255,255,0.7);font-family:'SF Mono',monospace">7.96 : 1 · AAA</div></div>
+        <div style="padding:14px;background:#091E42;border-radius:6px"><div style="color:#fff;font-size:14px;font-weight:600">White on dark</div><div style="font-size:11px;color:rgba(255,255,255,0.7);font-family:'SF Mono',monospace">14.62 : 1 · AAA</div></div>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="focus" data-vert>
+      <div style="display:flex;flex-direction:column;gap:18px;width:100%">
+        <button class="btn primary" style="box-shadow:var(--accent-glow)" autofocus>Focused button</button>
+        <input type="text" value="Focused input" style="width:240px;border-color:var(--btn-primary);box-shadow:var(--accent-glow)">
+        <div style="display:flex;align-items:center;gap:8px"><input type="checkbox" checked style="box-shadow:var(--accent-glow);border-radius:3px"><span style="font-size:13px">Focused checkbox</span></div>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="states-button" data-vert>
+      <div style="display:flex;flex-direction:column;gap:10px;width:100%">
+        <div style="display:flex;align-items:center;gap:12px"><button class="btn primary">Resting</button><span style="font-size:11px;color:var(--text-help)">default</span></div>
+        <div style="display:flex;align-items:center;gap:12px"><button class="btn primary" style="background:var(--btn-primary-hover)">Hover</button><span style="font-size:11px;color:var(--text-help)">darker primary</span></div>
+        <div style="display:flex;align-items:center;gap:12px"><button class="btn primary" style="box-shadow:var(--accent-glow)">Focus</button><span style="font-size:11px;color:var(--text-help)">accent glow ring</span></div>
+        <div style="display:flex;align-items:center;gap:12px"><button class="btn primary" style="background:var(--btn-primary-hover);transform:translateY(1px)">Active</button><span style="font-size:11px;color:var(--text-help)">1 px press</span></div>
+        <div style="display:flex;align-items:center;gap:12px"><button class="btn primary" disabled>Disabled</button><span style="font-size:11px;color:var(--text-help)">50% opacity</span></div>
+        <div style="display:flex;align-items:center;gap:12px"><button class="btn primary" style="position:relative;color:transparent">Loading<span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:spin 0.8s linear infinite"></span></button><span style="font-size:11px;color:var(--text-help)">spinner overlay</span></div>
+      </div>
+      <style>@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}</style>
+    </div>
+
+    <div class="example-item" data-example-id="states-row" data-vert>
+      <table class="sp-list-table" style="width:100%">
+        <thead><tr><th>Row state</th><th>Visual</th></tr></thead>
+        <tbody>
+          <tr><td>Resting</td><td>Default cell color</td></tr>
+          <tr style="background:var(--row-hover)"><td>Hover</td><td>--row-hover tint</td></tr>
+          <tr class="checked"><td>Selected</td><td>--row-selected-bg tint</td></tr>
+          <tr style="opacity:0.5"><td>Disabled</td><td>50% opacity, no hover</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="example-item" data-example-id="voice-buttons" data-vert>
+      <table class="fr-simple-table" style="width:100%">
+        <thead><tr><th>Don't</th><th>Do</th></tr></thead>
+        <tbody>
+          <tr><td><code>OK</code></td><td><code>Save changes</code></td></tr>
+          <tr><td><code>Submit</code></td><td><code>Send invitation</code></td></tr>
+          <tr><td><code>Update</code></td><td><code>Mark read</code></td></tr>
+          <tr><td><code>Confirm</code></td><td><code>Delete workspace</code></td></tr>
+          <tr><td><code>Create Workspace</code></td><td><code>Create workspace</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="example-item" data-example-id="voice-errors" data-vert>
+      <table class="fr-simple-table" style="width:100%">
+        <thead><tr><th>Don't</th><th>Do</th></tr></thead>
+        <tbody>
+          <tr><td><code>Error 503</code></td><td><code>We couldn't reach the server. Check your connection and try again.</code></td></tr>
+          <tr><td><code>You entered an invalid email</code></td><td><code>That doesn't look like a valid email.</code></td></tr>
+          <tr><td><code>Request timed out with status 502</code></td><td><code>Something went wrong. We're trying again.</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="example-item" data-example-id="voice-empty" data-vert>
+      <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius-md);padding:60px 24px;text-align:center;width:100%">
+        <div style="width:44px;height:44px;border-radius:50%;background:oklch(24% 0.073 260 / 0.04);color:var(--text-help);display:inline-flex;align-items:center;justify-content:center;margin-bottom:12px"><svg style="width:20px;height:20px"><use href="#i-folder"/></svg></div>
+        <div style="font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:6px">No workspaces yet</div>
+        <div style="font-size:12px;color:var(--text-help);max-width:320px;margin:0 auto 16px">Create your first workspace to start grouping records and inviting members.</div>
+        <button class="btn primary sm"><svg class="icon-svg sm"><use href="#i-plus"/></svg> New workspace</button>
+      </div>
+    </div>
+
+    <template class="example-usage">/* Focus ring — every focusable element */
+.btn:focus-visible,
+input:focus-visible,
+.row:focus-visible {
+  outline: none;
+  box-shadow: var(--accent-glow);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}</template>
+  </aside>
+</div>
+<button class="back-to-top" id="back-to-top" aria-label="Back to top"><svg><use href="#i-arrow-up"/></svg></button>
+<script src="./_shared/docs.js?v=20261112"></script>
+</body>
+</html>

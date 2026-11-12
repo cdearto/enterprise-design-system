@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Breadcrumbs · Enterprise Design System</title>
+<link rel="stylesheet" href="./_shared/tokens.css?v=20261112">
+<link rel="stylesheet" href="./_shared/docs.css?v=20261112">
+</head>
+<body>
+<div class="canvas with-example-panel" id="component-doc-canvas">
+  <nav class="left-sidebar" id="left-sidebar" data-active="breadcrumbs"></nav>
+
+  <div class="content component-doc">
+    <header class="page-header">
+      <div class="page-header-eyebrow">Navigation</div>
+      <h1 class="page-header-title">Breadcrumbs</h1>
+      <p class="page-header-description">A single-hop "where am I" indicator at the top of every detail page. Shows just the parent context + the current entity — never the full ancestor tree. Pairs with the back arrow in the <a href="./headers.html">Page header</a>.</p>
+    </header>
+
+    <div class="component-doc-body">
+      <section id="overview">
+        <h2>Overview</h2>
+        <p>The breadcrumb lives in the page header's left region (<code>.wiz-header-crumbs</code>). It contains the parent link, a chevron separator, and the current page's h4 title. The user already knows how they got here — the breadcrumb just confirms parent context and gives them a one-click escape upward.</p>
+      </section>
+
+      <section id="use-cases">
+        <h2>Use cases</h2>
+        <ul>
+          <li><strong>Entity detail pages.</strong> Show parent collection (Workspaces) → entity name (Q3 Planning).</li>
+          <li><strong>Wizards triggered from a context.</strong> Show origin (Workspaces) → current step ("New workspace").</li>
+          <li><strong>Sub-views inside an entity.</strong> Show entity (Q3 Planning) → sub-view (Settings, Members).</li>
+        </ul>
+      </section>
+
+      <section id="properties">
+        <h2>Properties</h2>
+        <table class="fr-simple-table">
+          <thead><tr><th>Element</th><th>Class</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Wrapper</td><td><code>.wiz-header-crumbs</code></td><td>Flex row holding back arrow + parent link + chevron + current title.</td></tr>
+            <tr><td>Back arrow</td><td><code>.wiz-header-back</code></td><td>Single arrow that mirrors the parent link — single nav target, two affordances.</td></tr>
+            <tr><td>Parent link</td><td><code>.wiz-header-crumb-link</code></td><td>Clickable text. Inherits link color; underlines on hover.</td></tr>
+            <tr><td>Separator</td><td><code>&lt;svg&gt;</code> with chevron-right</td><td>14 px chevron in help-text grey. Don't use <code>/</code> or <code>›</code> characters.</td></tr>
+            <tr><td>Current page</td><td><code>&lt;h4&gt;</code> or <code>.wiz-header-crumb-current</code></td><td>h4 for detail entities. The "current" span variant is for wizard step labels.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="best-practices">
+        <h2>Best practices</h2>
+        <ul>
+          <li><strong>Single hop only.</strong> Never render the full ancestor tree. Workspaces › Project › Sub-project › Task = noise. Use Workspaces › Task.</li>
+          <li><strong>Always pair with the back arrow.</strong> Both jump to the same destination — the arrow is for muscle memory, the link for clarity.</li>
+          <li><strong>Truncate long names.</strong> If the current title is long, allow it to wrap or get an ellipsis — never let the chrome push the right region offscreen.</li>
+          <li><strong>Origin-aware on wizards.</strong> When a wizard can be launched from multiple modules, the parent crumb reflects where the user came from — not a generic global label.</li>
+        </ul>
+      </section>
+    </div>
+  </div>
+
+  <div class="example-panel-resize" id="example-panel-resize"><div class="resize-handle-grip"></div></div>
+
+  <aside class="example-panel" id="example-panel" data-options='[
+    {"id":"basic","label":"Detail page"},
+    {"id":"with-items","label":"With items chip + status"},
+    {"id":"wizard","label":"Wizard variant"}
+  ]'>
+
+    <div class="example-item" data-example-id="basic" data-vert>
+      <div class="fr-header-demo" style="width:100%">
+        <div class="left">
+          <a class="wiz-header-back" href="#"><svg class="icon-svg"><use href="#i-arrow-left"/></svg></a>
+          <div class="wiz-header-crumbs">
+            <span class="wiz-header-crumb-link">Workspaces</span>
+            <svg class="icon-svg" style="width:14px;height:14px;color:var(--text-help)"><use href="#i-chevron-right"/></svg>
+            <h4 style="margin:0">Q3 Planning</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="with-items" data-vert>
+      <div class="fr-header-demo" style="width:100%">
+        <div class="left">
+          <a class="wiz-header-back" href="#"><svg class="icon-svg"><use href="#i-arrow-left"/></svg></a>
+          <div class="wiz-header-crumbs">
+            <span class="wiz-header-crumb-link">Workspaces</span>
+            <svg class="icon-svg" style="width:14px;height:14px;color:var(--text-help)"><use href="#i-chevron-right"/></svg>
+            <h4 style="margin:0">Q3 Planning</h4>
+            <span style="font-size:14px;color:var(--text-secondary);padding:4px 8px;border-radius:6px;background:rgba(9,30,66,0.04);font-weight:500">240 records</span>
+            <span class="status-pill progress" style="margin-left:6px"><span class="dot"></span>In Progress</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="wizard" data-vert>
+      <div class="fr-header-demo" style="width:100%">
+        <div class="left">
+          <a class="wiz-header-back" href="#"><svg class="icon-svg"><use href="#i-arrow-left"/></svg></a>
+          <div class="wiz-header-crumbs">
+            <span class="wiz-header-crumb-link">Workspaces</span>
+            <svg class="icon-svg" style="width:14px;height:14px;color:var(--text-help)"><use href="#i-chevron-right"/></svg>
+            <span class="wiz-header-crumb-current">New workspace</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <template class="example-usage">&lt;div class="wiz-header-crumbs"&gt;
+  &lt;span class="wiz-header-crumb-link"&gt;Workspaces&lt;/span&gt;
+  &lt;svg&gt;&lt;use href="#i-chevron-right"/&gt;&lt;/svg&gt;
+  &lt;h4&gt;Q3 Planning&lt;/h4&gt;
+&lt;/div&gt;</template>
+  </aside>
+</div>
+<button class="back-to-top" id="back-to-top" aria-label="Back to top"><svg><use href="#i-arrow-up"/></svg></button>
+<script src="./_shared/docs.js?v=20261112"></script>
+</body>
+</html>

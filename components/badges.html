@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Badge &amp; status pill · Enterprise Design System</title>
+<link rel="stylesheet" href="./_shared/tokens.css?v=20261112">
+<link rel="stylesheet" href="./_shared/docs.css?v=20261112">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-chevron-down" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2" fill="none"/><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="2" fill="none"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke="currentColor" stroke-width="2" fill="none"/></symbol>
+  <symbol id="i-expand" viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><polyline points="9 21 3 21 3 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><line x1="21" y1="3" x2="14" y2="10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="3" y1="21" x2="10" y2="14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-arrow-up" viewBox="0 0 24 24"><polyline points="5 12 12 5 19 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+</svg>
+
+<div class="canvas with-example-panel" id="component-doc-canvas">
+
+  <nav class="left-sidebar" id="left-sidebar" data-active="badges"></nav>
+
+  <div class="content component-doc">
+    <header class="page-header">
+      <div class="page-header-eyebrow">Data display</div>
+      <h1 class="page-header-title">Badge &amp; status pill</h1>
+      <p class="page-header-description">Small inline indicators that communicate a record's state, lifecycle position, or a numeric count. Status pills carry semantic color; count chips stay neutral. Always inline, never as standalone navigation.</p>
+    </header>
+
+    <div class="component-doc-body" id="component-doc-body">
+      <section id="overview">
+        <h2>Overview</h2>
+        <p>Two related families share the same chrome but different intent: <strong>status pills</strong> (<code>.status-pill</code>) communicate workflow position via a 6 px colored dot + label, with a tinted background per state; <strong>count chips</strong> (<code>.tab-count</code>) are neutral pills that show numeric counts inside tabs or beside labels.</p>
+      </section>
+
+      <section id="use-cases">
+        <h2>Use cases</h2>
+        <ul>
+          <li><strong>Workflow status.</strong> Inside table rows, card headers, and detail-page chrome to show progress (In Progress · Awaiting Review · Approved).</li>
+          <li><strong>Lifecycle state.</strong> On record cards and list items to indicate Draft / Active / Completed / Archived.</li>
+          <li><strong>Tab counts.</strong> Beside a tab label to show how many items are in that tab — replaces the need to load the tab to find out.</li>
+          <li><strong>Inline count summaries.</strong> Next to a section heading or filter label to show how many items are visible.</li>
+        </ul>
+      </section>
+
+      <section id="properties">
+        <h2>Properties</h2>
+        <table class="fr-simple-table">
+          <thead><tr><th>Property</th><th>Type</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td><code>.status-pill</code></td><td>base class</td><td>Status pill chrome — 11/600 label, full pill radius, 6 px colored dot.</td></tr>
+            <tr><td>status variant</td><td><code>progress</code> · <code>ready_review</code> · <code>approved</code> · <code>new</code> · <code>completed</code> · <code>on-hold</code></td><td>Sets dot color + background tint per workflow state.</td></tr>
+            <tr><td><code>.dot</code></td><td>required child</td><td>The 6 px colored circle inside the pill. Inherits color from the variant.</td></tr>
+            <tr><td><code>.tab-count</code></td><td>base class</td><td>Neutral count chip. Inline-block, monospace digits, half-pill radius.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="types">
+        <h2>Types &amp; styles</h2>
+        <h3>Workflow status — 3-state</h3>
+        <table class="fr-simple-table">
+          <thead><tr><th>Style</th><th>Meaning</th><th>Class</th></tr></thead>
+          <tbody>
+            <tr><td class="nowrap"><span class="status-pill progress"><span class="dot"></span>In Progress</span></td><td>Active work; user can edit and continue.</td><td class="nowrap"><code>.status-pill.progress</code></td></tr>
+            <tr><td class="nowrap"><span class="status-pill ready_review"><span class="dot"></span>Awaiting Review</span></td><td>Submitted; needs another user to approve.</td><td class="nowrap"><code>.status-pill.ready_review</code></td></tr>
+            <tr><td class="nowrap"><span class="status-pill approved"><span class="dot"></span>Approved</span></td><td>Sign-off complete; ready for the next stage.</td><td class="nowrap"><code>.status-pill.approved</code></td></tr>
+          </tbody>
+        </table>
+
+        <h3>Lifecycle status</h3>
+        <table class="fr-simple-table">
+          <thead><tr><th>Style</th><th>Meaning</th><th>Class</th></tr></thead>
+          <tbody>
+            <tr><td class="nowrap"><span class="status-pill new"><span class="dot"></span>Draft</span></td><td>Created but not yet shared.</td><td class="nowrap"><code>.status-pill.new</code></td></tr>
+            <tr><td class="nowrap"><span class="status-pill progress"><span class="dot"></span>Active</span></td><td>Live and accepting changes.</td><td class="nowrap"><code>.status-pill.progress</code></td></tr>
+            <tr><td class="nowrap"><span class="status-pill completed"><span class="dot"></span>Completed</span></td><td>Finished; read-only.</td><td class="nowrap"><code>.status-pill.completed</code></td></tr>
+            <tr><td class="nowrap"><span class="status-pill on-hold"><span class="dot"></span>Archived</span></td><td>Paused or shelved; off the active list.</td><td class="nowrap"><code>.status-pill.on-hold</code></td></tr>
+          </tbody>
+        </table>
+
+        <h3>Count chip</h3>
+        <table class="fr-simple-table">
+          <thead><tr><th>Style</th><th>When to use</th><th>Class</th></tr></thead>
+          <tbody>
+            <tr><td class="nowrap">All records <span class="tab-count">142</span></td><td>Inside tabs, beside filter labels, in section headers.</td><td class="nowrap"><code>.tab-count</code></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="best-practices">
+        <h2>Best practices</h2>
+        <ul>
+          <li><strong>One status per record.</strong> A row or card should carry at most one status pill — combining two confuses workflow position.</li>
+          <li><strong>Status pills aren't navigation.</strong> Don't make pills clickable links. If a state transition is needed, use a button or dropdown that opens the transition workflow.</li>
+          <li><strong>Don't invent colors.</strong> Use the existing variants. If a new state is needed, add a variant to the system rather than inlining a custom color.</li>
+          <li><strong>Count chips stay neutral.</strong> Never tint count chips with the same variants as status pills — counts are quantitative, not qualitative.</li>
+        </ul>
+      </section>
+    </div>
+  </div>
+
+  <div class="example-panel-resize" id="example-panel-resize"><div class="resize-handle-grip"></div></div>
+
+  <aside class="example-panel" id="example-panel">
+    <div class="example-panel-header">
+      <span class="example-panel-label">Examples</span>
+      <button class="example-panel-expand" id="example-panel-expand" title="Expand examples"><svg><use href="#i-expand"/></svg></button>
+      <div class="example-search-wrap">
+        <input id="example-search" class="example-search-input" type="text" placeholder="Search examples…" autocomplete="off" spellcheck="false">
+        <div class="example-search-dropdown hide" id="example-search-dropdown">
+          <button class="example-search-option active" data-example-value="workflow">Workflow — 3-state</button>
+          <button class="example-search-option" data-example-value="lifecycle">Lifecycle — 4-state</button>
+          <button class="example-search-option" data-example-value="count">Count chip</button>
+          <button class="example-search-option" data-example-value="in-row">In a table row</button>
+          <button class="example-search-option" data-example-value="in-header">In a detail-page header</button>
+          <button class="example-search-option" data-example-value="with-tab">Inside a tab</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="example-panel-preview" id="example-preview">
+      <div class="example-item" data-example-id="workflow">
+        <span class="status-pill progress"><span class="dot"></span>In Progress</span>
+        <span class="status-pill ready_review"><span class="dot"></span>Awaiting Review</span>
+        <span class="status-pill approved"><span class="dot"></span>Approved</span>
+      </div>
+      <div class="example-item" data-example-id="lifecycle">
+        <span class="status-pill new"><span class="dot"></span>Draft</span>
+        <span class="status-pill progress"><span class="dot"></span>Active</span>
+        <span class="status-pill completed"><span class="dot"></span>Completed</span>
+        <span class="status-pill on-hold"><span class="dot"></span>Archived</span>
+      </div>
+      <div class="example-item" data-example-id="count">
+        <div style="display:flex;gap:18px;font-size:13px;color:var(--text-secondary)">
+          <span>All records <span class="tab-count">142</span></span>
+          <span>Unread <span class="tab-count">6</span></span>
+          <span>Mentions <span class="tab-count">3</span></span>
+        </div>
+      </div>
+      <div class="example-item" data-example-id="in-row" data-vert>
+        <table class="sp-list-table" style="width:100%">
+          <thead><tr><th>Name</th><th>Owner</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Q3 Planning</strong></td><td>Jordan Mehta</td><td><span class="status-pill progress"><span class="dot"></span>In Progress</span></td></tr>
+            <tr><td><strong>FY26 Budget</strong></td><td>Sasha Kim</td><td><span class="status-pill ready_review"><span class="dot"></span>Awaiting Review</span></td></tr>
+            <tr><td><strong>Field Trial</strong></td><td>You</td><td><span class="status-pill approved"><span class="dot"></span>Approved</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="example-item" data-example-id="in-header" data-vert>
+        <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius-sm)">
+          <span style="font-size:12px;color:var(--text-help)">Workspaces</span>
+          <span style="color:var(--text-help)">›</span>
+          <h4 style="margin:0;font-size:16px">Q3 Planning</h4>
+          <span class="tab-count" style="margin-left:4px">240</span>
+          <span class="status-pill progress" style="margin-left:6px"><span class="dot"></span>In Progress</span>
+        </div>
+      </div>
+      <div class="example-item" data-example-id="with-tab" data-vert>
+        <nav class="ib-tabs" style="width:100%">
+          <button class="active">All <span class="tab-count">142</span></button>
+          <button>Unread <span class="tab-count">28</span></button>
+          <button>Mentions <span class="tab-count">3</span></button>
+        </nav>
+      </div>
+    </div>
+
+    <template class="example-usage">/* Status pill */
+&lt;span class="status-pill progress"&gt;
+  &lt;span class="dot"&gt;&lt;/span&gt;In Progress
+&lt;/span&gt;
+
+/* Count chip — neutral */
+All records &lt;span class="tab-count"&gt;142&lt;/span&gt;</template>
+
+    <div class="example-panel-code collapsed" id="example-usage">
+      <div class="example-panel-code-header">
+        <button class="example-panel-toggle" data-toggle-panel="example-usage" aria-expanded="false"><svg><use href="#i-chevron-down"/></svg><span class="example-panel-label">Usage</span></button>
+        <button class="example-panel-copy" data-copy-target="example-usage-block" title="Copy"><svg><use href="#i-copy"/></svg></button>
+      </div>
+      <div class="example-panel-code-body"><pre><code id="example-usage-block"></code></pre></div>
+    </div>
+    <div class="example-panel-code" id="example-code">
+      <div class="example-panel-code-header">
+        <button class="example-panel-toggle" data-toggle-panel="example-code" aria-expanded="true"><svg><use href="#i-chevron-down"/></svg><span class="example-panel-label">Code</span></button>
+        <button class="example-panel-copy" data-copy-target="example-code-block" title="Copy"><svg><use href="#i-copy"/></svg></button>
+      </div>
+      <div class="example-panel-code-body"><pre><code id="example-code-block"></code></pre></div>
+    </div>
+  </aside>
+</div>
+
+<button class="back-to-top" id="back-to-top" aria-label="Back to top"><svg><use href="#i-arrow-up"/></svg></button>
+<script src="./_shared/docs.js?v=20261112"></script>
+</body>
+</html>

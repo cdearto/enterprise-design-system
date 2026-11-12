@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Table · Enterprise Design System</title>
+<link rel="stylesheet" href="./_shared/tokens.css?v=20261112">
+<link rel="stylesheet" href="./_shared/docs.css?v=20261112">
+</head>
+<body>
+<div class="canvas with-example-panel" id="component-doc-canvas">
+  <nav class="left-sidebar" id="left-sidebar" data-active="tables"></nav>
+
+  <div class="content component-doc">
+    <header class="page-header">
+      <div class="page-header-eyebrow">Data display</div>
+      <h1 class="page-header-title">Table</h1>
+      <p class="page-header-description">List tables are the canonical row-data surface. One base class (<code>.sp-list-table</code>) carries the chrome — header cells in 12/600 help-text on a tinted background, hairline row dividers, row hover via <code>--row-hover</code>. Variations layer on with column-level modifiers (<code>.cb-col</code>, <code>.num</code>, <code>.sortable</code>) or whole-table modifiers (<code>.dense</code>).</p>
+    </header>
+
+    <div class="component-doc-body">
+      <section id="overview">
+        <h2>Overview</h2>
+        <p>One table chrome scales from a 5-row settings list to a 5,000-row data grid. The base class handles the common chrome; modifiers handle variation. Use the basic list for "browse entities" pages and add selectable/sortable for data grids where users need bulk operations.</p>
+      </section>
+
+      <section id="use-cases">
+        <h2>Use cases</h2>
+        <ul>
+          <li><strong>Basic list.</strong> Title + meta + status + right-aligned date. The default for browse pages.</li>
+          <li><strong>Selectable + sortable.</strong> Add a checkbox column and sortable headers. Pair with a bulk-action bar.</li>
+          <li><strong>Dense.</strong> Use <code>.dense</code> for log views, audit trails, and other scanning-heavy surfaces.</li>
+          <li><strong>Tree view.</strong> Hierarchical rows with caret + connector lines. Caret toggles a subtree; row click selects.</li>
+          <li><strong>Numeric.</strong> Right-aligned numbers with tabular-nums, optional totals row.</li>
+          <li><strong>Empty state.</strong> Centered icon + title + sub-text inside the table body when no rows.</li>
+        </ul>
+      </section>
+
+      <section id="properties">
+        <h2>Properties</h2>
+        <table class="fr-simple-table">
+          <thead><tr><th>Element</th><th>Class</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Base table</td><td><code>.sp-list-table</code></td><td>Standard chrome — 36 px row height, 16 px cell padding, hairline row dividers.</td></tr>
+            <tr><td>Dense modifier</td><td><code>.sp-list-table.dense</code></td><td>Drops row height to 28 px and body text to 12 px.</td></tr>
+            <tr><td>Checkbox column</td><td><code>.cb-col</code></td><td>Narrow column at the left for row selection checkboxes.</td></tr>
+            <tr><td>Numeric column</td><td><code>.num</code></td><td>Right-aligned, tabular-nums. Apply to both <code>&lt;th&gt;</code> and <code>&lt;td&gt;</code>.</td></tr>
+            <tr><td>Sortable header</td><td><code>.sortable</code></td><td>Header cell with sort affordance. Add <code>.sorted.asc</code> or <code>.sorted.desc</code> for active state.</td></tr>
+            <tr><td>Selected row</td><td><code>tr.checked</code></td><td>Background shifts to <code>--row-selected-bg</code>.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="best-practices">
+        <h2>Best practices</h2>
+        <ul>
+          <li><strong>Numbers always tabular.</strong> Use <code>.num</code> on every numeric column. Vertically stacked digits with different widths read as typos.</li>
+          <li><strong>One sort at a time.</strong> Show one column's sort indicator; clicking another moves the indicator.</li>
+          <li><strong>Truncate, don't wrap.</strong> Long values get ellipsis with a tooltip. Wrapping breaks the row rhythm.</li>
+          <li><strong>Bulk actions in a bar.</strong> Don't put per-row checkboxes if the page can't act on selections. Pair with the inbox bulk-action bar.</li>
+          <li><strong>Empty states are mandatory.</strong> An empty table without an empty-state component looks broken.</li>
+        </ul>
+      </section>
+    </div>
+  </div>
+
+  <div class="example-panel-resize" id="example-panel-resize"><div class="resize-handle-grip"></div></div>
+
+  <aside class="example-panel" id="example-panel" data-options='[
+    {"id":"basic","label":"Basic list"},
+    {"id":"selectable","label":"Selectable + sortable"},
+    {"id":"dense","label":"Dense"},
+    {"id":"numeric","label":"Numeric / financial"},
+    {"id":"tree","label":"Tree view"},
+    {"id":"empty","label":"Empty state"}
+  ]'>
+
+    <div class="example-item" data-example-id="basic" data-vert>
+      <table class="sp-list-table" style="width:100%">
+        <thead><tr><th>Name</th><th>Owner</th><th>Status</th><th class="num">Due</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Q3 Planning</strong></td><td>Jordan Mehta</td><td><span class="status-pill progress"><span class="dot"></span>In Progress</span></td><td class="num">May 30</td></tr>
+          <tr><td><strong>FY26 Budget Pass</strong></td><td>Sasha Kim</td><td><span class="status-pill ready_review"><span class="dot"></span>Awaiting Review</span></td><td class="num">Jun 12</td></tr>
+          <tr><td><strong>Field Trial — Phase 2</strong></td><td>You</td><td><span class="status-pill approved"><span class="dot"></span>Approved</span></td><td class="num">Jun 20</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="example-item" data-example-id="selectable" data-vert>
+      <table class="sp-list-table" style="width:100%">
+        <thead><tr><th class="cb-col"><input type="checkbox"></th><th class="sortable sorted asc">Name <svg style="width:10px;height:10px"><use href="#i-chevron-down"/></svg></th><th>Owner</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr class="checked"><td class="cb-col"><input type="checkbox" checked></td><td><strong>Customer onboarding</strong></td><td>Jordan Mehta</td><td><span class="status-pill progress"><span class="dot"></span>In Progress</span></td></tr>
+          <tr class="checked"><td class="cb-col"><input type="checkbox" checked></td><td><strong>FY26 Budget Pass</strong></td><td>Sasha Kim</td><td><span class="status-pill ready_review"><span class="dot"></span>Awaiting Review</span></td></tr>
+          <tr><td class="cb-col"><input type="checkbox"></td><td><strong>Field Trial</strong></td><td>You</td><td><span class="status-pill approved"><span class="dot"></span>Approved</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="example-item" data-example-id="dense" data-vert>
+      <table class="sp-list-table dense" style="width:100%">
+        <thead><tr><th>Time</th><th>Actor</th><th>Action</th><th>Target</th></tr></thead>
+        <tbody>
+          <tr><td>12:42:18</td><td>sasha.kim</td><td>approved</td><td>Q3 Planning</td></tr>
+          <tr><td>12:39:02</td><td>jordan.m</td><td>imported 18 records</td><td>FY26 Budget</td></tr>
+          <tr><td>12:35:54</td><td>you</td><td>archived</td><td>Field Trial Phase 1</td></tr>
+          <tr><td>12:28:11</td><td>workflow-bot</td><td>auto-closed</td><td>Stale issues (42)</td></tr>
+          <tr><td>12:24:08</td><td>system</td><td>backup completed</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="example-item" data-example-id="numeric" data-vert>
+      <table class="sp-list-table" style="width:100%">
+        <thead><tr><th>Quarter</th><th class="num">Revenue</th><th class="num">Cost</th><th class="num">Margin</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Q1 26</strong></td><td class="num">$1,248,200</td><td class="num">$842,600</td><td class="num" style="color:oklch(51% 0.139 146);font-weight:600">$405,600</td></tr>
+          <tr><td><strong>Q2 26</strong></td><td class="num">$1,386,400</td><td class="num">$912,180</td><td class="num" style="color:oklch(51% 0.139 146);font-weight:600">$474,220</td></tr>
+          <tr><td><strong>Q3 26</strong></td><td class="num">$1,201,000</td><td class="num">$1,084,200</td><td class="num" style="color:var(--btn-danger);font-weight:600">$116,800</td></tr>
+          <tr style="background:var(--surface-soft);font-weight:700"><td>Total</td><td class="num">$3,835,600</td><td class="num">$2,838,980</td><td class="num">$996,620</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="example-item" data-example-id="tree" data-vert>
+      <table class="sp-list-table" style="width:100%">
+        <thead><tr><th>Name</th><th>Owner</th><th class="num">Items</th></tr></thead>
+        <tbody>
+          <tr><td><strong>📁 Workspaces</strong></td><td>You</td><td class="num">3</td></tr>
+          <tr><td style="padding-left:32px">└─ <strong>Q3 Planning</strong></td><td>Jordan Mehta</td><td class="num">240</td></tr>
+          <tr><td style="padding-left:32px">└─ <strong>FY26 Budget</strong></td><td>Sasha Kim</td><td class="num">412</td></tr>
+          <tr><td style="padding-left:32px">└─ <strong>Field Trial</strong></td><td>You</td><td class="num">18</td></tr>
+          <tr><td><strong>📁 Archived</strong></td><td>—</td><td class="num">12</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="example-item" data-example-id="empty" data-vert>
+      <div style="width:100%;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius-md);padding:60px 24px;text-align:center">
+        <div style="width:44px;height:44px;border-radius:50%;background:oklch(24% 0.073 260 / 0.04);color:var(--text-help);display:inline-flex;align-items:center;justify-content:center;margin-bottom:12px"><svg style="width:20px;height:20px"><use href="#i-search"/></svg></div>
+        <div style="font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:6px">No matching workspaces</div>
+        <div style="font-size:12px;color:var(--text-help);max-width:300px;margin:0 auto 14px">Try adjusting the filter or search query, or create a new workspace to start.</div>
+        <button class="btn primary sm"><svg class="icon-svg sm"><use href="#i-plus"/></svg> New workspace</button>
+      </div>
+    </div>
+
+    <template class="example-usage">&lt;table class="sp-list-table"&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th class="cb-col"&gt;&lt;input type="checkbox"&gt;&lt;/th&gt;
+      &lt;th class="sortable sorted asc"&gt;Name&lt;/th&gt;
+      &lt;th&gt;Owner&lt;/th&gt;
+      &lt;th class="num"&gt;Due&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr class="checked"&gt;
+      &lt;td class="cb-col"&gt;&lt;input type="checkbox" checked&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;strong&gt;Q3 Planning&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;Jordan Mehta&lt;/td&gt;
+      &lt;td class="num"&gt;May 30&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</template>
+  </aside>
+</div>
+<button class="back-to-top" id="back-to-top" aria-label="Back to top"><svg><use href="#i-arrow-up"/></svg></button>
+<script src="./_shared/docs.js?v=20261112"></script>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page header · Enterprise Design System</title>
+<link rel="stylesheet" href="./_shared/tokens.css?v=20261112">
+<link rel="stylesheet" href="./_shared/docs.css?v=20261112">
+</head>
+<body>
+<div class="canvas with-example-panel" id="component-doc-canvas">
+  <nav class="left-sidebar" id="left-sidebar" data-active="headers"></nav>
+
+  <div class="content component-doc">
+    <header class="page-header">
+      <div class="page-header-eyebrow">Navigation</div>
+      <h1 class="page-header-title">Page header</h1>
+      <p class="page-header-description">The <code>.fr-header</code> sits at the top of every view — 48 px tall, frosted-glass surface, hairline bottom border. Three canonical left-region variants (Title · Breadcrumb · WizardCrumbs) all share an identical right region: Quick Create · Copilot · Bell · Help · Avatar.</p>
+    </header>
+
+    <div class="component-doc-body">
+      <section id="overview">
+        <h2>Overview</h2>
+        <p>One header chrome, three left-region variants. The right region is identical across every page so users always know where to find the global actions. The variants differ only in what sits on the left: a plain title for list pages, a breadcrumb for entity detail pages, a wizard breadcrumb with step pills for multi-step flows.</p>
+      </section>
+
+      <section id="use-cases">
+        <h2>Use cases</h2>
+        <ul>
+          <li><strong>List pages.</strong> Use the <strong>Title</strong> variant — just the page name, no parent context.</li>
+          <li><strong>Detail pages.</strong> Use the <strong>Breadcrumb</strong> variant with parent context, entity title, items chip, status pill.</li>
+          <li><strong>Multi-step flows.</strong> Use the <strong>WizardCrumbs</strong> variant with origin crumb + step pills showing progress.</li>
+        </ul>
+      </section>
+
+      <section id="properties">
+        <h2>Properties</h2>
+        <table class="fr-simple-table">
+          <thead><tr><th>Element</th><th>Class</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Header shell</td><td><code>.fr-header</code></td><td>48 px tall, frosted background, hairline bottom border.</td></tr>
+            <tr><td>Left region</td><td><code>.left</code></td><td>Houses the variant content (title / breadcrumb / wizard crumbs).</td></tr>
+            <tr><td>Right region</td><td><code>.right</code></td><td>Global actions. Order is fixed: Quick Create → Copilot → Bell → Help → Avatar.</td></tr>
+            <tr><td>Back arrow</td><td><code>.wiz-header-back</code></td><td>Required on Breadcrumb + WizardCrumbs variants.</td></tr>
+            <tr><td>Crumb link</td><td><code>.wiz-header-crumb-link</code></td><td>Parent context link — single hop only.</td></tr>
+            <tr><td>Crumb current</td><td><code>.wiz-header-crumb-current</code></td><td>Non-link text for the current step (WizardCrumbs).</td></tr>
+            <tr><td>Step pills</td><td><code>.wiz-header-steps</code></td><td>Wraps <code>.wiz-step-pill</code> elements with chevrons between them.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="types">
+        <h2>Variants</h2>
+        <table class="fr-simple-table">
+          <thead><tr><th>Variant</th><th>Used on</th><th>Left contents</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Title</strong></td><td>List pages (Workspaces, Projects)</td><td>Just an h4 page title — no parent context.</td></tr>
+            <tr><td><strong>Breadcrumb</strong></td><td>Entity detail pages</td><td>Back arrow + parent link + entity h4 + items chip + status pill.</td></tr>
+            <tr><td><strong>WizardCrumbs</strong></td><td>Multi-step flows</td><td>Back arrow + origin crumb + current step + step pills.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="best-practices">
+        <h2>Best practices</h2>
+        <ul>
+          <li><strong>One variant per view.</strong> Don't mix variants — every page commits to one shape so users learn the chrome once.</li>
+          <li><strong>Breadcrumb = single hop.</strong> Show parent → current only. Don't render the full ancestor tree — it's noise and the user already knows how they got here.</li>
+          <li><strong>Right region is sacred.</strong> Always Quick Create → Copilot → Bell → Help → Avatar, even if a page doesn't need one of them (hide via permission, not reorder).</li>
+          <li><strong>Status pills belong inline.</strong> On detail headers, the status pill sits to the right of the entity title — never in the right region.</li>
+        </ul>
+      </section>
+
+      <section id="composition">
+        <h2>Composition</h2>
+        <p>Detail headers carry additional contextual chrome — see <a href="./buttons.html">Button</a> for the panel-trigger icons that often sit beside the status pill, and <a href="./badges.html">Status pill</a> for the status dropdown that doubles as a workflow control.</p>
+      </section>
+    </div>
+  </div>
+
+  <div class="example-panel-resize" id="example-panel-resize"><div class="resize-handle-grip"></div></div>
+
+  <aside class="example-panel" id="example-panel" data-options='[
+    {"id":"title","label":"Title — list page"},
+    {"id":"breadcrumb","label":"Breadcrumb — detail page"},
+    {"id":"wizard","label":"WizardCrumbs — multi-step"},
+    {"id":"with-status","label":"Detail with status + panels"}
+  ]'>
+
+    <div class="example-item" data-example-id="title" data-vert>
+      <div class="fr-header-demo" style="width:100%">
+        <div class="left"><h4>Workspaces</h4></div>
+        <div class="right">
+          <button class="header-icon-btn"><svg class="icon-svg lg"><use href="#i-plus"/></svg></button>
+          <button class="header-icon-btn"><svg class="icon-svg lg"><use href="#i-sparkles"/></svg></button>
+          <button class="header-icon-btn"><svg class="icon-svg lg"><use href="#i-bell"/></svg></button>
+          <button class="header-icon-btn"><svg class="icon-svg lg"><use href="#i-help"/></svg></button>
+          <div class="header-avatar">Cd</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="breadcrumb" data-vert>
+      <div class="fr-header-demo" style="width:100%">
+        <div class="left">
+          <a class="wiz-header-back" href="#"><svg class="icon-svg"><use href="#i-arrow-left"/></svg></a>
+          <div class="wiz-header-crumbs">
+            <span class="wiz-header-crumb-link">Workspaces</span>
+            <svg class="icon-svg" style="width:14px;height:14px;color:var(--text-help)"><use href="#i-chevron-right"/></svg>
+            <h4 style="margin:0">Q3 Planning</h4>
+            <span style="font-size:14px;color:var(--text-secondary);padding:4px 8px;border-radius:6px;background:rgba(9,30,66,0.04);font-weight:500">240 records</span>
+          </div>
+        </div>
+        <div class="right">
+          <button class="header-icon-btn"><svg class="icon-svg lg"><use href="#i-plus"/></svg></button>
+          <button class="header-icon-btn"><svg class="icon-svg lg"><use href="#i-bell"/></svg></button>
+          <div class="header-avatar">Cd</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="wizard" data-vert>
+      <div class="fr-header-demo" style="width:100%">
+        <div class="left">
+          <a class="wiz-header-back" href="#"><svg class="icon-svg"><use href="#i-arrow-left"/></svg></a>
+          <div class="wiz-header-crumbs">
+            <span class="wiz-header-crumb-link">Workspaces</span>
+            <svg class="icon-svg" style="width:14px;height:14px;color:var(--text-help)"><use href="#i-chevron-right"/></svg>
+            <span class="wiz-header-crumb-current">New workspace</span>
+          </div>
+          <div class="wiz-header-steps">
+            <button class="wiz-step-pill active"><span class="wiz-step-num">1</span> Settings</button>
+            <svg class="wiz-step-chevron"><use href="#i-chevron-right"/></svg>
+            <button class="wiz-step-pill"><span class="wiz-step-num">2</span> Members</button>
+          </div>
+        </div>
+        <div class="right">
+          <button class="header-icon-btn"><svg class="icon-svg lg"><use href="#i-bell"/></svg></button>
+          <div class="header-avatar">Cd</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="with-status" data-vert>
+      <div class="fr-header-demo" style="width:100%">
+        <div class="left">
+          <a class="wiz-header-back" href="#"><svg class="icon-svg"><use href="#i-arrow-left"/></svg></a>
+          <div class="wiz-header-crumbs">
+            <span class="wiz-header-crumb-link">Workspaces</span>
+            <svg class="icon-svg" style="width:14px;height:14px;color:var(--text-help)"><use href="#i-chevron-right"/></svg>
+            <h4 style="margin:0">Q3 Planning</h4>
+            <span style="font-size:14px;color:var(--text-secondary);padding:4px 8px;border-radius:6px;background:rgba(9,30,66,0.04);font-weight:500">240 records</span>
+            <span class="status-pill progress" style="margin-left:6px"><span class="dot"></span>In Progress<svg style="width:10px;height:10px;margin-left:2px;opacity:0.6"><use href="#i-chevron-down"/></svg></span>
+          </div>
+          <button class="header-icon-btn" style="margin-left:2px"><svg class="icon-svg"><use href="#i-shield"/></svg></button>
+          <button class="header-icon-btn"><svg class="icon-svg"><use href="#i-folder"/></svg></button>
+          <button class="header-icon-btn"><svg class="icon-svg"><use href="#i-doc"/></svg></button>
+        </div>
+        <div class="right">
+          <button class="header-icon-btn"><svg class="icon-svg lg"><use href="#i-bell"/></svg></button>
+          <div class="header-avatar">Cd</div>
+        </div>
+      </div>
+    </div>
+
+    <template class="example-usage">/* Title — list page */
+&lt;div class="fr-header"&gt;
+  &lt;div class="left"&gt;&lt;h4&gt;Workspaces&lt;/h4&gt;&lt;/div&gt;
+  &lt;div class="right"&gt;...global actions...&lt;/div&gt;
+&lt;/div&gt;
+
+/* Breadcrumb — detail page */
+&lt;div class="fr-header"&gt;
+  &lt;div class="left"&gt;
+    &lt;a class="wiz-header-back"&gt;←&lt;/a&gt;
+    &lt;div class="wiz-header-crumbs"&gt;
+      &lt;span class="wiz-header-crumb-link"&gt;Workspaces&lt;/span&gt;
+      &lt;h4&gt;Q3 Planning&lt;/h4&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</template>
+  </aside>
+</div>
+<button class="back-to-top" id="back-to-top" aria-label="Back to top"><svg><use href="#i-arrow-up"/></svg></button>
+<script src="./_shared/docs.js?v=20261112"></script>
+</body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Card · Enterprise Design System</title>
+<link rel="stylesheet" href="./_shared/tokens.css?v=20261112">
+<link rel="stylesheet" href="./_shared/docs.css?v=20261112">
+</head>
+<body>
+<div class="canvas with-example-panel" id="component-doc-canvas">
+  <nav class="left-sidebar" id="left-sidebar" data-active="cards"></nav>
+
+  <div class="content component-doc">
+    <header class="page-header">
+      <div class="page-header-eyebrow">Data display</div>
+      <h1 class="page-header-title">Card</h1>
+      <p class="page-header-description">The primary content surface — white background, soft-1 shadow, 8 px corner radius, 20 px padding. One outer shell; the inside is composed from primitives (titles, metrics, charts, lists, progress bars, activity rows). Build dashboards from these variants — don't reach for new surfaces.</p>
+    </header>
+
+    <div class="component-doc-body">
+      <section id="overview">
+        <h2>Overview</h2>
+        <p>One <code>.card</code> shell — many internals. Cards are the canonical surface for grouping related data on a page; everything dense is composed inside one. Each variant below shares the same outer shell — only the inside changes. Most cards open with a header (title + optional secondary action) and close with a foot (meta + optional link).</p>
+      </section>
+
+      <section id="use-cases">
+        <h2>Use cases</h2>
+        <ul>
+          <li><strong>Basic record cards.</strong> Title, meta, status pill. The default for "browse entities" surfaces where every card is the entry to a detail page.</li>
+          <li><strong>KPI / metric cards.</strong> Single number front-and-center, trend underneath, sparkline beside it.</li>
+          <li><strong>Multi-stat cards.</strong> Hero stat + supporting stats below.</li>
+          <li><strong>Chart cards.</strong> Donut, bar, sparkline visualizations inside a card with title + meta.</li>
+          <li><strong>Progress cards.</strong> Single or multi-track progress bars showing completion or quota usage.</li>
+          <li><strong>Activity feed cards.</strong> Vertical stream of dated events.</li>
+          <li><strong>List-inside-card.</strong> A short list of rows wrapped by a card — settings, members, related items.</li>
+        </ul>
+      </section>
+
+      <section id="properties">
+        <h2>Properties</h2>
+        <table class="fr-simple-table">
+          <thead><tr><th>Element</th><th>Class</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Card shell</td><td><code>.card</code></td><td>White background, soft-1 shadow, 8 px radius, 20 px padding.</td></tr>
+            <tr><td>Header</td><td><code>.ds-card-header</code></td><td>Flex row — title left, optional secondary action right.</td></tr>
+            <tr><td>Foot</td><td><code>.ds-card-foot</code></td><td>Bottom row for meta + optional link. Hairline above.</td></tr>
+            <tr><td>Title</td><td><code>&lt;h5&gt;</code></td><td>15/600 inside the header.</td></tr>
+            <tr><td>Meta line</td><td><code>.ds-card-meta</code></td><td>13/400 help-text under the title.</td></tr>
+            <tr><td>Metric</td><td><code>.ds-metric</code></td><td>Big-number primitive — 32/700 number + 11 px uppercase label.</td></tr>
+            <tr><td>Trend</td><td><code>.ds-trend.up</code> / <code>.down</code></td><td>Inline delta indicator with arrow + percentage.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="best-practices">
+        <h2>Best practices</h2>
+        <ul>
+          <li><strong>One purpose per card.</strong> If a card needs two sections of unrelated data, it should be two cards.</li>
+          <li><strong>Don't double-shadow.</strong> Cards inside cards = no extra shadow on the inner card.</li>
+          <li><strong>Padding is sacred.</strong> 20 px on all sides. Don't tighten to fit more content — split into multiple cards instead.</li>
+          <li><strong>Click target = whole card.</strong> If the card represents an entity, the entire surface is the click target (use <code>cursor:pointer</code> + hover lift).</li>
+        </ul>
+      </section>
+    </div>
+  </div>
+
+  <div class="example-panel-resize" id="example-panel-resize"><div class="resize-handle-grip"></div></div>
+
+  <aside class="example-panel" id="example-panel" data-options='[
+    {"id":"basic","label":"Basic"},
+    {"id":"kpi","label":"KPI / metric"},
+    {"id":"multi-stat","label":"Multi-stat"},
+    {"id":"donut","label":"Donut chart"},
+    {"id":"bar","label":"Bar chart"},
+    {"id":"sparkline","label":"Sparkline"},
+    {"id":"progress","label":"Progress"},
+    {"id":"activity","label":"Activity feed"},
+    {"id":"list","label":"List inside card"}
+  ]'>
+
+    <div class="example-item" data-example-id="basic">
+      <div class="card" style="max-width:400px">
+        <h5 style="margin-bottom:6px">Q3 Planning</h5>
+        <div style="font-size:13px;color:var(--text-help);margin-bottom:14px">Workspace · 240 records · Due May 30</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap"><span class="status-pill progress"><span class="dot"></span>In Progress</span></div>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="kpi">
+      <div class="card" style="max-width:300px;width:100%">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-help);margin-bottom:8px">Active workspaces</div>
+        <div style="font-size:32px;font-weight:700;letter-spacing:-0.02em;color:var(--text-primary);font-variant-numeric:tabular-nums">1,284</div>
+        <div style="display:inline-flex;align-items:center;gap:4px;margin-top:6px;font-size:12px;color:oklch(51% 0.139 146);font-weight:600">↑ 12% vs last quarter</div>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="multi-stat">
+      <div class="card" style="max-width:340px;width:100%">
+        <h5 style="margin-bottom:4px">This quarter</h5>
+        <div style="font-size:11px;color:var(--text-help);margin-bottom:18px">Started · 94 of 110 · 16 in queue</div>
+        <div style="font-size:42px;font-weight:700;color:var(--text-primary);font-variant-numeric:tabular-nums;line-height:1">94</div>
+        <div style="display:flex;gap:24px;margin-top:18px;padding-top:14px;border-top:1px solid var(--border)">
+          <div><div style="font-size:11px;color:var(--text-help)">Started</div><div style="font-size:18px;font-weight:600">316</div></div>
+          <div><div style="font-size:11px;color:var(--text-help)">In queue</div><div style="font-size:18px;font-weight:600">16</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="donut">
+      <div class="card" style="max-width:340px;width:100%">
+        <h5 style="margin-bottom:4px">Members by role</h5>
+        <div style="font-size:11px;color:var(--text-help);margin-bottom:16px">Total · 28</div>
+        <div style="display:flex;align-items:center;gap:18px">
+          <div style="width:84px;height:84px;border-radius:50%;background:conic-gradient(var(--btn-primary) 0deg 158deg, oklch(72% 0.152 253) 158deg 226deg, oklch(51% 0.139 146) 226deg 295deg, oklch(80% 0.139 163) 295deg 360deg);position:relative;display:flex;align-items:center;justify-content:center"><div style="width:54px;height:54px;border-radius:50%;background:var(--card-bg);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700">28</div></div>
+          <div style="display:flex;flex-direction:column;gap:6px;font-size:12px">
+            <div><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--btn-primary);margin-right:6px"></span>Admins · 12</div>
+            <div><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:oklch(72% 0.152 253);margin-right:6px"></span>Editors · 8</div>
+            <div><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:oklch(51% 0.139 146);margin-right:6px"></span>Viewers · 6</div>
+            <div><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:oklch(80% 0.139 163);margin-right:6px"></span>Pending · 2</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="bar">
+      <div class="card" style="max-width:380px;width:100%">
+        <h5 style="margin-bottom:4px">Records created</h5>
+        <div style="font-size:11px;color:var(--text-help);margin-bottom:16px">Last 7 days · <strong style="color:var(--text-primary)">2,418</strong></div>
+        <div style="display:flex;align-items:flex-end;gap:6px;height:64px">
+          <div style="flex:1;background:color-mix(in oklch, var(--btn-primary) 24%, transparent);border-radius:3px 3px 0 0;height:40%"></div>
+          <div style="flex:1;background:color-mix(in oklch, var(--btn-primary) 24%, transparent);border-radius:3px 3px 0 0;height:55%"></div>
+          <div style="flex:1;background:color-mix(in oklch, var(--btn-primary) 24%, transparent);border-radius:3px 3px 0 0;height:48%"></div>
+          <div style="flex:1;background:color-mix(in oklch, var(--btn-primary) 24%, transparent);border-radius:3px 3px 0 0;height:68%"></div>
+          <div style="flex:1;background:color-mix(in oklch, var(--btn-primary) 24%, transparent);border-radius:3px 3px 0 0;height:60%"></div>
+          <div style="flex:1;background:color-mix(in oklch, var(--btn-primary) 24%, transparent);border-radius:3px 3px 0 0;height:75%"></div>
+          <div style="flex:1;background:var(--btn-primary);border-radius:3px 3px 0 0;height:90%"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-help);margin-top:6px"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="sparkline">
+      <div class="card" style="max-width:340px;width:100%;display:flex;align-items:center;gap:18px">
+        <div>
+          <div style="font-size:11px;color:var(--text-help)">Active users</div>
+          <div style="font-size:28px;font-weight:700;color:var(--text-primary);font-variant-numeric:tabular-nums">847</div>
+          <div style="font-size:12px;color:oklch(51% 0.139 146);font-weight:600">↑ 6%</div>
+        </div>
+        <svg viewBox="0 0 100 30" style="flex:1;height:48px"><polyline points="0,22 14,18 28,20 42,12 56,15 70,8 84,10 100,4" fill="none" stroke="var(--btn-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="progress">
+      <div class="card" style="max-width:380px;width:100%">
+        <h5 style="margin-bottom:14px">Quotas</h5>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px"><span>Onboarding completion</span><span style="font-weight:600">87%</span></div>
+            <div style="height:6px;background:oklch(24% 0.073 260 / 0.06);border-radius:999px;overflow:hidden"><div style="width:87%;height:100%;background:oklch(51% 0.139 146)"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px"><span>Storage used</span><span style="font-weight:600">68%</span></div>
+            <div style="height:6px;background:oklch(24% 0.073 260 / 0.06);border-radius:999px;overflow:hidden"><div style="width:68%;height:100%;background:var(--btn-primary)"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px"><span>Sync errors</span><span style="font-weight:600;color:var(--btn-danger)">96%</span></div>
+            <div style="height:6px;background:oklch(24% 0.073 260 / 0.06);border-radius:999px;overflow:hidden"><div style="width:96%;height:100%;background:var(--btn-danger)"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="activity">
+      <div class="card" style="max-width:380px;width:100%">
+        <h5 style="margin-bottom:14px">Recent activity</h5>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;gap:10px"><div style="width:6px;height:6px;border-radius:50%;background:var(--btn-primary);margin-top:7px;flex-shrink:0"></div><div><div style="font-size:13px"><strong>Sasha Kim</strong> approved <strong>Q3 Planning</strong></div><div style="font-size:11px;color:var(--text-help);margin-top:2px">3 min ago</div></div></div>
+          <div style="display:flex;gap:10px"><div style="width:6px;height:6px;border-radius:50%;background:oklch(51% 0.139 146);margin-top:7px;flex-shrink:0"></div><div><div style="font-size:13px"><strong>Jordan Mehta</strong> added 18 records</div><div style="font-size:11px;color:var(--text-help);margin-top:2px">28 min ago</div></div></div>
+          <div style="display:flex;gap:10px"><div style="width:6px;height:6px;border-radius:50%;background:oklch(80% 0.139 163);margin-top:7px;flex-shrink:0"></div><div><div style="font-size:13px"><strong>You</strong> archived <strong>FY26 Budget</strong></div><div style="font-size:11px;color:var(--text-help);margin-top:2px">2 hours ago</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="list">
+      <div class="card" style="max-width:380px;width:100%;padding:0">
+        <div style="padding:18px 20px 14px"><h5 style="margin:0">Members</h5></div>
+        <div style="display:flex;flex-direction:column;border-top:1px solid var(--border)">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 20px;border-bottom:1px solid var(--border)"><div style="width:28px;height:28px;border-radius:50%;background:var(--btn-primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600">SK</div><div style="flex:1"><div style="font-size:13px;font-weight:500">Sasha Kim</div><div style="font-size:11px;color:var(--text-help)">Admin</div></div></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 20px;border-bottom:1px solid var(--border)"><div style="width:28px;height:28px;border-radius:50%;background:oklch(72% 0.152 253);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600">JM</div><div style="flex:1"><div style="font-size:13px;font-weight:500">Jordan Mehta</div><div style="font-size:11px;color:var(--text-help)">Editor</div></div></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 20px"><div style="width:28px;height:28px;border-radius:50%;background:oklch(51% 0.139 146);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600">Cd</div><div style="flex:1"><div style="font-size:13px;font-weight:500">You</div><div style="font-size:11px;color:var(--text-help)">Owner</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <template class="example-usage">&lt;div class="card"&gt;
+  &lt;h5&gt;Q3 Planning&lt;/h5&gt;
+  &lt;div class="ds-card-meta"&gt;Workspace · 240 records&lt;/div&gt;
+  &lt;span class="status-pill progress"&gt;
+    &lt;span class="dot"&gt;&lt;/span&gt;In Progress
+  &lt;/span&gt;
+&lt;/div&gt;</template>
+  </aside>
+</div>
+<button class="back-to-top" id="back-to-top" aria-label="Back to top"><svg><use href="#i-arrow-up"/></svg></button>
+<script src="./_shared/docs.js?v=20261112"></script>
+</body>
+</html>

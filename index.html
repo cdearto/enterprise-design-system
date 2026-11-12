@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EDS · Enterprise Design System</title>
+<meta name="description" content="An enterprise design system for data-dense product surfaces. Tokens, primitives, compositions, and live examples. Hand-authored by Carlos deArtola.">
+<link rel="stylesheet" href="./components/_shared/tokens.css?v=20261112">
+<link rel="stylesheet" href="./components/_shared/docs.css?v=20261112">
+<style>
+  /* ============================================================
+     EDS · Marketing site home
+     Product-site treatment: sticky masthead, hero with live
+     in-product preview, stats band, features, showcase, principles,
+     footer. Component classes (.btn, .badge, .toast, .ib-card, etc.)
+     come from docs.css; this file styles only the marketing chrome.
+     ============================================================ */
+  body { background: var(--body-bg); color: var(--text-primary); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin: 0; line-height: 1.45; }
+  *, *::before, *::after { box-sizing: border-box; }
+  a { color: inherit; }
+
+  /* ─── Sticky masthead ───────────────────────────────────────── */
+  .site-header {
+    position: sticky; top: 0; z-index: 50;
+    background: color-mix(in oklch, var(--body-bg) 88%, transparent);
+    backdrop-filter: saturate(140%) blur(12px);
+    -webkit-backdrop-filter: saturate(140%) blur(12px);
+    border-bottom: 1px solid oklch(24% 0.073 260 / 0.08);
+  }
+  .header-inner {
+    max-width: 1240px; margin: 0 auto;
+    display: flex; align-items: center; gap: 32px;
+    padding: 14px 28px;
+  }
+  .logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text-primary); }
+  .logo:hover { text-decoration: none; color: var(--btn-primary); }
+  .logomark {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 28px; height: 28px;
+    background: var(--text-primary); color: oklch(100% 0 0);
+    font-size: 10px; font-weight: 800; letter-spacing: 0.06em;
+    border-radius: 6px;
+  }
+  .logotype { font-size: 13.5px; font-weight: 700; letter-spacing: -0.005em; }
+  .header-nav { display: flex; gap: 24px; margin-left: 12px; }
+  .header-nav a {
+    font-size: 13px; font-weight: 500; color: var(--text-secondary);
+    text-decoration: none; transition: color 0.12s;
+  }
+  .header-nav a:hover { color: var(--btn-primary); }
+  .header-spacer { flex: 1; }
+  .header-actions { display: flex; align-items: center; gap: 14px; }
+  .version-pill {
+    font-size: 10.5px; font-weight: 700; letter-spacing: 0.06em;
+    color: var(--text-help);
+    padding: 4px 10px;
+    background: var(--surface-soft);
+    border: 1px solid oklch(24% 0.073 260 / 0.08);
+    border-radius: 999px;
+  }
+  .header-link {
+    font-size: 13px; font-weight: 600; color: var(--text-primary);
+    text-decoration: none;
+    display: inline-flex; align-items: baseline; gap: 4px;
+    transition: color 0.12s;
+  }
+  .header-link:hover { color: var(--btn-primary); }
+  .header-link .arr { font-size: 11px; color: var(--text-help); }
+
+  @media (max-width: 720px) {
+    .header-nav { display: none; }
+    .header-inner { padding: 12px 20px; gap: 16px; }
+  }
+
+  /* ─── Layout shells ────────────────────────────────────────── */
+  .shell { max-width: 1240px; margin: 0 auto; padding: 0 28px; }
+  .shell-tight { max-width: 980px; margin: 0 auto; padding: 0 28px; }
+
+  /* ─── Hero ─────────────────────────────────────────────────── */
+  .hero {
+    padding: 80px 0 64px;
+    border-bottom: 1px solid oklch(24% 0.073 260 / 0.06);
+    background:
+      radial-gradient(ellipse 800px 600px at 20% -10%, color-mix(in oklch, var(--btn-primary) 6%, transparent) 0%, transparent 60%),
+      radial-gradient(ellipse 700px 500px at 90% 10%, color-mix(in oklch, var(--btn-primary) 4%, transparent) 0%, transparent 60%);
+  }
+  .hero-grid {
+    max-width: 1240px; margin: 0 auto; padding: 0 28px;
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: 56px; align-items: center;
+  }
+  @media (max-width: 980px) {
+    .hero { padding: 56px 0 40px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+  .hero-eyebrow {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--text-help);
+    margin-bottom: 22px;
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .hero-eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--btn-primary); }
+  .hero-title {
+    font-size: clamp(36px, 5.4vw, 64px); font-weight: 700;
+    letter-spacing: -0.028em; line-height: 1.02;
+    margin: 0 0 24px; color: var(--text-primary);
+  }
+  .hero-title em {
+    font-family: 'Times New Roman', Georgia, serif;
+    font-style: italic; font-weight: 500;
+    color: var(--btn-primary);
+  }
+  .hero-lead {
+    font-size: 17px; line-height: 1.6;
+    color: var(--text-secondary); margin: 0 0 32px;
+    max-width: 540px;
+  }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 30px; }
+  .btn-hero-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 22px; font-size: 14px; font-weight: 600;
+    background: var(--text-primary); color: oklch(100% 0 0);
+    border: 0; border-radius: 8px; text-decoration: none;
+    transition: background 0.16s, transform 0.12s;
+  }
+  .btn-hero-primary:hover { background: var(--btn-primary); color: oklch(100% 0 0); text-decoration: none; transform: translateY(-1px); }
+  .btn-hero-ghost {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 18px; font-size: 14px; font-weight: 600;
+    background: transparent; color: var(--text-primary);
+    border: 1px solid oklch(24% 0.073 260 / 0.18); border-radius: 8px;
+    text-decoration: none;
+    transition: border-color 0.16s, background 0.16s;
+  }
+  .btn-hero-ghost:hover { border-color: var(--text-primary); background: var(--row-hover); text-decoration: none; }
+
+  .hero-meta {
+    display: flex; gap: 22px; flex-wrap: wrap;
+    font-size: 11.5px; font-weight: 600; color: var(--text-help);
+    letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .hero-meta strong { color: var(--text-primary); font-weight: 700; }
+
+  /* Hero product preview — composed from actual system primitives so
+     the hero shows what shipped, not a fake illustration. */
+  .preview-window {
+    background: var(--card-bg);
+    border: 1px solid oklch(24% 0.073 260 / 0.10);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow:
+      0 1px 2px oklch(24% 0.073 260 / 0.04),
+      0 24px 60px -16px oklch(24% 0.073 260 / 0.18);
+    position: relative;
+  }
+  .preview-titlebar {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 14px;
+    background: var(--surface-soft);
+    border-bottom: 1px solid oklch(24% 0.073 260 / 0.08);
+  }
+  .preview-dots { display: flex; gap: 6px; }
+  .preview-dots span { width: 10px; height: 10px; border-radius: 50%; background: oklch(85% 0.005 260); }
+  .preview-url {
+    flex: 1; text-align: center;
+    font-size: 11px; font-family: ui-monospace, Menlo, Consolas, monospace;
+    color: var(--text-help);
+    padding: 4px 12px;
+    background: var(--card-bg);
+    border: 1px solid oklch(24% 0.073 260 / 0.06);
+    border-radius: 4px;
+    max-width: 280px; margin: 0 auto;
+  }
+  .preview-body {
+    display: grid; grid-template-columns: 140px minmax(0, 1fr);
+    min-height: 360px;
+  }
+  @media (max-width: 560px) {
+    .preview-body { grid-template-columns: 1fr; min-height: 0; }
+    .preview-sidebar { display: none; }
+    .preview-content { padding: 12px; }
+    .preview-table th, .preview-table td { padding: 6px 4px; font-size: 10.5px; }
+    .preview-url { font-size: 10px; padding: 3px 8px; max-width: 200px; }
+    .preview-toast { right: 8px; bottom: 8px; padding: 8px 10px; max-width: 200px; }
+    .preview-toast .body { font-size: 10.5px; }
+    .preview-toast .body strong { font-size: 11px; }
+  }
+  .preview-sidebar {
+    background: var(--surface-soft);
+    border-right: 1px solid oklch(24% 0.073 260 / 0.06);
+    padding: 14px 12px;
+  }
+  .preview-sidebar .label {
+    font-size: 9.5px; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--text-help);
+    margin: 0 0 8px; padding: 0 6px;
+  }
+  .preview-sidebar a {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 8px; font-size: 11.5px; font-weight: 500;
+    color: var(--text-primary); text-decoration: none;
+    border-radius: 4px; transition: background 0.12s;
+  }
+  .preview-sidebar a:hover { background: var(--row-hover); }
+  .preview-sidebar a.active { background: color-mix(in oklch, var(--btn-primary) 8%, transparent); color: var(--btn-primary); font-weight: 600; }
+  .preview-sidebar a .count {
+    margin-left: auto; font-size: 10px; color: var(--text-help);
+    background: var(--card-bg); padding: 0 5px; border-radius: 8px;
+  }
+  .preview-content { padding: 14px 16px; }
+  .preview-toolbar {
+    display: flex; align-items: center; gap: 8px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid oklch(24% 0.073 260 / 0.06);
+    margin-bottom: 10px;
+  }
+  .preview-toolbar .title { font-size: 13px; font-weight: 700; }
+  .preview-toolbar .crumb { font-size: 10.5px; color: var(--text-help); margin-left: 4px; }
+  .preview-toolbar .spacer { flex: 1; }
+  .preview-mini-btn {
+    font-size: 11px; padding: 4px 9px;
+    border: 1px solid oklch(24% 0.073 260 / 0.12);
+    border-radius: 4px; background: var(--card-bg); cursor: default;
+    color: var(--text-primary); font-weight: 500;
+  }
+  .preview-mini-btn.primary {
+    background: var(--btn-primary); color: oklch(100% 0 0); border-color: var(--btn-primary);
+  }
+  .preview-table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+  .preview-table th, .preview-table td {
+    padding: 7px 6px; text-align: left;
+    border-bottom: 1px solid oklch(24% 0.073 260 / 0.04);
+  }
+  .preview-table th {
+    font-size: 9.5px; font-weight: 700; letter-spacing: 0.04em;
+    text-transform: uppercase; color: var(--text-help);
+    border-bottom-color: oklch(24% 0.073 260 / 0.10);
+  }
+  .preview-table tbody tr:last-child td { border-bottom: 0; }
+  .preview-pill {
+    display: inline-block; padding: 1px 7px; border-radius: 999px;
+    font-size: 10px; font-weight: 600; letter-spacing: 0.02em;
+  }
+  .preview-pill.green { background: color-mix(in oklch, var(--green) 16%, transparent); color: var(--green); }
+  .preview-pill.blue { background: color-mix(in oklch, var(--btn-primary) 10%, transparent); color: var(--btn-primary); }
+  .preview-pill.amber { background: oklch(95% 0.05 75); color: oklch(45% 0.10 65); }
+  .preview-pill.red { background: color-mix(in oklch, var(--btn-danger) 12%, transparent); color: var(--btn-danger); }
+
+  .preview-toast {
+    position: absolute; bottom: 16px; right: 16px;
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 12px; max-width: 240px;
+    background: var(--card-bg);
+    border: 1px solid oklch(24% 0.073 260 / 0.10);
+    border-left: 3px solid var(--green);
+    border-radius: 6px;
+    box-shadow: var(--shadow-md);
+    animation: toastIn 600ms ease-out 600ms both;
+  }
+  .preview-toast .icon { width: 16px; height: 16px; color: var(--green); flex-shrink: 0; margin-top: 1px; }
+  .preview-toast .body { font-size: 11.5px; line-height: 1.35; }
+  .preview-toast .body strong { font-weight: 600; color: var(--text-primary); display: block; margin-bottom: 2px; font-size: 12px; }
+  .preview-toast .body span { color: var(--text-help); }
+  @keyframes toastIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  /* ─── Stats band ───────────────────────────────────────────── */
+  .stats {
+    padding: 36px 0;
+    background: var(--text-primary);
+    color: oklch(100% 0 0);
+  }
+  .stats-inner {
+    max-width: 1240px; margin: 0 auto; padding: 0 28px;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
+  }
+  @media (max-width: 720px) { .stats-inner { grid-template-columns: repeat(2, 1fr); gap: 24px; } }
+  .stat-num {
+    font-size: 40px; font-weight: 800; letter-spacing: -0.02em;
+    line-height: 1; display: block; margin-bottom: 6px;
+  }
+  .stat-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; color: oklch(80% 0 0);
+  }
+
+  /* ─── Section heads ────────────────────────────────────────── */
+  .section { padding: 88px 0; border-bottom: 1px solid oklch(24% 0.073 260 / 0.06); }
+  .section-eyebrow {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--btn-primary);
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-size: clamp(28px, 3.6vw, 40px); font-weight: 700;
+    letter-spacing: -0.022em; line-height: 1.1;
+    margin: 0 0 14px; max-width: 720px;
+  }
+  .section-title em { font-family: 'Times New Roman', Georgia, serif; font-style: italic; font-weight: 500; color: var(--btn-primary); }
+  .section-lead {
+    font-size: 16px; line-height: 1.6; color: var(--text-secondary);
+    max-width: 640px; margin: 0 0 48px;
+  }
+
+  /* ─── Features grid ────────────────────────────────────────── */
+  .features-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+  }
+  @media (max-width: 880px) { .features-grid { grid-template-columns: 1fr; } }
+  .feature {
+    padding: 26px 24px;
+    background: var(--card-bg);
+    border: 1px solid oklch(24% 0.073 260 / 0.08);
+    border-radius: 10px;
+  }
+  .feature-icon {
+    width: 36px; height: 36px;
+    background: color-mix(in oklch, var(--btn-primary) 10%, transparent);
+    color: var(--btn-primary);
+    border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    margin-bottom: 18px;
+  }
+  .feature-icon svg { width: 18px; height: 18px; }
+  .feature h3 {
+    font-size: 16px; font-weight: 700; margin: 0 0 8px;
+    color: var(--text-primary); letter-spacing: -0.01em;
+  }
+  .feature p {
+    font-size: 13.5px; line-height: 1.55; color: var(--text-secondary);
+    margin: 0;
+  }
+
+  /* ─── Showcase grid ────────────────────────────────────────── */
+  .showcase-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
+  }
+  .showcase-card {
+    display: flex; flex-direction: column;
+    background: var(--card-bg);
+    border: 1px solid oklch(24% 0.073 260 / 0.08);
+    border-radius: 10px; overflow: hidden;
+    text-decoration: none; color: inherit;
+    transition: border-color 0.12s, transform 0.16s, box-shadow 0.16s;
+  }
+  .showcase-card:hover {
+    border-color: color-mix(in oklch, var(--btn-primary) 50%, oklch(24% 0.073 260 / 0.10));
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+    text-decoration: none;
+  }
+  .showcase-preview {
+    padding: 24px 20px;
+    background: var(--surface-soft);
+    border-bottom: 1px solid oklch(24% 0.073 260 / 0.06);
+    min-height: 92px;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    flex-wrap: wrap;
+  }
+  .showcase-body { padding: 14px 18px 16px; }
+  .showcase-name {
+    font-size: 13.5px; font-weight: 700; color: var(--text-primary);
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 4px;
+  }
+  .showcase-name .arr { color: var(--text-help); font-size: 13px; transition: color 0.12s, transform 0.12s; }
+  .showcase-card:hover .showcase-name .arr { color: var(--btn-primary); transform: translateX(2px); }
+  .showcase-desc { font-size: 12px; line-height: 1.5; color: var(--text-help); }
+
+  /* Mini live previews inside showcase cards */
+  .mini-btn {
+    font-size: 11.5px; padding: 6px 14px; font-weight: 600;
+    border: 1px solid oklch(24% 0.073 260 / 0.14); border-radius: 5px;
+    background: var(--card-bg); color: var(--text-primary);
+  }
+  .mini-btn.primary { background: var(--btn-primary); color: oklch(100% 0 0); border-color: var(--btn-primary); }
+  .mini-badge {
+    display: inline-block; padding: 2px 9px; border-radius: 999px;
+    font-size: 10.5px; font-weight: 600; letter-spacing: 0.02em;
+  }
+  .mini-badge.green { background: color-mix(in oklch, var(--green) 18%, transparent); color: var(--green); }
+  .mini-badge.blue { background: color-mix(in oklch, var(--btn-primary) 12%, transparent); color: var(--btn-primary); }
+  .mini-badge.amber { background: oklch(95% 0.05 75); color: oklch(45% 0.10 65); }
+  .mini-input {
+    font-size: 11.5px; padding: 6px 9px; width: 140px;
+    border: 1px solid oklch(24% 0.073 260 / 0.16); border-radius: 4px;
+    background: var(--card-bg); color: var(--text-primary);
+  }
+  .mini-tab-strip { display: inline-flex; border-bottom: 1px solid oklch(24% 0.073 260 / 0.10); }
+  .mini-tab-strip span {
+    font-size: 11px; padding: 5px 10px; color: var(--text-help);
+    border-bottom: 2px solid transparent; transform: translateY(1px);
+  }
+  .mini-tab-strip span.active { color: var(--btn-primary); border-bottom-color: var(--btn-primary); font-weight: 600; }
+  .mini-toast {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 10px; background: var(--card-bg);
+    border: 1px solid oklch(24% 0.073 260 / 0.10);
+    border-left: 3px solid var(--green);
+    border-radius: 4px; font-size: 11px;
+  }
+  .mini-card {
+    width: 100%; padding: 8px 10px;
+    background: var(--card-bg);
+    border: 1px solid oklch(24% 0.073 260 / 0.10);
+    border-radius: 5px;
+  }
+  .mini-card .row1 { font-size: 11px; font-weight: 600; color: var(--text-primary); display: flex; justify-content: space-between; }
+  .mini-card .row1 span { color: var(--text-help); font-weight: 400; font-size: 10px; }
+  .mini-card .row2 { font-size: 16px; font-weight: 700; color: var(--text-primary); }
+  .mini-card .row3 { font-size: 10px; color: var(--green); }
+
+  /* ─── Compositions band ────────────────────────────────────── */
+  .compositions-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+  }
+  @media (max-width: 880px) { .compositions-grid { grid-template-columns: 1fr; } }
+  .composition-card {
+    padding: 28px 26px;
+    background: var(--card-bg);
+    border: 1px solid oklch(24% 0.073 260 / 0.08);
+    border-radius: 12px;
+    text-decoration: none; color: inherit;
+    transition: border-color 0.12s, transform 0.16s, box-shadow 0.16s;
+  }
+  .composition-card:hover {
+    border-color: color-mix(in oklch, var(--btn-primary) 50%, oklch(24% 0.073 260 / 0.10));
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    text-decoration: none;
+  }
+  .composition-card .num {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.10em;
+    color: var(--btn-primary); display: block; margin-bottom: 14px;
+  }
+  .composition-card h3 {
+    font-size: 22px; font-weight: 700; letter-spacing: -0.015em;
+    margin: 0 0 10px; color: var(--text-primary);
+  }
+  .composition-card p {
+    font-size: 13.5px; line-height: 1.55; color: var(--text-secondary);
+    margin: 0 0 18px;
+  }
+  .composition-card .link {
+    font-size: 12.5px; font-weight: 600; color: var(--btn-primary);
+    display: inline-flex; align-items: baseline; gap: 4px;
+  }
+
+  /* ─── Principles ───────────────────────────────────────────── */
+  .principles-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+  }
+  @media (max-width: 880px) { .principles-grid { grid-template-columns: 1fr; } }
+  .principle {
+    padding: 22px 22px;
+    background: var(--surface-soft);
+    border: 1px solid oklch(24% 0.073 260 / 0.06);
+    border-radius: 10px;
+  }
+  .principle .pnum {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.10em;
+    color: var(--btn-primary); display: block; margin-bottom: 10px;
+  }
+  .principle h4 {
+    font-size: 15px; font-weight: 700; margin: 0 0 6px;
+    color: var(--text-primary); letter-spacing: -0.005em;
+  }
+  .principle p {
+    font-size: 12.5px; line-height: 1.55; color: var(--text-secondary);
+    margin: 0;
+  }
+
+  /* ─── CTA strip ────────────────────────────────────────────── */
+  .cta {
+    padding: 88px 0;
+    background:
+      linear-gradient(180deg, transparent 0%, color-mix(in oklch, var(--btn-primary) 4%, transparent) 100%);
+  }
+  .cta-card {
+    max-width: 980px; margin: 0 auto;
+    padding: 56px 48px;
+    background: var(--text-primary);
+    color: oklch(100% 0 0);
+    border-radius: 16px;
+    text-align: center;
+  }
+  .cta-card h2 {
+    font-size: clamp(28px, 3.6vw, 40px); font-weight: 700;
+    letter-spacing: -0.022em; line-height: 1.1;
+    margin: 0 0 14px;
+  }
+  .cta-card h2 em { font-family: 'Times New Roman', Georgia, serif; font-style: italic; font-weight: 500; color: oklch(85% 0.10 18); }
+  .cta-card p {
+    font-size: 16px; line-height: 1.55; color: oklch(80% 0 0);
+    max-width: 560px; margin: 0 auto 28px;
+  }
+  .cta-card .actions { display: inline-flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .cta-card .btn-on-dark {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 12px 22px; font-size: 14px; font-weight: 600;
+    background: oklch(100% 0 0); color: var(--text-primary);
+    border-radius: 8px; text-decoration: none;
+    transition: background 0.16s, transform 0.12s;
+  }
+  .cta-card .btn-on-dark:hover { background: oklch(94% 0.005 260); transform: translateY(-1px); text-decoration: none; }
+  .cta-card .btn-on-dark-ghost {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 12px 18px; font-size: 14px; font-weight: 600;
+    color: oklch(100% 0 0);
+    border: 1px solid oklch(100% 0 0 / 0.30); border-radius: 8px;
+    text-decoration: none;
+    transition: border-color 0.16s, background 0.16s;
+  }
+  .cta-card .btn-on-dark-ghost:hover { border-color: oklch(100% 0 0); background: oklch(100% 0 0 / 0.06); text-decoration: none; }
+
+  /* ─── Footer ───────────────────────────────────────────────── */
+  .site-footer {
+    padding: 48px 0 56px;
+    background: var(--surface-soft);
+    border-top: 1px solid oklch(24% 0.073 260 / 0.08);
+  }
+  .footer-inner {
+    max-width: 1240px; margin: 0 auto; padding: 0 28px;
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 32px;
+  }
+  @media (max-width: 720px) { .footer-inner { grid-template-columns: 1fr 1fr; gap: 28px; } }
+  .footer-brand .logo { margin-bottom: 12px; }
+  .footer-brand p { font-size: 12.5px; line-height: 1.55; color: var(--text-help); max-width: 340px; margin: 8px 0 0; }
+  .footer-col h5 {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.10em;
+    text-transform: uppercase; color: var(--text-help);
+    margin: 0 0 12px;
+  }
+  .footer-col ul { list-style: none; padding: 0; margin: 0; }
+  .footer-col li { margin-bottom: 8px; }
+  .footer-col a {
+    font-size: 13px; color: var(--text-primary);
+    text-decoration: none; transition: color 0.12s;
+  }
+  .footer-col a:hover { color: var(--btn-primary); }
+  .footer-legal {
+    max-width: 1240px; margin: 36px auto 0; padding: 24px 28px 0;
+    border-top: 1px solid oklch(24% 0.073 260 / 0.08);
+    display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    font-size: 11.5px; color: var(--text-help);
+  }
+</style>
+</head>
+<body>
+
+<!-- ───── SVG sprite for the in-page icons (header check, etc.) ───── -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="i-density" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><line x1="3" y1="14" x2="21" y2="14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><line x1="3" y1="18" x2="21" y2="18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="i-stack" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" fill="none"/><polyline points="2 17 12 22 22 17" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" fill="none"/><polyline points="2 12 12 17 22 12" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" fill="none"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" stroke="currentColor" stroke-width="1.6" fill="none"/><rect x="14" y="3" width="7" height="7" stroke="currentColor" stroke-width="1.6" fill="none"/><rect x="14" y="14" width="7" height="7" stroke="currentColor" stroke-width="1.6" fill="none"/><rect x="3" y="14" width="7" height="7" stroke="currentColor" stroke-width="1.6" fill="none"/></symbol>
+</svg>
+
+<!-- ───── MASTHEAD ───── -->
+<header class="site-header">
+  <div class="header-inner">
+    <a class="logo" href="./index.html">
+      <span class="logomark">EDS</span>
+      <span class="logotype">Enterprise Design System</span>
+    </a>
+    <nav class="header-nav">
+      <a href="./components/foundations.html">Foundations</a>
+      <a href="./components/buttons.html">Components</a>
+      <a href="./components/wizard.html">Compositions</a>
+      <a href="./components/standards.html">Standards</a>
+    </nav>
+    <div class="header-spacer"></div>
+    <div class="header-actions">
+      <span class="version-pill">v2026.05</span>
+      <a class="header-link" href="https://doselos.com" title="Back to portfolio">
+        Portfolio <span class="arr">↗</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ───── HERO ───── -->
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="hero-eyebrow">
+        <span class="dot"></span>
+        Reference · v2026.05 · Hand-authored
+      </div>
+      <h1 class="hero-title">
+        A design system for the <em>dense, demanding</em> product surfaces.
+      </h1>
+      <p class="hero-lead">
+        Tokens, primitives, and compositions for the workflows real teams run — long lists, branching wizards, dashboards that surface signal not noise.
+      </p>
+      <div class="hero-actions">
+        <a class="btn-hero-primary" href="./components/introduction.html">Start with Introduction <span aria-hidden="true">→</span></a>
+        <a class="btn-hero-ghost" href="./components/buttons.html">Browse components</a>
+      </div>
+      <div class="hero-meta">
+        <span><strong>OKLCH</strong> color</span>
+        <span><strong>0</strong> framework</span>
+        <span><strong>WCAG AA</strong></span>
+      </div>
+    </div>
+
+    <!-- Live product preview composed from system primitives -->
+    <div class="preview-window" aria-hidden="true">
+      <div class="preview-titlebar">
+        <div class="preview-dots"><span></span><span></span><span></span></div>
+        <div class="preview-url">app.dosing.io / library / parts</div>
+      </div>
+      <div class="preview-body">
+        <aside class="preview-sidebar">
+          <div class="label">Library</div>
+          <a href="#" class="active">Parts <span class="count">142</span></a>
+          <a href="#">Assemblies <span class="count">28</span></a>
+          <a href="#">Locations <span class="count">14</span></a>
+          <div class="label" style="margin-top:14px">Workflows</div>
+          <a href="#">Inbox <span class="count">3</span></a>
+          <a href="#">Approvals</a>
+        </aside>
+        <div class="preview-content">
+          <div class="preview-toolbar">
+            <span class="title">Parts</span>
+            <span class="crumb">/ Active</span>
+            <div class="spacer"></div>
+            <button class="preview-mini-btn" type="button">Filter</button>
+            <button class="preview-mini-btn primary" type="button">+ New</button>
+          </div>
+          <table class="preview-table">
+            <thead>
+              <tr><th>SKU</th><th>Description</th><th>Status</th><th style="text-align:right">Qty</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>FX-2041</td><td>Brass fitting · 1/2&quot;</td><td><span class="preview-pill green">In stock</span></td><td style="text-align:right;font-variant-numeric:tabular-nums">1,420</td></tr>
+              <tr><td>FX-2042</td><td>Brass fitting · 3/4&quot;</td><td><span class="preview-pill amber">Low</span></td><td style="text-align:right;font-variant-numeric:tabular-nums">84</td></tr>
+              <tr><td>VL-118A</td><td>Ball valve · DN20</td><td><span class="preview-pill blue">Review</span></td><td style="text-align:right;font-variant-numeric:tabular-nums">312</td></tr>
+              <tr><td>VL-118B</td><td>Ball valve · DN25</td><td><span class="preview-pill green">In stock</span></td><td style="text-align:right;font-variant-numeric:tabular-nums">208</td></tr>
+              <tr><td>GS-007</td><td>O-ring · NBR</td><td><span class="preview-pill red">Out</span></td><td style="text-align:right;font-variant-numeric:tabular-nums">0</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="preview-toast" aria-hidden="true">
+        <svg class="icon"><use href="#i-check"/></svg>
+        <div class="body">
+          <strong>5 records imported</strong>
+          <span>Q3 Planning · just now</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───── STATS ───── -->
+<section class="stats">
+  <div class="stats-inner">
+    <div class="stat"><span class="stat-num">10</span><span class="stat-label">Components</span></div>
+    <div class="stat"><span class="stat-num">03</span><span class="stat-label">Compositions</span></div>
+    <div class="stat"><span class="stat-num">06</span><span class="stat-label">Principles</span></div>
+    <div class="stat"><span class="stat-num">2026.05</span><span class="stat-label">Version</span></div>
+  </div>
+</section>
+
+<!-- ───── START HERE ───── -->
+<section class="section">
+  <div class="shell">
+    <div class="section-eyebrow">Start here</div>
+    <h2 class="section-title">Three pages to read <em>before the components.</em></h2>
+    <p class="section-lead">
+      What the system is, the tokens underneath it, and the rules every component follows. In this order.
+    </p>
+    <div class="compositions-grid">
+      <a class="composition-card" href="./components/introduction.html">
+        <span class="num">01 · Introduction</span>
+        <h3>What's in the system.</h3>
+        <p>Tokens, primitives, patterns, behaviors, and how every component page is laid out so you can skim it in two minutes.</p>
+        <span class="link">Read <span aria-hidden="true">→</span></span>
+      </a>
+      <a class="composition-card" href="./components/foundations.html">
+        <span class="num">02 · Foundations</span>
+        <h3>The tokens underneath.</h3>
+        <p>Color, typography, spacing, layout, elevation and radius, motion, iconography. Use the token; never hard-code the value.</p>
+        <span class="link">Read <span aria-hidden="true">→</span></span>
+      </a>
+      <a class="composition-card" href="./components/standards.html">
+        <span class="num">03 · Standards</span>
+        <h3>The rules that apply everywhere.</h3>
+        <p>Accessibility, interaction states, and voice and tone. The part of the system that outlives any single component.</p>
+        <span class="link">Read <span aria-hidden="true">→</span></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ───── COMPONENT SHOWCASE ───── -->
+<section class="section">
+  <div class="shell">
+    <div class="section-eyebrow">The system</div>
+    <h2 class="section-title">Ten components. Each on its own page.</h2>
+    <p class="section-lead">
+      Live examples, properties, anatomy, and best practices for every primitive. Built to be skimmed in two minutes and copied in five.
+    </p>
+
+    <div class="showcase-grid">
+      <a class="showcase-card" href="./components/buttons.html">
+        <div class="showcase-preview">
+          <span class="mini-btn primary">Primary</span>
+          <span class="mini-btn">Standard</span>
+        </div>
+        <div class="showcase-body">
+          <div class="showcase-name">Button <span class="arr">→</span></div>
+          <div class="showcase-desc">Primary, standard, danger, link. Sizes, icons, disabled.</div>
+        </div>
+      </a>
+
+      <a class="showcase-card" href="./components/badges.html">
+        <div class="showcase-preview">
+          <span class="mini-badge green">In review</span>
+          <span class="mini-badge blue">Active</span>
+          <span class="mini-badge amber">Pending</span>
+        </div>
+        <div class="showcase-body">
+          <div class="showcase-name">Badge &amp; status pill <span class="arr">→</span></div>
+          <div class="showcase-desc">Workflow status, lifecycle, count chips. Inline only.</div>
+        </div>
+      </a>
+
+      <a class="showcase-card" href="./components/cards.html">
+        <div class="showcase-preview">
+          <div class="mini-card">
+            <div class="row1">REVENUE <span>Q3</span></div>
+            <div class="row2">$842K</div>
+            <div class="row3">▲ 12.4%</div>
+          </div>
+        </div>
+        <div class="showcase-body">
+          <div class="showcase-name">Card <span class="arr">→</span></div>
+          <div class="showcase-desc">Basic, KPI, multi-stat, donut, sparkline, progress.</div>
+        </div>
+      </a>
+
+      <a class="showcase-card" href="./components/tables.html">
+        <div class="showcase-preview" style="padding:14px 16px">
+          <table class="preview-table" style="font-size:10.5px">
+            <tbody>
+              <tr><td>FX-2041</td><td>1,420</td></tr>
+              <tr><td>FX-2042</td><td>84</td></tr>
+              <tr><td>VL-118A</td><td>312</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="showcase-body">
+          <div class="showcase-name">Table <span class="arr">→</span></div>
+          <div class="showcase-desc">Basic, selectable, sortable, dense, numeric, tree.</div>
+        </div>
+      </a>
+
+      <a class="showcase-card" href="./components/tabs.html">
+        <div class="showcase-preview">
+          <div class="mini-tab-strip">
+            <span class="active">All</span>
+            <span>Unread</span>
+            <span>Mentions</span>
+          </div>
+        </div>
+        <div class="showcase-body">
+          <div class="showcase-name">Tabs <span class="arr">→</span></div>
+          <div class="showcase-desc">Horizontal strip with optional count pills.</div>
+        </div>
+      </a>
+
+      <a class="showcase-card" href="./components/forms.html">
+        <div class="showcase-preview">
+          <input class="mini-input" placeholder="user@example.com" disabled>
+        </div>
+        <div class="showcase-body">
+          <div class="showcase-name">Form elements <span class="arr">→</span></div>
+          <div class="showcase-desc">Text input, select, textarea, checkbox, radio, toggle.</div>
+        </div>
+      </a>
+
+      <a class="showcase-card" href="./components/toasts.html">
+        <div class="showcase-preview">
+          <span class="mini-toast">
+            <svg width="11" height="11" style="color:var(--green)"><use href="#i-check"/></svg>
+            Workspace saved
+          </span>
+        </div>
+        <div class="showcase-body">
+          <div class="showcase-name">Toast <span class="arr">→</span></div>
+          <div class="showcase-desc">Transient bottom-right notifications.</div>
+        </div>
+      </a>
+
+      <a class="showcase-card" href="./components/headers.html">
+        <div class="showcase-preview" style="padding:14px 16px">
+          <div style="width:100%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid oklch(24% 0.073 260 / 0.08);padding-bottom:8px">
+            <span style="font-size:11.5px;font-weight:700">Q3 Planning</span>
+            <span style="font-size:10px;color:var(--text-help)">3 members</span>
+          </div>
+        </div>
+        <div class="showcase-body">
+          <div class="showcase-name">Page header <span class="arr">→</span></div>
+          <div class="showcase-desc">Title, Breadcrumb, WizardCrumbs variants.</div>
+        </div>
+      </a>
+
+      <a class="showcase-card" href="./components/dropdowns.html">
+        <div class="showcase-preview">
+          <span class="mini-btn">Sort: Newest ▾</span>
+        </div>
+        <div class="showcase-body">
+          <div class="showcase-name">Dropdown <span class="arr">→</span></div>
+          <div class="showcase-desc">Kebab actions, sort, status transitions, previews.</div>
+        </div>
+      </a>
+
+      <a class="showcase-card" href="./components/breadcrumbs.html">
+        <div class="showcase-preview">
+          <span style="font-size:11.5px;color:var(--text-help)">
+            Library <span style="color:var(--text-help);margin:0 6px">/</span>
+            <strong style="color:var(--text-primary);font-weight:600">Parts</strong>
+          </span>
+        </div>
+        <div class="showcase-body">
+          <div class="showcase-name">Breadcrumbs <span class="arr">→</span></div>
+          <div class="showcase-desc">Single-hop parent context. Paired with back arrow.</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ───── COMPOSITIONS ───── -->
+<section class="section">
+  <div class="shell">
+    <div class="section-eyebrow">Compositions</div>
+    <h2 class="section-title">Three patterns that <em>recur everywhere.</em></h2>
+    <p class="section-lead">
+      Compositions of primitives — not new components. Use them intact; don't reinvent.
+    </p>
+    <div class="compositions-grid">
+      <a class="composition-card" href="./components/wizard.html">
+        <span class="num">01 · Wizard System</span>
+        <h3>Every multi-step flow.</h3>
+        <p>Header + 2-col body + side panels + sticky footer. Workspace creation, import flows, configuration setup — same chrome, different fields.</p>
+        <span class="link">Open <span aria-hidden="true">→</span></span>
+      </a>
+      <a class="composition-card" href="./components/inbox.html">
+        <span class="num">02 · Inbox</span>
+        <h3>Two-pane list + detail.</h3>
+        <p>Tabs · toolbar · message cards · detail pane · bulk-action bar. Notification centers, comment threads, approval queues — one shell.</p>
+        <span class="link">Open <span aria-hidden="true">→</span></span>
+      </a>
+      <a class="composition-card" href="./components/upload.html">
+        <span class="num">03 · Upload Wizard</span>
+        <h3>Bring a spreadsheet in.</h3>
+        <p>Settings → Mapping. File picker, options, folder, priority list, column mapping. The most common enterprise chore, done once and reused.</p>
+        <span class="link">Open <span aria-hidden="true">→</span></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ───── PRINCIPLES ───── -->
+<section class="section">
+  <div class="shell">
+    <div class="section-eyebrow">Principles</div>
+    <h2 class="section-title">Six principles that decide every <em>close call.</em></h2>
+    <p class="section-lead">
+      If a component, layout, or copy choice conflicts with one of these, the principle wins.
+    </p>
+    <div class="principles-grid">
+      <div class="principle"><span class="pnum">01</span><h4>Quiet by default</h4><p>Color, motion, and elevation are signals — not decoration. Reserve the loud treatment for moments that need attention.</p></div>
+      <div class="principle"><span class="pnum">02</span><h4>Tabular truth</h4><p>Numbers stack vertically. Tabular-nums, right-aligned, same column width regardless of value. A misaligned digit reads as a typo.</p></div>
+      <div class="principle"><span class="pnum">03</span><h4>One pattern, many surfaces</h4><p>The bulk-action bar in the inbox is the same component in the library and the parts list. Fork the data, not the chrome.</p></div>
+      <div class="principle"><span class="pnum">04</span><h4>Composition over invention</h4><p>Build new screens by composing primitives. If you can't, the gap is the system's — file a proposal before shipping a one-off.</p></div>
+      <div class="principle"><span class="pnum">05</span><h4>State carries meaning</h4><p>Hover, active, focus, selected, disabled — never decoration. They communicate intent. Use them consistently; users learn them once.</p></div>
+      <div class="principle"><span class="pnum">06</span><h4>Density without friction</h4><p>Tight rows, compact toolbars, full-screen tables. But 32px is the floor for any interactive target. Compact never means hard to hit.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ───── CTA ───── -->
+<section class="cta">
+  <div class="cta-card">
+    <h2>Get into the <em>system.</em></h2>
+    <p>Start with the introduction, browse a primitive, or jump straight into a composition. Every page has live examples and copy-pasteable code.</p>
+    <div class="actions">
+      <a class="btn-on-dark" href="./components/introduction.html">Read the introduction <span aria-hidden="true">→</span></a>
+      <a class="btn-on-dark-ghost" href="./components/foundations.html">Browse foundations</a>
+    </div>
+  </div>
+</section>
+
+<!-- ───── FOOTER ───── -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a class="logo" href="./index.html">
+        <span class="logomark">EDS</span>
+        <span class="logotype">Enterprise Design System</span>
+      </a>
+      <p>A reference for the conventions I keep reaching for in product work. Hand-authored, open to read.</p>
+    </div>
+    <div class="footer-col">
+      <h5>System</h5>
+      <ul>
+        <li><a href="./components/introduction.html">Introduction</a></li>
+        <li><a href="./components/foundations.html">Foundations</a></li>
+        <li><a href="./components/standards.html">Standards</a></li>
+        <li><a href="./components/buttons.html">Components</a></li>
+        <li><a href="./components/wizard.html">Compositions</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Author</h5>
+      <ul>
+        <li><a href="https://doselos.com">Carlos deArtola Portfolio ↗</a></li>
+        <li><a href="https://www.linkedin.com/in/carlosdeartola" target="_blank" rel="noopener">LinkedIn ↗</a></li>
+        <li><a href="https://github.com/cdearto" target="_blank" rel="noopener">GitHub ↗</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Meta</h5>
+      <ul>
+        <li>v2026.05</li>
+        <li>Last updated September 2026</li>
+        <li>OKLCH-native</li>
+        <li>0 framework</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-legal">
+    <span>© 2026 Carlos deArtola. Personal reference; no warranty.</span>
+    <span>EDS · v2026.05</span>
+  </div>
+</footer>
+
+</body>
+</html>

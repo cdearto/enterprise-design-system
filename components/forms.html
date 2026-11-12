@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Form elements · Enterprise Design System</title>
+<link rel="stylesheet" href="./_shared/tokens.css?v=20261112">
+<link rel="stylesheet" href="./_shared/docs.css?v=20261112">
+</head>
+<body>
+
+<div class="canvas with-example-panel" id="component-doc-canvas">
+  <nav class="left-sidebar" id="left-sidebar" data-active="forms"></nav>
+
+  <div class="content component-doc">
+    <header class="page-header">
+      <div class="page-header-eyebrow">Forms</div>
+      <h1 class="page-header-title">Form elements</h1>
+      <p class="page-header-description">Native HTML inputs restyled to match the system — text input, select, textarea, checkbox, radio, and toggle. All controls share a 32 px standard height, 6 px corner radius, and a soft <code>--accent-glow</code> focus ring instead of the bare browser outline.</p>
+    </header>
+
+    <div class="component-doc-body">
+      <section id="overview">
+        <h2>Overview</h2>
+        <p>Forms compose native elements (<code>&lt;input&gt;</code>, <code>&lt;select&gt;</code>, <code>&lt;textarea&gt;</code>) inside a labeled <code>.ds-field</code> wrapper that supplies the visual chrome: 12/600 label on top, control in the middle, optional 12 px help text below. Toggles use a custom <code>.toggle</code> primitive that flips on click via a state class.</p>
+      </section>
+
+      <section id="use-cases">
+        <h2>Use cases</h2>
+        <ul>
+          <li><strong>Wizard cards.</strong> Stack 4–6 fields per card. Use <code>.req</code> on labels for required fields.</li>
+          <li><strong>Filter panels.</strong> Combine selects + checkboxes for facet filters that affect a list view.</li>
+          <li><strong>Settings forms.</strong> Use toggles for binary preferences; selects for one-of-N choices; textarea for long-form notes.</li>
+          <li><strong>Inline editors.</strong> Drop a single text input into a row cell for in-place editing.</li>
+        </ul>
+      </section>
+
+      <section id="properties">
+        <h2>Properties</h2>
+        <table class="fr-simple-table">
+          <thead><tr><th>Element</th><th>Class</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Field wrapper</td><td><code>.ds-field</code></td><td>Vertical label + control + help text stack with consistent gap.</td></tr>
+            <tr><td>Required marker</td><td><code>.req</code></td><td>Asterisk inside the label for required fields.</td></tr>
+            <tr><td>Help text</td><td><code>.help</code></td><td>12/400 help-text-colored note under the control.</td></tr>
+            <tr><td>Text input</td><td><code>&lt;input type="text"&gt;</code></td><td>32 px height, 6 px radius, accent focus ring.</td></tr>
+            <tr><td>Select</td><td><code>&lt;select&gt;</code></td><td>Same chrome as text input. Use native rendering — don't rebuild as a div.</td></tr>
+            <tr><td>Textarea</td><td><code>&lt;textarea&gt;</code></td><td>Multi-line variant. Use <code>rows</code> attr to set initial height.</td></tr>
+            <tr><td>Toggle</td><td><code>.toggle</code> + <code>.toggle.on</code></td><td>Custom switch. Click adds/removes <code>.on</code> class via JS.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="types">
+        <h2>Types &amp; styles</h2>
+        <table class="fr-simple-table">
+          <thead><tr><th>Control</th><th>When to use</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Text input</strong></td><td>Free-form short strings — names, identifiers, search queries.</td></tr>
+            <tr><td><strong>Select</strong></td><td>One-of-N choice from a known list with ≤20 options.</td></tr>
+            <tr><td><strong>Textarea</strong></td><td>Multi-line free-form text — descriptions, notes, messages.</td></tr>
+            <tr><td><strong>Checkbox</strong></td><td>Independent on/off choices — "Notify me", "Auto-archive".</td></tr>
+            <tr><td><strong>Radio</strong></td><td>Mutually exclusive choice from a small set (≤5 options).</td></tr>
+            <tr><td><strong>Toggle</strong></td><td>Binary setting with immediate effect — applies on flip, no save button.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="best-practices">
+        <h2>Best practices</h2>
+        <ul>
+          <li><strong>Label every control.</strong> Use a visible label inside <code>.ds-field</code> — never rely on placeholder text as the label.</li>
+          <li><strong>Help text below, not in placeholder.</strong> Placeholders disappear when the user types. Important context belongs in <code>.help</code>.</li>
+          <li><strong>Use native HTML.</strong> Don't rebuild <code>&lt;select&gt;</code> as a custom dropdown unless you genuinely need search or grouping.</li>
+          <li><strong>Toggle ≠ checkbox.</strong> Use toggles for settings that take effect immediately. Use checkboxes for choices that need an explicit submit.</li>
+          <li><strong>Required asterisks belong on labels.</strong> Wrap the asterisk in <code>.req</code> for consistent danger-tint styling.</li>
+        </ul>
+      </section>
+    </div>
+  </div>
+
+  <div class="example-panel-resize" id="example-panel-resize"><div class="resize-handle-grip"></div></div>
+
+  <aside class="example-panel" id="example-panel" data-options='[
+    {"id":"text-input","label":"Text input"},
+    {"id":"select","label":"Select"},
+    {"id":"textarea","label":"Textarea"},
+    {"id":"checkbox","label":"Checkbox"},
+    {"id":"radio","label":"Radio"},
+    {"id":"toggle","label":"Toggle"},
+    {"id":"field-group","label":"Field group"}
+  ]'>
+
+    <div class="example-item" data-example-id="text-input" data-vert>
+      <label class="ds-field" style="max-width:340px;width:100%">
+        <span class="lbl">Workspace name <span class="req">*</span></span>
+        <input type="text" placeholder="e.g. Q3 Planning">
+        <span class="help">Internal label — visible to members.</span>
+      </label>
+    </div>
+
+    <div class="example-item" data-example-id="select" data-vert>
+      <label class="ds-field" style="max-width:340px;width:100%">
+        <span class="lbl">Visibility</span>
+        <select>
+          <option>Organization default</option>
+          <option>Restricted</option>
+          <option>Public link</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="example-item" data-example-id="textarea" data-vert>
+      <label class="ds-field" style="max-width:340px;width:100%">
+        <span class="lbl">Description</span>
+        <textarea rows="4" placeholder="Brief notes about this workspace"></textarea>
+      </label>
+    </div>
+
+    <div class="example-item" data-example-id="checkbox" data-vert>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" checked> Notify on changes</label>
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox"> Include in weekly digest</label>
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox"> Auto-archive completed</label>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="radio" data-vert>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="radio" name="vis" checked> Members only</label>
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="radio" name="vis"> Anyone in the organization</label>
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="radio" name="vis"> Anyone with the link</label>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="toggle" data-vert>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div style="display:flex;align-items:center;gap:10px"><span class="toggle on"></span><span>Auto-archive after 90 days</span></div>
+        <div style="display:flex;align-items:center;gap:10px"><span class="toggle"></span><span>Email digest</span></div>
+        <div style="display:flex;align-items:center;gap:10px"><span class="toggle on"></span><span>Show count badges in nav</span></div>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="field-group" data-vert>
+      <div style="display:flex;flex-direction:column;gap:14px;max-width:340px;width:100%">
+        <label class="ds-field"><span class="lbl">Workspace name <span class="req">*</span></span><input type="text" placeholder="Required"></label>
+        <label class="ds-field"><span class="lbl">Template</span><select><option>Standard</option><option>Imported</option></select></label>
+        <label class="ds-field"><span class="lbl">Description</span><textarea rows="2" placeholder="Optional notes"></textarea></label>
+        <div style="display:flex;align-items:center;gap:10px"><span class="toggle on"></span><span>Notify members on create</span></div>
+      </div>
+    </div>
+
+    <template class="example-usage">/* Field wrapper carries the label and help text */
+&lt;label class="ds-field"&gt;
+  &lt;span class="lbl"&gt;Workspace name &lt;span class="req"&gt;*&lt;/span&gt;&lt;/span&gt;
+  &lt;input type="text" placeholder="e.g. Q3 Planning"&gt;
+  &lt;span class="help"&gt;Internal label.&lt;/span&gt;
+&lt;/label&gt;
+
+/* Toggle — click to flip */
+&lt;span class="toggle on"&gt;&lt;/span&gt;</template>
+  </aside>
+</div>
+
+<button class="back-to-top" id="back-to-top" aria-label="Back to top"><svg><use href="#i-arrow-up"/></svg></button>
+<script src="./_shared/docs.js?v=20261112"></script>
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Upload wizard · Enterprise Design System</title>
+<link rel="stylesheet" href="./_shared/tokens.css?v=20261112">
+<link rel="stylesheet" href="./_shared/docs.css?v=20261112">
+</head>
+<body>
+<div class="canvas with-example-panel" id="component-doc-canvas">
+  <nav class="left-sidebar" id="left-sidebar" data-active="upload"></nav>
+
+  <div class="content component-doc">
+    <header class="page-header">
+      <div class="page-header-eyebrow">Compositions</div>
+      <h1 class="page-header-title">Upload wizard</h1>
+      <p class="page-header-description">A 2-step wizard (<strong>Settings → Mapping</strong>) for ingesting tabular files (CSV, XLSX, JSON) into structured records. Use this pattern any time the app accepts a user-provided file that needs column mapping before storage. Always pair with origin-aware navigation so users return to their starting context after upload.</p>
+    </header>
+
+    <div class="component-doc-body">
+      <section id="overview">
+        <h2>Overview</h2>
+        <p>The upload wizard is a specialization of the <a href="./wizard.html">Wizard system</a>. Step 1 collects the file plus ingestion options (auto-match, hierarchical, visibility). Step 2 is column mapping — detected source headers on the left, target fields on the right. Users return to their starting context on completion via the origin-aware breadcrumb.</p>
+      </section>
+
+      <section id="use-cases">
+        <h2>Use cases</h2>
+        <ul>
+          <li><strong>Catalog upload.</strong> Product records from CSV/XLSX.</li>
+          <li><strong>Price list import.</strong> Price updates bulk-imported from a spreadsheet.</li>
+          <li><strong>Member roster.</strong> CSV of employee emails + roles to seed a workspace.</li>
+          <li><strong>Configuration migration.</strong> JSON export from one workspace imported into another.</li>
+        </ul>
+      </section>
+
+      <section id="anatomy">
+        <h2>Anatomy</h2>
+        <table class="fr-simple-table">
+          <thead><tr><th>Part</th><th>Class</th><th>Role</th></tr></thead>
+          <tbody>
+            <tr><td>File picker</td><td><code>.bn-drop</code> + <code>.bn-file-strip</code></td><td>Two states: empty drop zone before pick, collapsed file strip after.</td></tr>
+            <tr><td>Option rows</td><td><code>.bn-opt</code> / <code>.bn-radio</code></td><td>Title + one-liner help. Checkboxes for independent options, radios for one-of-N.</td></tr>
+            <tr><td>Folder picker</td><td><code>.bn-tree</code></td><td>Tree-view inside a wizard panel for "where do these records go?".</td></tr>
+            <tr><td>Sortable priority list</td><td><code>.bn-priority</code></td><td>Drag-to-reorder list for tie-break ordering.</td></tr>
+            <tr><td>Column mapping</td><td><code>.bn-map</code></td><td>Step 2. Source headers left, target fields right, dropdown per row.</td></tr>
+            <tr><td>Section title</td><td><code>.bn-section-title</code></td><td>Lightweight in-card title that breaks Settings into logical groups.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="best-practices">
+        <h2>Best practices</h2>
+        <ul>
+          <li><strong>Origin-aware.</strong> The crumb in the wizard header reflects where the user launched the upload from — not a generic "Files" label. Cancel + post-submit landing return to the same view.</li>
+          <li><strong>Drop zone, file strip.</strong> Show a drop zone before pick; collapse to a one-line file strip after. Don't keep the drop zone visible after selection.</li>
+          <li><strong>Required fields first in mapping.</strong> Step 2 lists required target fields at the top with red asterisks. Optional fields below.</li>
+          <li><strong>Validation before commit.</strong> Show row-level errors before the user clicks Import. Don't let them submit and then surface errors.</li>
+        </ul>
+      </section>
+
+      <section id="composition">
+        <h2>Composition</h2>
+        <p>Upload wizard composes the <a href="./wizard.html">Wizard system</a> chrome with these specialized parts. The header uses the <a href="./headers.html">WizardCrumbs</a> variant and the origin crumb is set per launch context. See <a href="./breadcrumbs.html">Breadcrumbs</a> for how origin-aware navigation is implemented.</p>
+      </section>
+    </div>
+  </div>
+
+  <div class="example-panel-resize" id="example-panel-resize"><div class="resize-handle-grip"></div></div>
+
+  <aside class="example-panel" id="example-panel" data-options='[
+    {"id":"drop","label":"File picker — empty"},
+    {"id":"strip","label":"File picker — selected"},
+    {"id":"opt","label":"Checkbox option rows"},
+    {"id":"radio","label":"Radio option rows"},
+    {"id":"tree","label":"Folder picker"},
+    {"id":"priority","label":"Sortable priority list"},
+    {"id":"mapping","label":"Column mapping"},
+    {"id":"section","label":"Section title"}
+  ]'>
+
+    <div class="example-item" data-example-id="drop" data-vert>
+      <div style="width:100%;border:2px dashed oklch(24% 0.073 260 / 0.18);border-radius:var(--radius-md);padding:32px;text-align:center;background:var(--surface-soft)">
+        <svg style="width:36px;height:36px;color:var(--text-help);margin-bottom:10px"><use href="#i-upload"/></svg>
+        <div style="font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:4px">Drop a file here</div>
+        <div style="font-size:12px;color:var(--text-help);margin-bottom:12px">CSV · XLSX · JSON up to 50 MB</div>
+        <button class="btn">Browse files</button>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="strip" data-vert>
+      <div style="width:100%;display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius-sm)">
+        <svg style="width:18px;height:18px;color:var(--btn-primary);flex-shrink:0"><use href="#i-doc"/></svg>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">FY26-Q1-budget-pass.xlsx</div>
+          <div style="font-size:11px;color:var(--text-help)">218 KB · 412 rows detected</div>
+        </div>
+        <button style="background:transparent;border:0;color:var(--text-help);cursor:pointer;width:24px;height:24px;display:flex;align-items:center;justify-content:center"><svg style="width:14px;height:14px"><use href="#i-close"/></svg></button>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="opt" data-vert>
+      <div style="display:flex;flex-direction:column;gap:8px;width:100%">
+        <label style="display:flex;gap:10px;padding:12px 14px;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer">
+          <input type="checkbox" checked>
+          <div><div style="font-size:13px;font-weight:600">Auto-match existing records</div><div style="font-size:12px;color:var(--text-help);margin-top:2px">When a row matches an existing record by identifier, update in place instead of creating a duplicate.</div></div>
+        </label>
+        <label style="display:flex;gap:10px;padding:12px 14px;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer">
+          <input type="checkbox">
+          <div><div style="font-size:13px;font-weight:600">Treat the file as hierarchical</div><div style="font-size:12px;color:var(--text-help);margin-top:2px">Rows with the same parent identifier are grouped under a single parent on import.</div></div>
+        </label>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="radio" data-vert>
+      <div style="display:flex;flex-direction:column;gap:8px;width:100%">
+        <label style="display:flex;gap:10px;padding:12px 14px;background:color-mix(in oklch, var(--btn-primary) 5%, transparent);border:1px solid var(--btn-primary);border-radius:var(--radius-sm);cursor:pointer">
+          <input type="radio" name="vis" checked>
+          <div><div style="font-size:13px;font-weight:600;color:var(--btn-primary)">Members only</div><div style="font-size:12px;color:var(--text-secondary);margin-top:2px">Only people invited to this workspace can read or write. Default for most teams.</div></div>
+        </label>
+        <label style="display:flex;gap:10px;padding:12px 14px;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer">
+          <input type="radio" name="vis">
+          <div><div style="font-size:13px;font-weight:600">Anyone in the organization</div><div style="font-size:12px;color:var(--text-help);margin-top:2px">Discoverable across the org. Members can read; explicit invites still control write access.</div></div>
+        </label>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="tree" data-vert>
+      <div style="width:100%;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px;font-size:13px">
+        <div style="padding:6px 10px;cursor:pointer;display:flex;align-items:center;gap:8px"><svg style="width:10px;height:10px"><use href="#i-chevron-down"/></svg><svg style="width:14px;height:14px;color:var(--btn-primary)"><use href="#i-folder"/></svg> All workspaces</div>
+        <div style="padding-left:22px">
+          <div style="padding:6px 10px;cursor:pointer;display:flex;align-items:center;gap:8px;background:color-mix(in oklch, var(--btn-primary) 8%, transparent);border-radius:4px;color:var(--btn-primary);font-weight:600"><svg style="width:14px;height:14px"><use href="#i-check"/></svg><svg style="width:14px;height:14px"><use href="#i-folder"/></svg> Q3 Planning</div>
+          <div style="padding:6px 10px;cursor:pointer;display:flex;align-items:center;gap:8px"><svg style="width:14px;height:14px;color:var(--text-help)"><use href="#i-folder"/></svg> FY26 Budget</div>
+          <div style="padding:6px 10px;cursor:default;display:flex;align-items:center;gap:8px;color:var(--text-help);opacity:0.6"><svg style="width:14px;height:14px"><use href="#i-folder"/></svg> Archived <span style="margin-left:auto;font-size:10px;padding:1px 6px;background:oklch(24% 0.073 260 / 0.06);border-radius:3px">Closed</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="priority" data-vert>
+      <div class="bn-priority" style="width:100%">
+        <div class="bn-priority-row is-top">
+          <span class="bn-priority-num">1</span>
+          <div class="bn-priority-text">
+            <div class="bn-priority-label">Organization policy<span class="bn-priority-tag">Top</span></div>
+            <div class="bn-priority-help">Enforced by IT for everyone.</div>
+          </div>
+          <span class="bn-priority-grip"><svg><use href="#i-grip"/></svg></span>
+        </div>
+        <div class="bn-priority-row">
+          <span class="bn-priority-num">2</span>
+          <div class="bn-priority-text">
+            <div class="bn-priority-label">Workspace override</div>
+            <div class="bn-priority-help">Workspace owners can soften the policy locally.</div>
+          </div>
+          <span class="bn-priority-grip"><svg><use href="#i-grip"/></svg></span>
+        </div>
+        <div class="bn-priority-row">
+          <span class="bn-priority-num">3</span>
+          <div class="bn-priority-text">
+            <div class="bn-priority-label">User preference</div>
+            <div class="bn-priority-help">Individual users can change for their own session only.</div>
+          </div>
+          <span class="bn-priority-grip"><svg><use href="#i-grip"/></svg></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="mapping" data-vert>
+      <table class="sp-list-table" style="width:100%">
+        <thead><tr><th>Source column</th><th>Target field</th><th class="num">Sample</th></tr></thead>
+        <tbody>
+          <tr><td><code>sku</code></td><td><select style="width:100%"><option>SKU *</option><option>Description</option></select></td><td class="num" style="color:var(--text-help);font-size:11px">A-2402-X</td></tr>
+          <tr><td><code>desc</code></td><td><select style="width:100%"><option>Description *</option><option>Notes</option></select></td><td class="num" style="color:var(--text-help);font-size:11px">Hex bolt 1/4"</td></tr>
+          <tr><td><code>qty</code></td><td><select style="width:100%"><option>Quantity *</option></select></td><td class="num" style="color:var(--text-help);font-size:11px">240</td></tr>
+          <tr><td><code>note</code></td><td><select style="width:100%"><option style="color:#888">— Skip column —</option><option>Notes</option></select></td><td class="num" style="color:var(--text-help);font-size:11px">stainless</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="example-item" data-example-id="section" data-vert>
+      <div style="display:flex;align-items:baseline;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);margin-bottom:14px">
+        <span style="font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-help)">Priority order</span>
+        <span style="font-size:11px;color:var(--text-help)">5 sources</span>
+      </div>
+    </div>
+
+    <template class="example-usage">&lt;!-- Step 1: Settings — radio option row --&gt;
+&lt;label class="bn-radio selected"&gt;
+  &lt;input type="radio" name="visibility" checked&gt;
+  &lt;span class="bn-radio-text"&gt;
+    &lt;span class="bn-radio-title"&gt;Members only&lt;/span&gt;
+    &lt;span class="bn-radio-help"&gt;Only invited people can read or write.&lt;/span&gt;
+  &lt;/span&gt;
+&lt;/label&gt;
+
+&lt;!-- Step 2: Mapping — one row per source column --&gt;
+&lt;tr&gt;
+  &lt;td&gt;&lt;code&gt;sku&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;select&gt;&lt;option&gt;SKU *&lt;/option&gt;&lt;/select&gt;&lt;/td&gt;
+  &lt;td class="num"&gt;A-2402-X&lt;/td&gt;
+&lt;/tr&gt;</template>
+  </aside>
+</div>
+<button class="back-to-top" id="back-to-top" aria-label="Back to top"><svg><use href="#i-arrow-up"/></svg></button>
+<script src="./_shared/docs.js?v=20261112"></script>
+</body>
+</html>

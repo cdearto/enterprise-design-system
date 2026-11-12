@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Foundations · Enterprise Design System</title>
+<link rel="stylesheet" href="./_shared/tokens.css?v=20261112">
+<link rel="stylesheet" href="./_shared/docs.css?v=20261112">
+</head>
+<body>
+<div class="canvas with-example-panel" id="component-doc-canvas">
+  <nav class="left-sidebar" id="left-sidebar" data-active="foundations"></nav>
+
+  <div class="content component-doc">
+    <header class="page-header">
+      <div class="page-header-eyebrow">Foundations</div>
+      <h1 class="page-header-title">Foundations</h1>
+      <p class="page-header-description">The raw materials — color, type, space, depth. Every component on this page is built from these tokens; never hard-coded values. Use the token; if a value isn't tokenized yet, add a token to <code>:root</code> before shipping.</p>
+    </header>
+
+    <div class="component-doc-body">
+      <section id="color">
+        <h2>Color</h2>
+        <p>A restrained palette with one primary action color and feature-specific tokens for status and feedback. Every UI value resolves to a token. The default theme is <strong>Light + Blue</strong>; mode (light · dim · dark · hc) and accent (blue · indigo · teal · violet · amber · slate) compose independently via <code>data-mode</code> and <code>data-accent</code>.</p>
+        <table class="fr-simple-table">
+          <thead><tr><th>Family</th><th>Tokens</th><th>Role</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Action &amp; brand</strong></td><td><code>--btn-primary</code>, <code>--btn-primary-hover</code>, <code>--btn-danger</code>, <code>--green</code>, <code>--status-new</code></td><td>The primary blue + feature tints for status pills.</td></tr>
+            <tr><td><strong>Text</strong></td><td><code>--text-primary</code>, <code>--text-secondary</code>, <code>--text-help</code></td><td>Three ink levels — never use opacity to dim text.</td></tr>
+            <tr><td><strong>Surfaces</strong></td><td><code>--body-bg</code>, <code>--card-bg</code>, <code>--nav-bg</code>, <code>--row-hover</code>, <code>--row-selected-bg</code>, <code>--border</code></td><td>Layered backgrounds + the hairline border that carries most of the depth.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="typography">
+        <h2>Typography</h2>
+        <p>Helvetica Neue across the entire app. No monospace in UI, no display fonts. The type scale is fixed: <strong>12 / 14 / 16 / 18 / 22 / 26 / 32</strong>. Any value outside this scale is a bug. Pair every numeric column with <code>font-variant-numeric: tabular-nums</code> for vertical alignment.</p>
+        <table class="fr-simple-table">
+          <thead><tr><th>Role</th><th>Size · weight</th><th>Use for</th></tr></thead>
+          <tbody>
+            <tr><td>Heading 1 — page title</td><td>32 / 700</td><td>The h1 on a page header. One per page.</td></tr>
+            <tr><td>Heading 2 — section</td><td>22 / 700</td><td>Major sections inside a page.</td></tr>
+            <tr><td>Heading 3 — subsection</td><td>18 / 600</td><td>Subsections within an h2.</td></tr>
+            <tr><td>Heading 4 — header titles</td><td>16 / 600</td><td>Entity titles in page headers, card titles.</td></tr>
+            <tr><td>Heading 5 — card titles</td><td>15 / 600</td><td>Titles inside cards and side panels.</td></tr>
+            <tr><td>Body</td><td>14 / 400</td><td>Default for almost everything: labels, list rows, dropdown items.</td></tr>
+            <tr><td>Help / meta</td><td>12 / 400</td><td>Only when the row already carries a 14 px primary label.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="spacing">
+        <h2>Spacing</h2>
+        <p>A 4-pixel base scale. Every padding, margin, and gap in the system resolves to a step on this scale — no in-between values. Pick the smallest step that gives the surface room to breathe; densification is a feature, not a fault.</p>
+        <table class="fr-simple-table">
+          <thead><tr><th>Token</th><th>Value</th><th>Use for</th></tr></thead>
+          <tbody>
+            <tr><td><code>space.1</code></td><td>4 px</td><td>Inline icon gap, segmented-control internal gutter.</td></tr>
+            <tr><td><code>space.2</code></td><td>8 px</td><td>Field row gap, button label gap, dropdown item leading icon.</td></tr>
+            <tr><td><code>space.3</code></td><td>12 px</td><td>Compact card padding, dense table row vertical padding.</td></tr>
+            <tr><td><code>space.4</code></td><td>16 px</td><td>Default — most card padding, form field stacks, toolbar gaps.</td></tr>
+            <tr><td><code>space.5</code></td><td>20 px</td><td>Comfortable card padding, side panel padding.</td></tr>
+            <tr><td><code>space.6</code></td><td>24 px</td><td>Section gaps within a page, content-well horizontal padding.</td></tr>
+            <tr><td><code>space.8</code></td><td>32 px</td><td>Page padding, between distinct page regions.</td></tr>
+            <tr><td><code>space.12</code></td><td>48 px</td><td>Between major page sections (hero → body, section → section).</td></tr>
+            <tr><td><code>space.16</code></td><td>64 px</td><td>Top-of-page hero margin, modal-to-edge breathing room.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="layout">
+        <h2>Layout</h2>
+        <p>A persistent two-shell layout — fixed side navigation, frosted top bar, scrolling content well between them. Every app surface composes inside this shell; no full-bleed pages. Side nav is <code>position:fixed</code> (60 px collapsed or 165 px expanded); top bar is <code>position:fixed</code> (48 px tall, anchored from sidebar's right edge to viewport right).</p>
+        <table class="fr-simple-table">
+          <thead><tr><th>Breakpoint</th><th>Range</th><th>Behavior</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Wide</strong></td><td>≥ 1440 px</td><td>Side nav expanded, multi-column dashboards, full-width tables.</td></tr>
+            <tr><td><strong>Standard</strong></td><td>1024 – 1440 px</td><td>Side nav expanded, single-column body, standard density.</td></tr>
+            <tr><td><strong>Compact</strong></td><td>768 – 1024 px</td><td>Side nav auto-collapses to icon-only; content keeps standard density.</td></tr>
+            <tr><td><strong>Below</strong></td><td>&lt; 768 px</td><td>Out of scope — not a supported breakpoint for the work surface.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="elevation">
+        <h2>Elevation &amp; radius</h2>
+        <p>Three shadow levels. Every shadow uses the same color (<code>rgba(9,30,66,...)</code>) at different intensities — never CSS-default black shadows. Hairlines (1 px borders at low opacity) carry most of the depth; shadows just float surfaces above the page. Three radius sizes: <strong>sm</strong> 6 px (controls, inputs, list rows), <strong>md</strong> 8 px (cards, dropdowns, modals), <strong>lg</strong> 12 px (hero surfaces). Pills use 999 px for full half-circle ends.</p>
+      </section>
+
+      <section id="motion">
+        <h2>Motion</h2>
+        <p>Motion is functional, not ornamental. It signals "something happened" or "this is what you just clicked" — never decorates. <strong>One curve</strong> for everything: <code>cubic-bezier(0.4, 0, 0.2, 1)</code>. <strong>Four durations:</strong> 120 ms (hover affordances), 180 ms (toggles + caret rotation), 250 ms (panel slide-in), 300 ms (sidebar collapse).</p>
+      </section>
+
+      <section id="iconography">
+        <h2>Iconography</h2>
+        <p>A unified stroke-based icon set rendered as inline SVG via a single document-level sprite. Icons inherit color through <code>currentColor</code> — never tint them with explicit fill or stroke values in markup. <strong>24×24 viewBox</strong> regardless of rendered size. <strong>1.5–2 px stroke</strong> with round caps + joins. Four sizes: <code>.sm</code> 12 px, default 16 px, <code>.lg</code> 18 px, <code>.xl</code> 24 px.</p>
+      </section>
+    </div>
+  </div>
+
+  <div class="example-panel-resize" id="example-panel-resize"><div class="resize-handle-grip"></div></div>
+
+  <aside class="example-panel" id="example-panel" data-options='[
+    {"id":"palette-action","label":"Color — Action &amp; brand"},
+    {"id":"palette-text","label":"Color — Text"},
+    {"id":"palette-surface","label":"Color — Surfaces"},
+    {"id":"type-scale","label":"Typography — type scale"},
+    {"id":"spacing-scale","label":"Spacing — scale"},
+    {"id":"shadows","label":"Elevation — shadows"},
+    {"id":"radius","label":"Corner radius"},
+    {"id":"motion-durations","label":"Motion — durations"},
+    {"id":"icon-sizes","label":"Iconography — sizes"}
+  ]'>
+
+    <div class="example-item" data-example-id="palette-action" data-vert>
+      <div class="ds-color-grid" style="width:100%">
+        <div class="ds-color"><div class="ds-color-swatch" style="background:#0052CC"></div><div class="ds-color-meta"><div class="ds-color-name">Primary</div><div class="ds-color-token">--btn-primary · #0052CC</div></div></div>
+        <div class="ds-color"><div class="ds-color-swatch" style="background:#0747A6"></div><div class="ds-color-meta"><div class="ds-color-name">Primary hover</div><div class="ds-color-token">--btn-primary-hover · #0747A6</div></div></div>
+        <div class="ds-color"><div class="ds-color-swatch" style="background:#BD3F3D"></div><div class="ds-color-meta"><div class="ds-color-name">Danger</div><div class="ds-color-token">--btn-danger · #BD3F3D</div></div></div>
+        <div class="ds-color"><div class="ds-color-swatch" style="background:#36B37E"></div><div class="ds-color-meta"><div class="ds-color-name">Green</div><div class="ds-color-token">--green · #36B37E</div></div></div>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="palette-text" data-vert>
+      <div class="ds-color-grid" style="width:100%">
+        <div class="ds-color"><div class="ds-color-swatch" style="background:#091E42"></div><div class="ds-color-meta"><div class="ds-color-name">Primary</div><div class="ds-color-token">--text-primary · #091E42</div></div></div>
+        <div class="ds-color"><div class="ds-color-swatch" style="background:#5E6C84"></div><div class="ds-color-meta"><div class="ds-color-name">Secondary</div><div class="ds-color-token">--text-secondary · #5E6C84</div></div></div>
+        <div class="ds-color"><div class="ds-color-swatch" style="background:#7B838F"></div><div class="ds-color-meta"><div class="ds-color-name">Help / muted</div><div class="ds-color-token">--text-help · #7B838F</div></div></div>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="palette-surface" data-vert>
+      <div class="ds-color-grid" style="width:100%">
+        <div class="ds-color"><div class="ds-color-swatch" style="background:#FFFFFF;border-bottom:1px solid rgba(9,30,66,0.06)"></div><div class="ds-color-meta"><div class="ds-color-name">Body</div><div class="ds-color-token">--body-bg · #FFFFFF</div></div></div>
+        <div class="ds-color"><div class="ds-color-swatch" style="background:#F0F1F4"></div><div class="ds-color-meta"><div class="ds-color-name">Nav</div><div class="ds-color-token">--nav-bg · #F0F1F4</div></div></div>
+        <div class="ds-color"><div class="ds-color-swatch" style="background:#F4F5F7"></div><div class="ds-color-meta"><div class="ds-color-name">Row hover</div><div class="ds-color-token">--row-hover · #F4F5F7</div></div></div>
+        <div class="ds-color"><div class="ds-color-swatch" style="background:#EDF6FF"></div><div class="ds-color-meta"><div class="ds-color-name">Row selected</div><div class="ds-color-token">--row-selected-bg · #EDF6FF</div></div></div>
+        <div class="ds-color"><div class="ds-color-swatch" style="background:#D2D8DD"></div><div class="ds-color-meta"><div class="ds-color-name">Border</div><div class="ds-color-token">--border · #D2D8DD</div></div></div>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="type-scale" data-vert>
+      <div style="display:flex;flex-direction:column;gap:12px;width:100%">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;padding-bottom:8px;border-bottom:1px solid var(--border)"><span style="font-size:32px;font-weight:700;letter-spacing:-0.02em">Heading 1</span><span style="font-size:11px;color:var(--text-help);font-family:'SF Mono',monospace">32 / 700</span></div>
+        <div style="display:flex;align-items:baseline;justify-content:space-between;padding-bottom:8px;border-bottom:1px solid var(--border)"><span style="font-size:22px;font-weight:700">Heading 2</span><span style="font-size:11px;color:var(--text-help);font-family:'SF Mono',monospace">22 / 700</span></div>
+        <div style="display:flex;align-items:baseline;justify-content:space-between;padding-bottom:8px;border-bottom:1px solid var(--border)"><span style="font-size:18px;font-weight:600">Heading 3</span><span style="font-size:11px;color:var(--text-help);font-family:'SF Mono',monospace">18 / 600</span></div>
+        <div style="display:flex;align-items:baseline;justify-content:space-between;padding-bottom:8px;border-bottom:1px solid var(--border)"><span style="font-size:14px">Body — default everywhere</span><span style="font-size:11px;color:var(--text-help);font-family:'SF Mono',monospace">14 / 400</span></div>
+        <div style="display:flex;align-items:baseline;justify-content:space-between"><span style="font-size:12px;color:var(--text-help)">Help / meta</span><span style="font-size:11px;color:var(--text-help);font-family:'SF Mono',monospace">12 / 400</span></div>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="spacing-scale" data-vert>
+      <div style="display:flex;flex-direction:column;gap:6px;width:100%;font-family:'SF Mono',monospace;font-size:12px">
+        <div style="display:flex;align-items:center;gap:14px;padding:6px 0;border-bottom:1px solid var(--border)"><span style="width:64px;color:var(--text-help)">space.1</span><span style="width:48px;font-weight:700">4 px</span><span style="width:4px;height:8px;background:var(--btn-primary)"></span></div>
+        <div style="display:flex;align-items:center;gap:14px;padding:6px 0;border-bottom:1px solid var(--border)"><span style="width:64px;color:var(--text-help)">space.2</span><span style="width:48px;font-weight:700">8 px</span><span style="width:8px;height:8px;background:var(--btn-primary)"></span></div>
+        <div style="display:flex;align-items:center;gap:14px;padding:6px 0;border-bottom:1px solid var(--border)"><span style="width:64px;color:var(--text-help)">space.4</span><span style="width:48px;font-weight:700">16 px</span><span style="width:16px;height:8px;background:var(--btn-primary)"></span></div>
+        <div style="display:flex;align-items:center;gap:14px;padding:6px 0;border-bottom:1px solid var(--border)"><span style="width:64px;color:var(--text-help)">space.6</span><span style="width:48px;font-weight:700">24 px</span><span style="width:24px;height:8px;background:var(--btn-primary)"></span></div>
+        <div style="display:flex;align-items:center;gap:14px;padding:6px 0;border-bottom:1px solid var(--border)"><span style="width:64px;color:var(--text-help)">space.8</span><span style="width:48px;font-weight:700">32 px</span><span style="width:32px;height:8px;background:var(--btn-primary)"></span></div>
+        <div style="display:flex;align-items:center;gap:14px;padding:6px 0"><span style="width:64px;color:var(--text-help)">space.12</span><span style="width:48px;font-weight:700">48 px</span><span style="width:48px;height:8px;background:var(--btn-primary)"></span></div>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="shadows" data-vert>
+      <div style="display:flex;flex-direction:column;gap:18px;width:100%">
+        <div style="display:flex;align-items:center;gap:18px"><div style="width:80px;height:80px;background:var(--card-bg);border-radius:8px;box-shadow:0 1px 3px rgba(9,30,66,0.06),0 2px 8px rgba(9,30,66,0.04)"></div><div><div style="font-size:13px;font-weight:600">--shadow-sm</div><div style="font-size:11px;color:var(--text-help)">cards, list rows</div></div></div>
+        <div style="display:flex;align-items:center;gap:18px"><div style="width:80px;height:80px;background:var(--card-bg);border-radius:8px;box-shadow:0 2px 6px rgba(9,30,66,0.06),0 8px 24px rgba(9,30,66,0.08)"></div><div><div style="font-size:13px;font-weight:600">--shadow-md</div><div style="font-size:11px;color:var(--text-help)">dropdowns, modals, panels</div></div></div>
+        <div style="display:flex;align-items:center;gap:18px"><div style="width:80px;height:80px;background:var(--card-bg);border-radius:8px;box-shadow:0 4px 12px rgba(9,30,66,0.08),0 16px 40px rgba(9,30,66,0.12)"></div><div><div style="font-size:13px;font-weight:600">--shadow-lg</div><div style="font-size:11px;color:var(--text-help)">slide-in side panels, top-level modals</div></div></div>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="radius" data-vert>
+      <div style="display:flex;flex-direction:column;gap:14px;width:100%">
+        <div style="background:color-mix(in oklch, var(--btn-primary) 10%, transparent);color:var(--btn-primary);font-size:13px;font-weight:600;padding:18px 22px;border-radius:6px;text-align:center">--radius-sm · 6 px (controls, inputs, list rows)</div>
+        <div style="background:color-mix(in oklch, var(--btn-primary) 10%, transparent);color:var(--btn-primary);font-size:13px;font-weight:600;padding:18px 22px;border-radius:8px;text-align:center">--radius-md · 8 px (cards, dropdowns, modals)</div>
+        <div style="background:color-mix(in oklch, var(--btn-primary) 10%, transparent);color:var(--btn-primary);font-size:13px;font-weight:600;padding:18px 22px;border-radius:12px;text-align:center">--radius-lg · 12 px (hero surfaces, panels)</div>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="motion-durations" data-vert>
+      <table class="fr-simple-table" style="width:100%">
+        <thead><tr><th>Name</th><th class="num">Duration</th><th>Use for</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Instant</strong></td><td class="num">120 ms</td><td>Hover affordances, button press</td></tr>
+          <tr><td><strong>Quick</strong></td><td class="num">180 ms</td><td>Toggles, caret rotation, expand/collapse</td></tr>
+          <tr><td><strong>Standard</strong></td><td class="num">250 ms</td><td>Side panel slide-in, modal fade</td></tr>
+          <tr><td><strong>Considered</strong></td><td class="num">300 ms</td><td>Sidebar collapse, layout offset</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="example-item" data-example-id="icon-sizes" data-vert>
+      <div style="display:flex;align-items:flex-end;gap:24px;width:100%">
+        <div style="text-align:center"><svg style="width:12px;height:12px"><use href="#i-search"/></svg><div style="font-size:11px;color:var(--text-help);margin-top:6px">.sm · 12 px</div></div>
+        <div style="text-align:center"><svg style="width:16px;height:16px"><use href="#i-search"/></svg><div style="font-size:11px;color:var(--text-help);margin-top:6px">default · 16 px</div></div>
+        <div style="text-align:center"><svg style="width:18px;height:18px"><use href="#i-search"/></svg><div style="font-size:11px;color:var(--text-help);margin-top:6px">.lg · 18 px</div></div>
+        <div style="text-align:center"><svg style="width:24px;height:24px"><use href="#i-search"/></svg><div style="font-size:11px;color:var(--text-help);margin-top:6px">.xl · 24 px</div></div>
+      </div>
+    </div>
+
+    <template class="example-usage">/* Use tokens, never raw values */
+.btn { background: var(--btn-primary); }
+.card { padding: 20px; box-shadow: var(--shadow-sm); border-radius: var(--radius-md); }
+.help { font-size: 12px; color: var(--text-help); }
+.row { padding: 8px 16px; transition: background var(--motion-instant); }
+.row:hover { background: var(--row-hover); }</template>
+  </aside>
+</div>
+<button class="back-to-top" id="back-to-top" aria-label="Back to top"><svg><use href="#i-arrow-up"/></svg></button>
+<script src="./_shared/docs.js?v=20261112"></script>
+</body>
+</html>

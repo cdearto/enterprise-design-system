@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wizard system · Enterprise Design System</title>
+<link rel="stylesheet" href="./_shared/tokens.css?v=20261112">
+<link rel="stylesheet" href="./_shared/docs.css?v=20261112">
+</head>
+<body>
+<div class="canvas with-example-panel" id="component-doc-canvas">
+  <nav class="left-sidebar" id="left-sidebar" data-active="wizard"></nav>
+
+  <div class="content component-doc">
+    <header class="page-header">
+      <div class="page-header-eyebrow">Compositions</div>
+      <h1 class="page-header-title">Wizard system</h1>
+      <p class="page-header-description">Every multi-step flow in the app uses the same canonical chrome — creation wizards, import flows, configuration setup. Header (back arrow + breadcrumb + step pills) → body (2-column: main form left, panel triggers right) → side panels → sticky footer. Don't invent feature-specific wizard layouts.</p>
+    </header>
+
+    <div class="component-doc-body">
+      <section id="overview">
+        <h2>Overview</h2>
+        <p>The wizard chrome is one composition; what changes per flow is the form fields inside the left card and the trigger summaries on the right. Always 2 columns — never 3. Ancillary settings go behind <code>.wiz-panel-trigger</code> chips on the right that open <code>.wiz-side-panel</code> drawers.</p>
+      </section>
+
+      <section id="use-cases">
+        <h2>Use cases</h2>
+        <ul>
+          <li><strong>Workspace / project creation.</strong> 2–3 steps — identity → members → review.</li>
+          <li><strong>Import flows.</strong> Source file picker → column mapping → confirm. See <a href="./upload.html">Upload wizard</a>.</li>
+          <li><strong>Configuration setup.</strong> First-run wizards for connecting services, setting permissions, etc.</li>
+        </ul>
+      </section>
+
+      <section id="anatomy">
+        <h2>Anatomy</h2>
+        <table class="fr-simple-table">
+          <thead><tr><th>Part</th><th>Class</th><th>Role</th></tr></thead>
+          <tbody>
+            <tr><td>Step pills</td><td><code>.wiz-step-pill</code></td><td>Top-of-page progress. One pill per step, active and completed states distinct.</td></tr>
+            <tr><td>Wizard card (left)</td><td><code>.wizard-card</code></td><td>Primary form — keep to ~6 fields. More than that → move behind a panel trigger.</td></tr>
+            <tr><td>Panel triggers (right)</td><td><code>.wiz-panel-trigger</code></td><td>Stacked summary chips for ancillary settings. Show current values; refresh after Apply.</td></tr>
+            <tr><td>Side panel</td><td><code>.wiz-side-panel</code></td><td>Slide-in drawer with full settings for one trigger. Sticky Cancel/Apply footer.</td></tr>
+            <tr><td>Sticky footer</td><td><code>.wiz-sticky-footer</code></td><td>Page-level Cancel · Back · primary action. Always visible regardless of scroll.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="best-practices">
+        <h2>Best practices</h2>
+        <ul>
+          <li><strong>2-column layout, not 3.</strong> Left = one <code>.wizard-card</code> with primary fields. Right = stacked <code>.wiz-panel-trigger</code> buttons. Don't render ancillary settings inline as a 3rd column.</li>
+          <li><strong>Live trigger summaries.</strong> Each trigger shows a few key values from its panel. Summaries must re-render after every Apply.</li>
+          <li><strong>One sticky footer.</strong> Position fixed, left offset matches sidebar + QA panel width. Cancel on the left, primary on the right.</li>
+          <li><strong>Apply re-renders triggers.</strong> Closing a side panel with Cancel just closes — no dirty tracking. Apply closes AND updates the matching trigger's chip values.</li>
+        </ul>
+      </section>
+
+      <section id="composition">
+        <h2>Composition</h2>
+        <p>The wizard composes from: <a href="./headers.html">Page header</a> (WizardCrumbs variant), <a href="./forms.html">Form elements</a> (inside the card), <a href="./buttons.html">Buttons</a> (sticky footer + side panel actions), <a href="./breadcrumbs.html">Breadcrumbs</a> (origin-aware crumb in the header).</p>
+      </section>
+    </div>
+  </div>
+
+  <div class="example-panel-resize" id="example-panel-resize"><div class="resize-handle-grip"></div></div>
+
+  <aside class="example-panel" id="example-panel" data-options='[
+    {"id":"step-pills","label":"Step pills"},
+    {"id":"card","label":"Wizard card"},
+    {"id":"trigger","label":"Panel trigger"},
+    {"id":"side-panel","label":"Side panel"},
+    {"id":"footer","label":"Sticky footer"},
+    {"id":"full","label":"Full layout"}
+  ]'>
+
+    <div class="example-item" data-example-id="step-pills" data-vert>
+      <div style="display:flex;align-items:center;gap:0;padding:14px;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius-sm)">
+        <button class="wiz-step-pill completed"><span class="wiz-step-num"><svg width="10" height="10"><use href="#i-check"/></svg></span> Settings</button>
+        <svg class="wiz-step-chevron"><use href="#i-chevron-right"/></svg>
+        <button class="wiz-step-pill active"><span class="wiz-step-num">2</span> Members</button>
+        <svg class="wiz-step-chevron"><use href="#i-chevron-right"/></svg>
+        <button class="wiz-step-pill"><span class="wiz-step-num">3</span> Review</button>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="card" data-vert>
+      <div class="wizard-card" style="max-width:420px;width:100%">
+        <div class="wizard-card-header">
+          <h3><span class="wiz-section-icon blue"><svg><use href="#i-doc"/></svg></span> Identity</h3>
+        </div>
+        <div class="wizard-card-body">
+          <div class="wizard-field"><label>Workspace name <span class="req">*</span></label><input type="text" placeholder="Enter a name"></div>
+          <div class="wizard-field"><label>Description</label><div class="field-help">Brief scope notes — visible to members only.</div><textarea rows="2"></textarea></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="trigger" data-vert>
+      <div class="wiz-panel-triggers" style="max-width:420px;width:100%">
+        <button class="wiz-panel-trigger">
+          <span class="wiz-section-icon amber"><svg><use href="#i-shield"/></svg></span>
+          <div class="wiz-trigger-text">
+            <span class="wiz-trigger-label">Permissions</span>
+            <div class="wiz-trigger-details">
+              <div class="wiz-trigger-detail"><span class="wiz-td-label">Role</span><span class="wiz-td-val">Member</span></div>
+              <div class="wiz-trigger-detail"><span class="wiz-td-label">Sharing</span><span class="wiz-td-val">Org default</span></div>
+            </div>
+          </div>
+          <svg class="icon-svg" style="width:14px;height:14px;color:var(--text-help)"><use href="#i-chevron-right"/></svg>
+        </button>
+        <button class="wiz-panel-trigger">
+          <span class="wiz-section-icon green"><svg><use href="#i-folder"/></svg></span>
+          <div class="wiz-trigger-text">
+            <span class="wiz-trigger-label">Location &amp; Access</span>
+            <div class="wiz-trigger-details">
+              <div class="wiz-trigger-detail"><span class="wiz-td-label">Folder</span><span class="wiz-td-val">All workspaces</span></div>
+              <div class="wiz-trigger-detail"><span class="wiz-td-label">Access</span><span class="wiz-td-val" style="color:var(--text-help)">No groups</span></div>
+            </div>
+          </div>
+          <svg class="icon-svg" style="width:14px;height:14px;color:var(--text-help)"><use href="#i-chevron-right"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="side-panel" data-vert>
+      <div style="width:380px;background:var(--card-bg);border:1px solid var(--border);border-radius:8px;box-shadow:var(--shadow-lg);overflow:hidden;display:flex;flex-direction:column;height:420px">
+        <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--border)">
+          <span class="wiz-section-icon amber"><svg><use href="#i-shield"/></svg></span>
+          <h3 style="margin:0;font-size:15px;flex:1">Permissions</h3>
+          <button style="background:transparent;border:0;color:var(--text-help);cursor:pointer;font-size:18px;line-height:1">&times;</button>
+        </div>
+        <div style="padding:18px;flex:1;overflow:auto">
+          <label style="display:flex;gap:10px;cursor:pointer;margin-bottom:8px"><input type="checkbox"> <span><strong style="display:block;margin-bottom:2px">Require approval for changes</strong><span style="font-size:12px;color:var(--text-help)">Members draft; owners approve.</span></span></label>
+          <label style="display:block;margin-top:14px"><span style="display:block;font-size:12px;font-weight:600;margin-bottom:6px">Default role</span><select style="width:100%"><option>Member — read &amp; comment</option><option>Editor</option><option>Viewer</option></select></label>
+        </div>
+        <div style="padding:12px 18px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px"><button class="btn sm">Cancel</button><button class="btn primary sm">Apply</button></div>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="footer" data-vert>
+      <div style="display:flex;align-items:center;gap:8px;padding:14px 24px;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius-sm);width:100%">
+        <button class="btn link">Cancel</button>
+        <div style="flex:1"></div>
+        <button class="btn link"><svg class="icon-svg sm"><use href="#i-arrow-left"/></svg> Back</button>
+        <button class="btn primary">Next: Members <svg class="icon-svg sm" style="transform:rotate(180deg)"><use href="#i-arrow-left"/></svg></button>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="full" data-vert>
+      <div style="width:100%;display:grid;grid-template-columns:1fr 1fr;gap:18px">
+        <div class="wizard-card">
+          <div class="wizard-card-header"><h3><span class="wiz-section-icon blue"><svg><use href="#i-doc"/></svg></span> Identity</h3></div>
+          <div class="wizard-card-body">
+            <div class="wizard-field"><label>Workspace name <span class="req">*</span></label><input type="text" placeholder="Required"></div>
+            <div class="wizard-field"><label>Template</label><select><option>Standard</option></select></div>
+          </div>
+        </div>
+        <div class="wiz-panel-triggers">
+          <button class="wiz-panel-trigger">
+            <span class="wiz-section-icon amber"><svg><use href="#i-shield"/></svg></span>
+            <div class="wiz-trigger-text"><span class="wiz-trigger-label">Permissions</span><div class="wiz-trigger-details"><div class="wiz-trigger-detail"><span class="wiz-td-label">Role</span><span class="wiz-td-val">Member</span></div></div></div>
+            <svg class="icon-svg" style="width:14px;height:14px;color:var(--text-help)"><use href="#i-chevron-right"/></svg>
+          </button>
+          <button class="wiz-panel-trigger">
+            <span class="wiz-section-icon green"><svg><use href="#i-folder"/></svg></span>
+            <div class="wiz-trigger-text"><span class="wiz-trigger-label">Location</span><div class="wiz-trigger-details"><div class="wiz-trigger-detail"><span class="wiz-td-label">Folder</span><span class="wiz-td-val">All workspaces</span></div></div></div>
+            <svg class="icon-svg" style="width:14px;height:14px;color:var(--text-help)"><use href="#i-chevron-right"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <template class="example-usage">&lt;div class="wizard-cols"&gt;
+  &lt;div class="wizard-card"&gt;
+    &lt;div class="wizard-card-header"&gt;
+      &lt;h3&gt;&lt;span class="wiz-section-icon blue"&gt;
+        &lt;svg&gt;&lt;use href="#i-doc"/&gt;&lt;/svg&gt;
+      &lt;/span&gt; Identity&lt;/h3&gt;
+    &lt;/div&gt;
+    &lt;div class="wizard-card-body"&gt;...fields...&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="wiz-panel-triggers"&gt;
+    &lt;button class="wiz-panel-trigger"&gt;...&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</template>
+  </aside>
+</div>
+<button class="back-to-top" id="back-to-top" aria-label="Back to top"><svg><use href="#i-arrow-up"/></svg></button>
+<script src="./_shared/docs.js?v=20261112"></script>
+</body>
+</html>

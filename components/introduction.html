@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Introduction · Enterprise Design System</title>
+<link rel="stylesheet" href="./_shared/tokens.css?v=20261112">
+<link rel="stylesheet" href="./_shared/docs.css?v=20261112">
+<style>
+  /* Principle grid + step list — used only on the intro */
+  .intro-principle-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin: 20px 0 8px; }
+  .intro-principle { padding: 18px 20px; background: var(--card-bg); border: 1px solid oklch(24% 0.073 260 / 0.08); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); }
+  .intro-principle .num { display:inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: var(--btn-primary); margin-bottom: 8px; }
+  .intro-principle h3 { margin: 0 0 6px; font-size: 15px; font-weight: 600; color: var(--text-primary); }
+  .intro-principle p { margin: 0; font-size: 13px; line-height: 1.55; color: var(--text-secondary); max-width: none; }
+</style>
+</head>
+<body>
+<div class="canvas with-left-nav" id="component-doc-canvas">
+  <nav class="left-sidebar" id="left-sidebar" data-active="introduction"></nav>
+
+  <div class="content component-doc">
+    <header class="page-header">
+      <div class="page-header-eyebrow">Start here</div>
+      <h1 class="page-header-title">Introduction</h1>
+      <p class="page-header-description">An enterprise design system for data-dense software. Optimized for the workflows real teams run — list views with thousands of rows, wizards with branching configuration, dashboards that surface signal not noise, and the long tail of detail pages, drawers, and toolbars that make a real product feel coherent.</p>
+    </header>
+
+    <div class="component-doc-body">
+      <section id="whats-in">
+        <h2>What's in the system</h2>
+        <ul>
+          <li><strong>Tokens.</strong> CSS variables for color, typography, elevation, radius, motion, and density. Use the token; never hard-code the value.</li>
+          <li><strong>Primitives.</strong> Buttons, badges, form elements, cards, dropdowns, toasts, tables — the small components that compose everything else.</li>
+          <li><strong>Patterns.</strong> Larger compositions that recur across the app (detail page header, wizard layout, origin-aware navigation, inbox two-pane). Use these intact; don't reinvent.</li>
+          <li><strong>Behaviors.</strong> Universal interaction states (hover, active, focus, selected, disabled, loading, error) plus accessibility, motion, and keyboard nav rules that apply to every component.</li>
+        </ul>
+      </section>
+
+      <section id="how-to-read">
+        <h2>How to read these docs</h2>
+        <p>Every component page follows the same shape: a description, an <strong>Overview</strong> section, an <strong>Use cases</strong> list, a <strong>Properties</strong> table, a <strong>Types &amp; styles</strong> reference, and <strong>Best practices</strong>. The live examples sit in the right panel — pick a variant from the dropdown, see the rendered preview, and copy the Usage or Code snippet.</p>
+        <p>Pattern pages (Wizard system, Inbox, Upload wizard) describe compositions of primitives, not new components. If you find yourself reaching for one of these and modifying its chrome, stop and revisit Primitives instead — there's almost always a primitive that already does what you need.</p>
+      </section>
+
+      <section id="not-for">
+        <h2>What this system isn't for</h2>
+        <ul>
+          <li><strong>Marketing sites.</strong> The chrome here optimizes for density and decision-making, not delight or storytelling. Use a different system for the public-facing surface.</li>
+          <li><strong>Bespoke one-off screens.</strong> If a design needs to break the system, that's a signal to look for a missing primitive — not to ship a one-off.</li>
+          <li><strong>Mobile-first products.</strong> The grid, density, and information architecture assume a 1024 px+ work surface. Mobile breakpoints exist but the system is desktop-optimal.</li>
+        </ul>
+      </section>
+
+      <section id="principles">
+        <h2>Design principles</h2>
+        <p>Six principles that decide every close call. If a component, layout, or copy choice conflicts with one of these, the principle wins.</p>
+        <div class="intro-principle-grid">
+          <div class="intro-principle"><span class="num">01</span><h3>Quiet by default</h3><p>Color, motion, and elevation are signals — not decoration. Most cells, rows, and panels should be calm. Reserve the loud treatment for the moments that need a user's attention.</p></div>
+          <div class="intro-principle"><span class="num">02</span><h3>Tabular truth</h3><p>Numbers stack vertically. Always tabular-nums, always right-aligned, always the same column width regardless of value. A misaligned digit reads as a typo.</p></div>
+          <div class="intro-principle"><span class="num">03</span><h3>One pattern, many surfaces</h3><p>The bulk-action bar in the inbox is the same component that ships in the library, the parts list, and the conditioning workspace. Don't fork the chrome per surface — fork the data.</p></div>
+          <div class="intro-principle"><span class="num">04</span><h3>Composition over invention</h3><p>Build new screens by composing existing primitives and tokens. If you can't, the gap is the design system's — file a new primitive proposal before shipping a one-off.</p></div>
+          <div class="intro-principle"><span class="num">05</span><h3>State carries meaning</h3><p>Hover, active, focus, selected, disabled — these aren't decoration. They communicate "this is interactive", "this is what you'll click", "this is what's currently chosen". Use them consistently; users learn them once.</p></div>
+          <div class="intro-principle"><span class="num">06</span><h3>Density without friction</h3><p>Enterprise software earns trust through information density — tight rows, compact toolbars, full-screen tables. But 32 px is the floor for any interactive target; "compact" never means "hard to hit."</p></div>
+        </div>
+      </section>
+
+      <section id="getting-started">
+        <h2>Getting started</h2>
+        <h3>Install the tokens</h3>
+        <p>Drop the <code>:root</code> variable block into your global stylesheet. Every component below assumes these tokens exist. Override per-theme by re-declaring inside a scoped class (e.g. <code>.theme-dark :root</code>).</p>
+
+        <h3>One stylesheet, one cascade</h3>
+        <p>The system ships as a single CSS file scoped only by class selectors. Don't reach for CSS-in-JS, scoped modules, or per-component stylesheets — they fight the cascade the system depends on. State classes (<code>.open</code>, <code>.selected</code>, <code>.checked</code>, <code>.dragging</code>) only behave correctly when the base styles are loaded globally.</p>
+
+        <h3>Conventions you'll see everywhere</h3>
+        <ul>
+          <li><strong>Class-first.</strong> Components are styled by class, not by attribute or descendant selector. <code>.btn.primary</code>, not <code>button[data-variant=primary]</code>.</li>
+          <li><strong>BEM-adjacent state classes.</strong> A component's open/active/selected/checked state is a class on the same element, not a parent. <code>.ib-sel.open</code> means "the select-all is in its open state."</li>
+          <li><strong>Inline icons via SVG sprite.</strong> Symbols defined once in <code>&lt;svg&gt;...&lt;/svg&gt;</code> at the top of the document, referenced via <code>&lt;use href="#i-name"/&gt;</code>. Icons inherit color via <code>currentColor</code>.</li>
+          <li><strong>One controller for layout offsets.</strong> Sidebar width, panel widths, and assistant-panel widths all flow through a single <code>updateLayout()</code> function that writes inline margins on the content well. Components don't measure each other.</li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</div>
+<button class="back-to-top" id="back-to-top" aria-label="Back to top"><svg><use href="#i-arrow-up"/></svg></button>
+<script src="./_shared/docs.js?v=20261112"></script>
+</body>
+</html>

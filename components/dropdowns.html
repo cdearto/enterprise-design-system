@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dropdown · Enterprise Design System</title>
+<link rel="stylesheet" href="./_shared/tokens.css?v=20261112">
+<link rel="stylesheet" href="./_shared/docs.css?v=20261112">
+</head>
+<body>
+<div class="canvas with-example-panel" id="component-doc-canvas">
+  <nav class="left-sidebar" id="left-sidebar" data-active="dropdowns"></nav>
+
+  <div class="content component-doc">
+    <header class="page-header">
+      <div class="page-header-eyebrow">Feedback</div>
+      <h1 class="page-header-title">Dropdown</h1>
+      <p class="page-header-description">A floating menu of actions or options anchored to a trigger element. Use for action menus (kebab), one-of-N selects with search, status transitions, and notification previews. White surface, soft-2 shadow, 8 px radius, 4 px internal padding.</p>
+    </header>
+
+    <div class="component-doc-body">
+      <section id="overview">
+        <h2>Overview</h2>
+        <p>One chrome (<code>.dropdown</code>) for all menu surfaces — kebab menus, status pickers, sort menus, notification previews. The chrome stays constant; only the contents change. Width adapts to content but caps at 320 px for menus and 420 px for richer previews.</p>
+      </section>
+
+      <section id="use-cases">
+        <h2>Use cases</h2>
+        <ul>
+          <li><strong>Kebab action menus.</strong> Destructive + rare actions on a row or card (Archive, Duplicate, Delete).</li>
+          <li><strong>Status transitions.</strong> Click a status pill to open a dropdown listing the valid next states.</li>
+          <li><strong>Sort menus.</strong> Click a sort button to pick from "Newest", "Alphabetical", "Recently updated".</li>
+          <li><strong>Notification preview.</strong> Click the bell to see the most recent 5 inbox cards before deciding to open the full inbox.</li>
+        </ul>
+      </section>
+
+      <section id="properties">
+        <h2>Properties</h2>
+        <table class="fr-simple-table">
+          <thead><tr><th>Element</th><th>Class</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Surface</td><td><code>.dropdown</code></td><td>White background, soft-2 shadow, 8 px radius, hairline border, 4 px internal padding.</td></tr>
+            <tr><td>Menu item</td><td><code>.dropdown-item</code></td><td>32 px height, full-width clickable row. Hover background = <code>--row-hover</code>.</td></tr>
+            <tr><td>Item icon</td><td><code>.icon-svg</code> before label</td><td>16 px icon with a 10 px gap from the label.</td></tr>
+            <tr><td>Destructive item</td><td><code>.dropdown-item.danger</code></td><td>Danger-red label + icon. Sits last in the menu with a divider above.</td></tr>
+            <tr><td>Divider</td><td><code>.dropdown-divider</code></td><td>1 px hairline between groups inside the menu.</td></tr>
+            <tr><td>Section label</td><td><code>.dropdown-section</code></td><td>11 px uppercase eyebrow inside the menu, for grouped items.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="best-practices">
+        <h2>Best practices</h2>
+        <ul>
+          <li><strong>Close on outside click + Escape.</strong> Both should dismiss the menu. Trap focus inside the menu while open.</li>
+          <li><strong>Destructive items last + divider.</strong> Put Delete / Archive / Revoke after a divider so the user has visual separation from safe actions.</li>
+          <li><strong>≤7 items.</strong> If you have more, group with section labels or break into a side panel.</li>
+          <li><strong>Anchor to the trigger.</strong> Top-left of the dropdown aligns with bottom-left of the trigger (or right for end-aligned triggers). Don't float.</li>
+        </ul>
+      </section>
+    </div>
+  </div>
+
+  <div class="example-panel-resize" id="example-panel-resize"><div class="resize-handle-grip"></div></div>
+
+  <aside class="example-panel" id="example-panel" data-options='[
+    {"id":"kebab","label":"Kebab menu"},
+    {"id":"sort","label":"Sort menu"},
+    {"id":"status","label":"Status transition picker"},
+    {"id":"with-danger","label":"With destructive action"}
+  ]'>
+
+    <div class="example-item" data-example-id="kebab" data-vert>
+      <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:8px;box-shadow:var(--shadow-md);padding:4px;width:200px">
+        <button class="dropdown-item" style="display:flex;align-items:center;gap:10px;width:100%;background:transparent;border:0;padding:8px 12px;font:inherit;font-size:13px;text-align:left;border-radius:4px;cursor:pointer;color:var(--text-primary)">Open</button>
+        <button class="dropdown-item" style="display:flex;align-items:center;gap:10px;width:100%;background:transparent;border:0;padding:8px 12px;font:inherit;font-size:13px;text-align:left;border-radius:4px;cursor:pointer;color:var(--text-primary)">Duplicate</button>
+        <button class="dropdown-item" style="display:flex;align-items:center;gap:10px;width:100%;background:transparent;border:0;padding:8px 12px;font:inherit;font-size:13px;text-align:left;border-radius:4px;cursor:pointer;color:var(--text-primary)">Rename</button>
+        <button class="dropdown-item" style="display:flex;align-items:center;gap:10px;width:100%;background:transparent;border:0;padding:8px 12px;font:inherit;font-size:13px;text-align:left;border-radius:4px;cursor:pointer;color:var(--text-primary)">Archive</button>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="sort" data-vert>
+      <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:8px;box-shadow:var(--shadow-md);padding:4px;width:220px">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-help);padding:8px 12px 4px">Sort by</div>
+        <button style="display:flex;align-items:center;gap:10px;width:100%;background:color-mix(in oklch, var(--btn-primary) 8%, transparent);border:0;padding:8px 12px;font:inherit;font-size:13px;text-align:left;border-radius:4px;cursor:pointer;color:var(--btn-primary);font-weight:600"><svg class="icon-svg sm"><use href="#i-check"/></svg> Newest</button>
+        <button style="display:flex;align-items:center;gap:10px;width:100%;background:transparent;border:0;padding:8px 12px;font:inherit;font-size:13px;text-align:left;border-radius:4px;cursor:pointer;color:var(--text-primary)"><span style="width:14px"></span>Recently updated</button>
+        <button style="display:flex;align-items:center;gap:10px;width:100%;background:transparent;border:0;padding:8px 12px;font:inherit;font-size:13px;text-align:left;border-radius:4px;cursor:pointer;color:var(--text-primary)"><span style="width:14px"></span>Alphabetical</button>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="status" data-vert>
+      <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:8px;box-shadow:var(--shadow-md);padding:4px;width:240px">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-help);padding:8px 12px 4px">Change status</div>
+        <button style="display:flex;align-items:center;gap:10px;width:100%;background:transparent;border:0;padding:8px 12px;font:inherit;font-size:13px;text-align:left;border-radius:4px;cursor:pointer"><span class="status-pill progress"><span class="dot"></span>In Progress</span></button>
+        <button style="display:flex;align-items:center;gap:10px;width:100%;background:transparent;border:0;padding:8px 12px;font:inherit;font-size:13px;text-align:left;border-radius:4px;cursor:pointer"><span class="status-pill ready_review"><span class="dot"></span>Awaiting Review</span></button>
+        <button style="display:flex;align-items:center;gap:10px;width:100%;background:transparent;border:0;padding:8px 12px;font:inherit;font-size:13px;text-align:left;border-radius:4px;cursor:pointer"><span class="status-pill approved"><span class="dot"></span>Approved</span></button>
+        <button style="display:flex;align-items:center;gap:10px;width:100%;background:transparent;border:0;padding:8px 12px;font:inherit;font-size:13px;text-align:left;border-radius:4px;cursor:pointer"><span class="status-pill on-hold"><span class="dot"></span>On hold</span></button>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="with-danger" data-vert>
+      <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:8px;box-shadow:var(--shadow-md);padding:4px;width:200px">
+        <button style="display:flex;align-items:center;gap:10px;width:100%;background:transparent;border:0;padding:8px 12px;font:inherit;font-size:13px;text-align:left;border-radius:4px;cursor:pointer;color:var(--text-primary)">Open</button>
+        <button style="display:flex;align-items:center;gap:10px;width:100%;background:transparent;border:0;padding:8px 12px;font:inherit;font-size:13px;text-align:left;border-radius:4px;cursor:pointer;color:var(--text-primary)">Duplicate</button>
+        <button style="display:flex;align-items:center;gap:10px;width:100%;background:transparent;border:0;padding:8px 12px;font:inherit;font-size:13px;text-align:left;border-radius:4px;cursor:pointer;color:var(--text-primary)">Rename</button>
+        <div style="border-top:1px solid var(--border);margin:4px 0"></div>
+        <button style="display:flex;align-items:center;gap:10px;width:100%;background:transparent;border:0;padding:8px 12px;font:inherit;font-size:13px;text-align:left;border-radius:4px;cursor:pointer;color:var(--btn-danger)">Delete workspace</button>
+      </div>
+    </div>
+
+    <template class="example-usage">&lt;div class="dropdown"&gt;
+  &lt;button class="dropdown-item"&gt;Open&lt;/button&gt;
+  &lt;button class="dropdown-item"&gt;Duplicate&lt;/button&gt;
+  &lt;div class="dropdown-divider"&gt;&lt;/div&gt;
+  &lt;button class="dropdown-item danger"&gt;Delete&lt;/button&gt;
+&lt;/div&gt;</template>
+  </aside>
+</div>
+<button class="back-to-top" id="back-to-top" aria-label="Back to top"><svg><use href="#i-arrow-up"/></svg></button>
+<script src="./_shared/docs.js?v=20261112"></script>
+</body>
+</html>

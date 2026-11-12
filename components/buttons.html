@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Button · Enterprise Design System</title>
+<link rel="stylesheet" href="./_shared/tokens.css?v=20261112">
+<link rel="stylesheet" href="./_shared/docs.css?v=20261112">
+</head>
+<body>
+
+<!-- SVG sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-plus" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="i-chevron-down" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="1.5" fill="none"/><polyline points="14 2 14 8 20 8" stroke="currentColor" stroke-width="1.5" fill="none"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><polyline points="17 8 12 3 7 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><line x1="12" y1="3" x2="12" y2="15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2" fill="none"/><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="2" fill="none"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke="currentColor" stroke-width="2" fill="none"/></symbol>
+  <symbol id="i-expand" viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><polyline points="9 21 3 21 3 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><line x1="21" y1="3" x2="14" y2="10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="3" y1="21" x2="10" y2="14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-arrow-up" viewBox="0 0 24 24"><polyline points="5 12 12 5 19 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+</svg>
+
+<div class="canvas with-example-panel" id="component-doc-canvas">
+
+  <!-- ───────── Left sidebar ───────── -->
+  <nav class="left-sidebar" id="left-sidebar" data-active="buttons"></nav>
+
+  <!-- ───────── Center: prose docs ───────── -->
+  <div class="content component-doc">
+    <header class="page-header">
+      <div class="page-header-eyebrow">Actions</div>
+      <h1 class="page-header-title">Button</h1>
+      <p class="page-header-description">Buttons trigger actions — use them in forms, modals, toolbars, and anywhere a user confirms or initiates an operation. For grouped actions see Toolbar; for menus built from buttons see Dropdown.</p>
+    </header>
+
+    <div class="component-doc-body" id="component-doc-body">
+
+      <section id="overview">
+        <h2>Overview</h2>
+        <p>One button primitive (<code>.btn</code>) with role variants: <strong>primary</strong>, <strong>standard</strong> (default), <strong>danger</strong>, and <strong>link</strong>. Standard height is <strong>32 px</strong> with a <strong>.sm</strong> modifier dropping to 28 px. Icons sit before the label with a 6 px gap.</p>
+      </section>
+
+      <section id="use-cases">
+        <h2>Use cases</h2>
+        <ul>
+          <li><strong>Form submission.</strong> Use <code>.primary</code> for save, submit, or confirm — at most one primary per view.</li>
+          <li><strong>Destructive actions.</strong> Use <code>.danger</code> for delete or revoke. Always pair with a confirmation modal.</li>
+          <li><strong>Cancel / dismiss.</strong> Use <code>.link</code> for secondary actions you don't want to encourage.</li>
+          <li><strong>Toolbars.</strong> Combine standard buttons left + primary action right (<code>&lt;div style="flex:1"&gt;</code> as spacer).</li>
+        </ul>
+      </section>
+
+      <section id="properties">
+        <h2>Properties</h2>
+        <div class="scroll-on-mobile">
+          <table class="fr-simple-table">
+            <thead><tr><th>Property</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>class</code></td><td>string</td><td><code>.btn</code></td><td>Base class. Add role + size modifiers as additional classes.</td></tr>
+              <tr><td>role variant</td><td><code>primary</code> · <code>danger</code> · <code>link</code></td><td>—</td><td>Visual style. Omit for the standard (secondary) role.</td></tr>
+              <tr><td>size variant</td><td><code>sm</code></td><td>—</td><td>Compact 28 px height. Omit for the standard 32 px height.</td></tr>
+              <tr><td>icon</td><td>SVG sprite reference</td><td>—</td><td>Use <code>&lt;svg class="icon-svg sm"&gt;&lt;use href="#i-..."/&gt;&lt;/svg&gt;</code> before the label.</td></tr>
+              <tr><td><code>disabled</code></td><td>boolean attr</td><td>false</td><td>Native HTML disabled attribute. Dims visually and disables click.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="types">
+        <h2>Types &amp; styles</h2>
+        <div class="scroll-on-mobile">
+          <table class="fr-simple-table">
+            <thead><tr><th>Style</th><th>When to use</th><th>Class</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="nowrap"><button class="btn primary">Primary</button></td>
+                <td>Main action on a page or modal — save, confirm, submit.</td>
+                <td class="nowrap"><code>.btn.primary</code></td>
+              </tr>
+              <tr>
+                <td class="nowrap"><button class="btn">Standard</button></td>
+                <td>Default style for secondary actions.</td>
+                <td class="nowrap"><code>.btn</code></td>
+              </tr>
+              <tr>
+                <td class="nowrap"><button class="btn danger">Danger</button></td>
+                <td>Destructive actions — always pair with a confirmation step.</td>
+                <td class="nowrap"><code>.btn.danger</code></td>
+              </tr>
+              <tr>
+                <td class="nowrap"><button class="btn link">Link</button></td>
+                <td>De-emphasized actions — cancel, dismiss, secondary navigation.</td>
+                <td class="nowrap"><code>.btn.link</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="sizes">
+        <h2>Sizes</h2>
+        <div class="scroll-on-mobile">
+          <table class="fr-simple-table">
+            <thead><tr><th>Size</th><th>Height</th><th>When to use</th><th>Class</th></tr></thead>
+            <tbody>
+              <tr><td class="nowrap"><button class="btn primary">Standard</button></td><td class="nowrap">32 px</td><td>The default everywhere — forms, modals, page headers.</td><td class="nowrap"><code>.btn</code></td></tr>
+              <tr><td class="nowrap"><button class="btn primary sm">Compact</button></td><td class="nowrap">28 px</td><td>Dense toolbars, table-row inline actions, dropdown footers.</td><td class="nowrap"><code>.btn.sm</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="best-practices">
+        <h2>Best practices</h2>
+        <ul>
+          <li><strong>One primary per view.</strong> Every page or modal should have at most one primary button to create a clear visual hierarchy.</li>
+          <li><strong>Label with verbs.</strong> Use action words — "Save", "Delete", "Export" — not vague labels like "OK" or "Submit".</li>
+          <li><strong>Pair destructive with confirmation.</strong> A <code>.danger</code> button should always open a confirmation modal before executing.</li>
+          <li><strong>Icon-only buttons need tooltips.</strong> If a button has no visible text, supply a <code>title</code> attribute or <code>aria-label</code> for accessibility.</li>
+          <li><strong>Disabled ≠ hidden.</strong> Use the disabled state to show an action exists but isn't available yet. Don't hide buttons the user expects to see.</li>
+        </ul>
+      </section>
+
+      <section id="composition">
+        <h2>Composition</h2>
+        <ul>
+          <li><strong>Toolbars.</strong> Secondary buttons on the left, primary action on the right. Use <code>&lt;div style="flex:1"&gt;&lt;/div&gt;</code> as a spacer between them.</li>
+          <li><strong>Modals / panels.</strong> Cancel on the left, primary on the right. Always in that order — even if your design tool defaults the other way.</li>
+          <li><strong>Destructive actions.</strong> Keep them on their own row, often with <code>margin-right:auto</code>, so they don't sit adjacent to the confirm button.</li>
+        </ul>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- ───────── Resize handle ───────── -->
+  <div class="example-panel-resize" id="example-panel-resize"><div class="resize-handle-grip"></div></div>
+
+  <!-- ───────── Right: example panel ───────── -->
+  <aside class="example-panel" id="example-panel">
+    <div class="example-panel-header">
+      <span class="example-panel-label">Examples</span>
+      <button class="example-panel-expand" id="example-panel-expand" title="Expand examples"><svg><use href="#i-expand"/></svg></button>
+      <div class="example-search-wrap">
+        <input id="example-search" class="example-search-input" type="text" placeholder="Search examples…" autocomplete="off" spellcheck="false">
+        <div class="example-search-dropdown hide" id="example-search-dropdown">
+          <button class="example-search-option active" data-example-value="primary">Primary</button>
+          <button class="example-search-option" data-example-value="standard">Standard</button>
+          <button class="example-search-option" data-example-value="danger">Danger</button>
+          <button class="example-search-option" data-example-value="link">Link</button>
+          <button class="example-search-option" data-example-value="with-icon">With icon</button>
+          <button class="example-search-option" data-example-value="sizes">Sizes — standard vs compact</button>
+          <button class="example-search-option" data-example-value="disabled">Disabled</button>
+          <button class="example-search-option" data-example-value="toolbar">Toolbar composition</button>
+          <button class="example-search-option" data-example-value="modal-actions">Modal actions</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="example-panel-preview" id="example-preview">
+      <div class="example-item" data-example-id="primary">
+        <button class="btn primary">Save changes</button>
+      </div>
+      <div class="example-item" data-example-id="standard">
+        <button class="btn">Cancel</button>
+      </div>
+      <div class="example-item" data-example-id="danger">
+        <button class="btn danger">Delete workspace</button>
+      </div>
+      <div class="example-item" data-example-id="link">
+        <button class="btn link">Learn more</button>
+      </div>
+      <div class="example-item" data-example-id="with-icon">
+        <button class="btn primary"><svg class="icon-svg sm"><use href="#i-plus"/></svg> New Project</button>
+        <button class="btn"><svg class="icon-svg sm"><use href="#i-upload"/></svg> Upload file</button>
+        <button class="btn"><svg class="icon-svg sm"><use href="#i-doc"/></svg> Import CSV</button>
+      </div>
+      <div class="example-item" data-example-id="sizes">
+        <button class="btn primary">Standard 32 px</button>
+        <button class="btn primary sm">Compact 28 px</button>
+      </div>
+      <div class="example-item" data-example-id="disabled">
+        <button class="btn primary" disabled>Save (disabled)</button>
+        <button class="btn" disabled>Cancel (disabled)</button>
+      </div>
+      <div class="example-item" data-example-id="toolbar" data-vert>
+        <div style="display:flex;align-items:center;gap:8px;padding:12px 16px;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius-sm);width:100%">
+          <button class="btn"><svg class="icon-svg sm"><use href="#i-upload"/></svg> Upload</button>
+          <button class="btn">Filter</button>
+          <button class="btn">Export</button>
+          <div style="flex:1"></div>
+          <button class="btn primary"><svg class="icon-svg sm"><use href="#i-plus"/></svg> New</button>
+        </div>
+      </div>
+      <div class="example-item" data-example-id="modal-actions" data-vert>
+        <div style="display:flex;align-items:center;gap:8px;padding:14px 18px;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius-md);width:100%">
+          <button class="btn danger" style="margin-right:auto">Delete</button>
+          <button class="btn link">Cancel</button>
+          <button class="btn primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+
+    <template class="example-usage">/* Composition hint: pair role + size modifiers on the base class. */
+&lt;button class="btn primary"&gt;Save&lt;/button&gt;
+&lt;button class="btn primary sm"&gt;Save (compact)&lt;/button&gt;
+&lt;button class="btn"&gt;Cancel&lt;/button&gt;
+&lt;button class="btn danger"&gt;Delete&lt;/button&gt;
+&lt;button class="btn link"&gt;Learn more&lt;/button&gt;</template>
+
+    <div class="example-panel-code collapsed" id="example-usage">
+      <div class="example-panel-code-header">
+        <button class="example-panel-toggle" data-toggle-panel="example-usage" aria-expanded="false">
+          <svg><use href="#i-chevron-down"/></svg>
+          <span class="example-panel-label">Usage</span>
+        </button>
+        <button class="example-panel-copy" data-copy-target="example-usage-block" title="Copy">
+          <svg><use href="#i-copy"/></svg>
+        </button>
+      </div>
+      <div class="example-panel-code-body">
+        <pre><code id="example-usage-block"></code></pre>
+      </div>
+    </div>
+
+    <div class="example-panel-code" id="example-code">
+      <div class="example-panel-code-header">
+        <button class="example-panel-toggle" data-toggle-panel="example-code" aria-expanded="true">
+          <svg><use href="#i-chevron-down"/></svg>
+          <span class="example-panel-label">Code</span>
+        </button>
+        <button class="example-panel-copy" data-copy-target="example-code-block" title="Copy">
+          <svg><use href="#i-copy"/></svg>
+        </button>
+      </div>
+      <div class="example-panel-code-body">
+        <pre><code id="example-code-block"></code></pre>
+      </div>
+    </div>
+  </aside>
+
+</div>
+
+<button class="back-to-top" id="back-to-top" aria-label="Back to top"><svg><use href="#i-arrow-up"/></svg></button>
+
+<script src="./_shared/docs.js?v=20261112"></script>
+</body>
+</html>

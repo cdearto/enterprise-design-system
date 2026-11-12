@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inbox · Enterprise Design System</title>
+<link rel="stylesheet" href="./_shared/tokens.css?v=20261112">
+<link rel="stylesheet" href="./_shared/docs.css?v=20261112">
+</head>
+<body>
+<div class="canvas with-example-panel" id="component-doc-canvas">
+  <nav class="left-sidebar" id="left-sidebar" data-active="inbox"></nav>
+
+  <div class="content component-doc">
+    <header class="page-header">
+      <div class="page-header-eyebrow">Compositions</div>
+      <h1 class="page-header-title">Inbox</h1>
+      <p class="page-header-description">A two-pane layout (list left, focused message right) for any "list + detail" surface — inboxes, notification centers, comment threads, audit logs. The chrome is universal: tab strip → toolbar → optional bulk-action bar → two-pane body.</p>
+    </header>
+
+    <div class="component-doc-body">
+      <section id="overview">
+        <h2>Overview</h2>
+        <p>Inbox is a composition, not a single component. It assembles a tab strip (<a href="./tabs.html">Tabs</a>), a toolbar with persistent select-all, a message card list, a detail pane, and an optional bulk-action bar. The bulk bar replaces the toolbar's right cluster when rows are selected — it never floats over.</p>
+      </section>
+
+      <section id="use-cases">
+        <h2>Use cases</h2>
+        <ul>
+          <li><strong>Inbox / notifications.</strong> The canonical example — workflow events, mentions, approvals.</li>
+          <li><strong>Comment threads.</strong> Same chrome on a list of comments + the focused thread on the right.</li>
+          <li><strong>Audit logs.</strong> Pair Dense rows with the same two-pane layout when each event has details to drill into.</li>
+          <li><strong>Approvals queues.</strong> List of pending items + the focused request body + an action footer.</li>
+        </ul>
+      </section>
+
+      <section id="anatomy">
+        <h2>Anatomy</h2>
+        <table class="fr-simple-table">
+          <thead><tr><th>Part</th><th>Class</th><th>Role</th></tr></thead>
+          <tbody>
+            <tr><td>Tab strip</td><td><code>.ib-tabs</code></td><td>Filters by status (All · Unread · Mentions). Count pills inside each tab.</td></tr>
+            <tr><td>Toolbar</td><td><code>.ib-toolbar</code></td><td>Select-all on the left, search · sort · new on the right.</td></tr>
+            <tr><td>Bulk action bar</td><td><code>.ib-bulkbar</code></td><td>Appears only when rows are selected. Replaces the toolbar's right cluster.</td></tr>
+            <tr><td>Message card</td><td><code>.ib-card</code></td><td>List row — avatar + title + preview + timestamp + unread dot.</td></tr>
+            <tr><td>Detail pane</td><td><code>.ib-detail</code></td><td>Right side. Empty state explains "Select a message". Full body + reply when populated.</td></tr>
+            <tr><td>Bell trigger</td><td><code>.ib-bell-trigger</code></td><td>The entry point. Bell icon in the global header opens a 5-card preview dropdown.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="best-practices">
+        <h2>Best practices</h2>
+        <ul>
+          <li><strong>Persistent select-all.</strong> The select-all stays in the toolbar at all times — not just when items are already selected. It always shows a chevron menu (All / Unread / Read / Starred).</li>
+          <li><strong>Bulk bar replaces, never floats.</strong> When selections exist, the bulk bar takes over the toolbar's right cluster. Never have both visible at once.</li>
+          <li><strong>Read/unread is the primary state.</strong> Bold weight + unread dot. Other states (starred, mentioned) ride on top of read/unread, not replacing it.</li>
+          <li><strong>Empty detail pane is mandatory.</strong> Never show blank. Render "Select a message" with a contextual hint about what selecting will do.</li>
+        </ul>
+      </section>
+
+      <section id="composition">
+        <h2>Composition</h2>
+        <p>Inbox composes from: <a href="./tabs.html">Tabs</a> (status filters), <a href="./buttons.html">Buttons</a> (toolbar actions), <a href="./badges.html">Badges</a> (mention/priority chips on cards), <a href="./dropdowns.html">Dropdowns</a> (select-all menu, bell preview).</p>
+      </section>
+    </div>
+  </div>
+
+  <div class="example-panel-resize" id="example-panel-resize"><div class="resize-handle-grip"></div></div>
+
+  <aside class="example-panel" id="example-panel" data-options='[
+    {"id":"tabs","label":"Tab strip with counts"},
+    {"id":"toolbar","label":"Toolbar — resting"},
+    {"id":"bulkbar","label":"Bulk action bar — active"},
+    {"id":"card","label":"Message card"},
+    {"id":"bell","label":"Bell notification dropdown"}
+  ]'>
+
+    <div class="example-item" data-example-id="tabs" data-vert>
+      <nav class="ib-tabs" style="width:100%">
+        <button class="active">All <span class="tab-count">142</span></button>
+        <button>Unread <span class="tab-count">28</span></button>
+        <button>Mentions <span class="tab-count">3</span></button>
+        <button>Sent <span class="tab-count">14</span></button>
+      </nav>
+    </div>
+
+    <div class="example-item" data-example-id="toolbar" data-vert>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius-sm);width:100%">
+        <label style="display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox"> <svg style="width:10px;height:10px;color:var(--text-help)"><use href="#i-chevron-down"/></svg></label>
+        <div style="flex:1"></div>
+        <button class="btn sm"><svg class="icon-svg sm"><use href="#i-search"/></svg></button>
+        <button class="btn sm">Sort: Newest</button>
+        <button class="btn primary sm"><svg class="icon-svg sm"><use href="#i-plus"/></svg> New message</button>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="bulkbar" data-vert>
+      <div class="ib-bulkbar" style="width:100%">
+        <span class="ib-bulk-count">3 selected</span>
+        <button class="ib-btn"><svg class="icon-svg sm"><use href="#i-check"/></svg> Mark read</button>
+        <button class="ib-btn">Archive</button>
+        <button class="ib-btn">Star</button>
+        <button class="ib-btn ghost" style="margin-left:auto">Clear</button>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="card" data-vert>
+      <div class="ib-card unread priority" style="width:100%;padding:12px 14px;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius-sm)">
+        <div class="ib-body">
+          <div class="ib-head" style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+            <span class="ib-sender" style="font-weight:600">Sasha Kim</span>
+            <span class="ib-badge ready_review" style="font-size:10px;padding:1px 6px;border-radius:999px;background:color-mix(in oklch, var(--btn-primary) 12%, transparent);color:var(--btn-primary);font-weight:600">Mention</span>
+            <span class="ib-time" style="margin-left:auto;font-size:11px;color:var(--text-help)">3 min</span>
+          </div>
+          <div class="ib-subject" style="font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:2px">Approval needed: FY26 Q1 budget pass</div>
+          <div class="ib-preview" style="font-size:12px;color:var(--text-help)">Could you sign off before 5pm? Margin numbers look strong but Jordan wants a second pair of eyes.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="bell" data-vert>
+      <div style="width:340px;background:var(--card-bg);border:1px solid var(--border);border-radius:8px;box-shadow:var(--shadow-md);overflow:hidden">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1px solid var(--border)">
+          <h4 style="margin:0;font-size:14px">Inbox</h4>
+          <span style="font-size:11px;color:var(--text-help)">3 unread</span>
+        </div>
+        <div style="max-height:240px;overflow-y:auto">
+          <div style="padding:10px 14px;border-bottom:1px solid var(--border)">
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:2px"><span style="font-weight:600">Sasha Kim</span><span style="color:var(--text-help)">3 min</span></div>
+            <div style="font-size:13px;font-weight:600">Approval needed: FY26 Q1</div>
+          </div>
+          <div style="padding:10px 14px;border-bottom:1px solid var(--border)">
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:2px"><span style="font-weight:600">Workflow bot</span><span style="color:var(--text-help)">28 min</span></div>
+            <div style="font-size:13px;font-weight:600">You were added as a reviewer</div>
+          </div>
+        </div>
+        <div style="padding:10px 14px;border-top:1px solid var(--border);text-align:right"><button class="btn primary sm">Go to inbox →</button></div>
+      </div>
+    </div>
+
+    <template class="example-usage">&lt;nav class="ib-tabs"&gt;
+  &lt;button class="active"&gt;All &lt;span class="tab-count"&gt;142&lt;/span&gt;&lt;/button&gt;
+  &lt;button&gt;Unread &lt;span class="tab-count"&gt;28&lt;/span&gt;&lt;/button&gt;
+&lt;/nav&gt;
+
+&lt;!-- Toolbar transitions to bulkbar when rows are selected --&gt;
+&lt;div class="ib-bulkbar"&gt;
+  &lt;span class="ib-bulk-count"&gt;3 selected&lt;/span&gt;
+  &lt;button class="ib-btn"&gt;Mark read&lt;/button&gt;
+&lt;/div&gt;</template>
+  </aside>
+</div>
+<button class="back-to-top" id="back-to-top" aria-label="Back to top"><svg><use href="#i-arrow-up"/></svg></button>
+<script src="./_shared/docs.js?v=20261112"></script>
+</body>
+</html>

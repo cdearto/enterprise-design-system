@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Toast · Enterprise Design System</title>
+<link rel="stylesheet" href="./_shared/tokens.css?v=20261112">
+<link rel="stylesheet" href="./_shared/docs.css?v=20261112">
+</head>
+<body>
+<div class="canvas with-example-panel" id="component-doc-canvas">
+  <nav class="left-sidebar" id="left-sidebar" data-active="toasts"></nav>
+
+  <div class="content component-doc">
+    <header class="page-header">
+      <div class="page-header-eyebrow">Feedback</div>
+      <h1 class="page-header-title">Toast</h1>
+      <p class="page-header-description">A transient inline notification that appears in the bottom-right corner. Confirms a completed action or reports a non-blocking error. Auto-dismisses after 4 seconds; the user can dismiss earlier via the close button.</p>
+    </header>
+
+    <div class="component-doc-body">
+      <section id="overview">
+        <h2>Overview</h2>
+        <p>Toasts confirm — they don't ask. Use them for "Workspace saved", "5 records imported", "Failed to upload". Never use a toast for a question or a blocking decision; that's a <a href="./buttons.html">modal action set</a>. Stack vertically when multiple toasts fire in sequence, newest on top.</p>
+      </section>
+
+      <section id="use-cases">
+        <h2>Use cases</h2>
+        <ul>
+          <li><strong>Successful actions.</strong> Confirm a save, upload, delete, or other reversible operation that completed.</li>
+          <li><strong>Non-blocking errors.</strong> Tell the user something failed but they can keep working ("Network error, retry in 5s").</li>
+          <li><strong>Background completions.</strong> An import or export finished; the user wasn't waiting for it.</li>
+          <li><strong>Undo flows.</strong> Pair "Deleted Q3 Planning" with an "Undo" action button inside the toast.</li>
+        </ul>
+      </section>
+
+      <section id="properties">
+        <h2>Properties</h2>
+        <table class="fr-simple-table">
+          <thead><tr><th>Element</th><th>Class</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Toast shell</td><td><code>.toast</code></td><td>White surface, soft-2 shadow, 8 px radius, 12/16 px padding, 320 px width.</td></tr>
+            <tr><td>Status icon</td><td><code>.toast-icon</code></td><td>20 px icon with semantic color (green for success, red for error, blue for info).</td></tr>
+            <tr><td>Variant</td><td><code>.toast.success</code> · <code>.toast.error</code> · <code>.toast.info</code></td><td>Sets icon color and the 3 px left rail tint.</td></tr>
+            <tr><td>Action button</td><td><code>.toast-action</code></td><td>Optional in-toast button — typically "Undo" or "View".</td></tr>
+            <tr><td>Close</td><td><code>.toast-close</code></td><td>X button to dismiss before auto-timer expires.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="best-practices">
+        <h2>Best practices</h2>
+        <ul>
+          <li><strong>Use sparingly.</strong> A toast every minute = noise. Reserve for state changes the user genuinely needs to know about.</li>
+          <li><strong>One sentence.</strong> Toasts read in passing. If a user needs to actually read 2+ lines, switch to a banner or modal.</li>
+          <li><strong>Action button max 1.</strong> "Undo" or "View". More than one means the toast is doing too much.</li>
+          <li><strong>4 s default, 8 s with action.</strong> Give the user enough time to read and click an Undo if present.</li>
+          <li><strong>Errors don't auto-dismiss.</strong> Critical errors stay until the user dismisses or retries.</li>
+        </ul>
+      </section>
+    </div>
+  </div>
+
+  <div class="example-panel-resize" id="example-panel-resize"><div class="resize-handle-grip"></div></div>
+
+  <aside class="example-panel" id="example-panel" data-options='[
+    {"id":"success","label":"Success"},
+    {"id":"error","label":"Error"},
+    {"id":"info","label":"Info"},
+    {"id":"with-undo","label":"With undo action"},
+    {"id":"stack","label":"Stacked"}
+  ]'>
+
+    <div class="example-item" data-example-id="success" data-vert>
+      <div style="display:flex;gap:12px;align-items:flex-start;background:var(--card-bg);border:1px solid var(--border);border-left:3px solid oklch(51% 0.139 146);border-radius:8px;box-shadow:var(--shadow-md);padding:12px 16px;width:320px">
+        <svg style="width:20px;height:20px;flex-shrink:0;color:oklch(51% 0.139 146);margin-top:1px"><use href="#i-check"/></svg>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:600;color:var(--text-primary)">Workspace saved</div>
+          <div style="font-size:12px;color:var(--text-help);margin-top:2px">Q3 Planning · just now</div>
+        </div>
+        <button style="background:transparent;border:0;cursor:pointer;color:var(--text-help);padding:0;width:18px;height:18px;display:flex;align-items:center;justify-content:center"><svg style="width:12px;height:12px"><use href="#i-close"/></svg></button>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="error" data-vert>
+      <div style="display:flex;gap:12px;align-items:flex-start;background:var(--card-bg);border:1px solid var(--border);border-left:3px solid var(--btn-danger);border-radius:8px;box-shadow:var(--shadow-md);padding:12px 16px;width:320px">
+        <svg style="width:20px;height:20px;flex-shrink:0;color:var(--btn-danger);margin-top:1px"><use href="#i-close"/></svg>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:600;color:var(--text-primary)">Upload failed</div>
+          <div style="font-size:12px;color:var(--text-help);margin-top:2px">Network error — please retry.</div>
+        </div>
+        <button style="background:transparent;border:0;cursor:pointer;color:var(--text-help);padding:0;width:18px;height:18px;display:flex;align-items:center;justify-content:center"><svg style="width:12px;height:12px"><use href="#i-close"/></svg></button>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="info" data-vert>
+      <div style="display:flex;gap:12px;align-items:flex-start;background:var(--card-bg);border:1px solid var(--border);border-left:3px solid var(--btn-primary);border-radius:8px;box-shadow:var(--shadow-md);padding:12px 16px;width:320px">
+        <svg style="width:20px;height:20px;flex-shrink:0;color:var(--btn-primary);margin-top:1px"><use href="#i-help"/></svg>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:600;color:var(--text-primary)">Import in progress</div>
+          <div style="font-size:12px;color:var(--text-help);margin-top:2px">240 records · we'll notify you when done.</div>
+        </div>
+        <button style="background:transparent;border:0;cursor:pointer;color:var(--text-help);padding:0;width:18px;height:18px;display:flex;align-items:center;justify-content:center"><svg style="width:12px;height:12px"><use href="#i-close"/></svg></button>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="with-undo" data-vert>
+      <div style="display:flex;gap:12px;align-items:flex-start;background:var(--card-bg);border:1px solid var(--border);border-left:3px solid oklch(51% 0.139 146);border-radius:8px;box-shadow:var(--shadow-md);padding:12px 16px;width:340px">
+        <svg style="width:20px;height:20px;flex-shrink:0;color:oklch(51% 0.139 146);margin-top:1px"><use href="#i-check"/></svg>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:600;color:var(--text-primary)">Deleted Q3 Planning</div>
+          <div style="font-size:12px;color:var(--text-help);margin-top:2px">8 s left to undo</div>
+        </div>
+        <button class="btn link sm">Undo</button>
+      </div>
+    </div>
+
+    <div class="example-item" data-example-id="stack" data-vert>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;gap:12px;align-items:flex-start;background:var(--card-bg);border:1px solid var(--border);border-left:3px solid oklch(51% 0.139 146);border-radius:8px;box-shadow:var(--shadow-md);padding:12px 16px;width:320px">
+          <svg style="width:20px;height:20px;flex-shrink:0;color:oklch(51% 0.139 146);margin-top:1px"><use href="#i-check"/></svg>
+          <div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--text-primary)">5 records imported</div></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;background:var(--card-bg);border:1px solid var(--border);border-left:3px solid var(--btn-primary);border-radius:8px;box-shadow:var(--shadow-md);padding:12px 16px;width:320px">
+          <svg style="width:20px;height:20px;flex-shrink:0;color:var(--btn-primary);margin-top:1px"><use href="#i-help"/></svg>
+          <div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--text-primary)">Workspace shared with 3 members</div></div>
+        </div>
+      </div>
+    </div>
+
+    <template class="example-usage">&lt;div class="toast success"&gt;
+  &lt;svg class="toast-icon"&gt;&lt;use href="#i-check"/&gt;&lt;/svg&gt;
+  &lt;div&gt;
+    &lt;div class="toast-title"&gt;Workspace saved&lt;/div&gt;
+    &lt;div class="toast-meta"&gt;Q3 Planning · just now&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;button class="toast-close"&gt;×&lt;/button&gt;
+&lt;/div&gt;</template>
+  </aside>
+</div>
+<button class="back-to-top" id="back-to-top" aria-label="Back to top"><svg><use href="#i-arrow-up"/></svg></button>
+<script src="./_shared/docs.js?v=20261112"></script>
+</body>
+</html>
