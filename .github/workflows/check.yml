@@ -16,5 +16,6 @@ jobs:
       - run: npm ci
       - run: npm run typecheck
       - run: npm run build
-      - name: The committed docs.js matches src/docs.ts
-        run: git diff --exit-code components/_shared/docs.js
+      - run: npm run tokens
+      - name: The committed docs.js and tokens match their sources
+        run: git diff --exit-code components/_shared/docs.js tokens

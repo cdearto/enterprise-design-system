@@ -1,2 +1,4 @@
 # Compiled from src/docs.ts by `npm run build`.
 components/_shared/docs.js linguist-generated=true
+# Generated from components/_shared/tokens.css by `npm run tokens`.
+tokens/** linguist-generated=true

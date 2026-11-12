@@ -1,0 +1,635 @@
+{
+  "$description": "Enterprise Design System, dark mode, blue accent. Generated from components/_shared/tokens.css; edit the CSS, not this file.",
+  "number": {
+    "tint-mult": {
+      "$type": "number",
+      "$value": 2.6,
+      "$extensions": {
+        "com.doselos.eds": {
+          "css": "--tint-mult"
+        }
+      }
+    }
+  },
+  "color": {
+    "card-bg": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "oklch",
+        "components": [
+          0.15,
+          0.005,
+          250
+        ],
+        "hex": "#0a0b0d"
+      },
+      "$extensions": {
+        "com.doselos.eds": {
+          "css": "--card-bg"
+        }
+      }
+    },
+    "surface-soft": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "oklch",
+        "components": [
+          0.18,
+          0.006,
+          250
+        ],
+        "hex": "#101214"
+      },
+      "$extensions": {
+        "com.doselos.eds": {
+          "css": "--surface-soft"
+        }
+      }
+    },
+    "nav-bg": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "oklch",
+        "components": [
+          0.23,
+          0.016,
+          257
+        ],
+        "hex": "#181d24"
+      },
+      "$extensions": {
+        "com.doselos.eds": {
+          "css": "--nav-bg"
+        }
+      }
+    },
+    "topbar-bg": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "oklch",
+        "components": [
+          0.23,
+          0.016,
+          257
+        ],
+        "hex": "#181d24"
+      },
+      "$extensions": {
+        "com.doselos.eds": {
+          "css": "--topbar-bg"
+        }
+      }
+    },
+    "topbar-border": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "oklch",
+        "components": [
+          1,
+          0,
+          0
+        ],
+        "alpha": 0.08,
+        "hex": "#ffffff"
+      },
+      "$extensions": {
+        "com.doselos.eds": {
+          "css": "--topbar-border"
+        }
+      }
+    },
+    "body-bg": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "oklch",
+        "components": [
+          0.22,
+          0.008,
+          250
+        ],
+        "hex": "#181b1e"
+      },
+      "$extensions": {
+        "com.doselos.eds": {
+          "css": "--body-bg"
+        }
+      }
+    },
+    "border": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "oklch",
+        "components": [
+          1,
+          0,
+          0
+        ],
+        "alpha": 0.1,
+        "hex": "#ffffff"
+      },
+      "$extensions": {
+        "com.doselos.eds": {
+          "css": "--border"
+        }
+      }
+    },
+    "text-primary": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "oklch",
+        "components": [
+          0.95,
+          0.006,
+          255
+        ],
+        "hex": "#eceff2"
+      },
+      "$extensions": {
+        "com.doselos.eds": {
+          "css": "--text-primary"
+        }
+      }
+    },
+    "text-secondary": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "oklch",
+        "components": [
+          0.71,
+          0.023,
+          257
+        ],
+        "hex": "#99a2b0"
+      },
+      "$extensions": {
+        "com.doselos.eds": {
+          "css": "--text-secondary"
+        }
+      }
+    },
+    "text-help": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "oklch",
+        "components": [
+          0.55,
+          0.022,
+          260
+        ],
+        "hex": "#6a727f"
+      },
+      "$extensions": {
+        "com.doselos.eds": {
+          "css": "--text-help"
+        }
+      }
+    },
+    "btn-primary": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "oklch",
+        "components": [
+          0.66,
+          0.182,
+          261
+        ],
+        "hex": "#4e8eff"
+      },
+      "$extensions": {
+        "com.doselos.eds": {
+          "css": "--btn-primary"
+        }
+      }
+    },
+    "btn-primary-hover": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "oklch",
+        "components": [
+          0.72,
+          0.145,
+          259
+        ],
+        "hex": "#6ba4fe"
+      },
+      "$extensions": {
+        "com.doselos.eds": {
+          "css": "--btn-primary-hover"
+        }
+      }
+    },
+    "btn-danger": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "oklch",
+        "components": [
+          0.66,
+          0.165,
+          24
+        ],
+        "hex": "#e6625f"
+      },
+      "$extensions": {
+        "com.doselos.eds": {
+          "css": "--btn-danger"
+        }
+      }
+    },
+    "row-hover": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "oklch",
+        "components": [
+          1,
+          0,
+          0
+        ],
+        "alpha": 0.04,
+        "hex": "#ffffff"
+      },
+      "$extensions": {
+        "com.doselos.eds": {
+          "css": "--row-hover"
+        }
+      }
+    },
+    "row-selected-bg": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "oklch",
+        "components": [
+          0.66,
+          0.182,
+          261
+        ],
+        "alpha": 0.312,
+        "hex": "#4e8eff"
+      },
+      "$extensions": {
+        "com.doselos.eds": {
+          "css": "--row-selected-bg"
+        }
+      }
+    },
+    "link": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "oklch",
+        "components": [
+          0.66,
+          0.182,
+          261
+        ],
+        "hex": "#4e8eff"
+      },
+      "$extensions": {
+        "com.doselos.eds": {
+          "css": "--link"
+        }
+      }
+    },
+    "green": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "oklch",
+        "components": [
+          0.79,
+          0.134,
+          162
+        ],
+        "hex": "#5cd5a0"
+      },
+      "$extensions": {
+        "com.doselos.eds": {
+          "css": "--green"
+        }
+      }
+    },
+    "green-light": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "oklch",
+        "components": [
+          0.79,
+          0.134,
+          162
+        ],
+        "alpha": 0.12,
+        "hex": "#5cd5a0"
+      },
+      "$extensions": {
+        "com.doselos.eds": {
+          "css": "--green-light"
+        }
+      }
+    },
+    "progress-green": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "oklch",
+        "components": [
+          0.79,
+          0.134,
+          162
+        ],
+        "hex": "#5cd5a0"
+      },
+      "$extensions": {
+        "com.doselos.eds": {
+          "css": "--progress-green"
+        }
+      }
+    },
+    "status-new": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "oklch",
+        "components": [
+          0.77,
+          0.118,
+          252
+        ],
+        "hex": "#7bb9fd"
+      },
+      "$extensions": {
+        "com.doselos.eds": {
+          "css": "--status-new"
+        }
+      }
+    }
+  },
+  "shadow": {
+    "sm": {
+      "$type": "shadow",
+      "$value": [
+        {
+          "color": {
+            "colorSpace": "oklch",
+            "components": [
+              0,
+              0,
+              0
+            ],
+            "alpha": 0.32,
+            "hex": "#000000"
+          },
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 1,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 3,
+            "unit": "px"
+          },
+          "spread": {
+            "value": 0,
+            "unit": "px"
+          }
+        },
+        {
+          "color": {
+            "colorSpace": "oklch",
+            "components": [
+              0,
+              0,
+              0
+            ],
+            "alpha": 0.2,
+            "hex": "#000000"
+          },
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 2,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 8,
+            "unit": "px"
+          },
+          "spread": {
+            "value": 0,
+            "unit": "px"
+          }
+        }
+      ],
+      "$extensions": {
+        "com.doselos.eds": {
+          "css": "--shadow-sm"
+        }
+      }
+    },
+    "md": {
+      "$type": "shadow",
+      "$value": [
+        {
+          "color": {
+            "colorSpace": "oklch",
+            "components": [
+              0,
+              0,
+              0
+            ],
+            "alpha": 0.36,
+            "hex": "#000000"
+          },
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 2,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 6,
+            "unit": "px"
+          },
+          "spread": {
+            "value": 0,
+            "unit": "px"
+          }
+        },
+        {
+          "color": {
+            "colorSpace": "oklch",
+            "components": [
+              0,
+              0,
+              0
+            ],
+            "alpha": 0.28,
+            "hex": "#000000"
+          },
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 8,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 24,
+            "unit": "px"
+          },
+          "spread": {
+            "value": 0,
+            "unit": "px"
+          }
+        }
+      ],
+      "$extensions": {
+        "com.doselos.eds": {
+          "css": "--shadow-md"
+        }
+      }
+    },
+    "lg": {
+      "$type": "shadow",
+      "$value": [
+        {
+          "color": {
+            "colorSpace": "oklch",
+            "components": [
+              0,
+              0,
+              0
+            ],
+            "alpha": 0.4,
+            "hex": "#000000"
+          },
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 4,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 12,
+            "unit": "px"
+          },
+          "spread": {
+            "value": 0,
+            "unit": "px"
+          }
+        },
+        {
+          "color": {
+            "colorSpace": "oklch",
+            "components": [
+              0,
+              0,
+              0
+            ],
+            "alpha": 0.36,
+            "hex": "#000000"
+          },
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 16,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 40,
+            "unit": "px"
+          },
+          "spread": {
+            "value": 0,
+            "unit": "px"
+          }
+        }
+      ],
+      "$extensions": {
+        "com.doselos.eds": {
+          "css": "--shadow-lg"
+        }
+      }
+    },
+    "accent-glow": {
+      "$type": "shadow",
+      "$value": {
+        "color": {
+          "colorSpace": "oklch",
+          "components": [
+            0.66,
+            0.182,
+            261
+          ],
+          "alpha": 0.572,
+          "hex": "#4e8eff"
+        },
+        "offsetX": {
+          "value": 0,
+          "unit": "px"
+        },
+        "offsetY": {
+          "value": 0,
+          "unit": "px"
+        },
+        "blur": {
+          "value": 0,
+          "unit": "px"
+        },
+        "spread": {
+          "value": 3,
+          "unit": "px"
+        }
+      },
+      "$extensions": {
+        "com.doselos.eds": {
+          "css": "--accent-glow"
+        }
+      }
+    }
+  },
+  "radius": {
+    "sm": {
+      "$type": "dimension",
+      "$value": {
+        "value": 6,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.doselos.eds": {
+          "css": "--radius-sm"
+        }
+      }
+    },
+    "md": {
+      "$type": "dimension",
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.doselos.eds": {
+          "css": "--radius-md"
+        }
+      }
+    },
+    "lg": {
+      "$type": "dimension",
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      },
+      "$extensions": {
+        "com.doselos.eds": {
+          "css": "--radius-lg"
+        }
+      }
+    }
+  }
+}

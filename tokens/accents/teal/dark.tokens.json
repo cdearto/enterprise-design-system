@@ -1,0 +1,112 @@
+{
+  "$description": "The teal accent in dark mode: the tokens it changes from modes/dark.tokens.json. Generated from components/_shared/tokens.css.",
+  "color": {
+    "btn-primary": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "oklch",
+        "components": [
+          0.78,
+          0.133,
+          182
+        ],
+        "hex": "#28d3be"
+      },
+      "$extensions": {
+        "com.doselos.eds": {
+          "css": "--btn-primary"
+        }
+      }
+    },
+    "btn-primary-hover": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "oklch",
+        "components": [
+          0.85,
+          0.125,
+          181
+        ],
+        "hex": "#5ce8d2"
+      },
+      "$extensions": {
+        "com.doselos.eds": {
+          "css": "--btn-primary-hover"
+        }
+      }
+    },
+    "row-selected-bg": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "oklch",
+        "components": [
+          0.78,
+          0.133,
+          182
+        ],
+        "alpha": 0.14,
+        "hex": "#28d3be"
+      },
+      "$extensions": {
+        "com.doselos.eds": {
+          "css": "--row-selected-bg"
+        }
+      }
+    },
+    "link": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "oklch",
+        "components": [
+          0.78,
+          0.133,
+          182
+        ],
+        "hex": "#28d3be"
+      },
+      "$extensions": {
+        "com.doselos.eds": {
+          "css": "--link"
+        }
+      }
+    }
+  },
+  "shadow": {
+    "accent-glow": {
+      "$type": "shadow",
+      "$value": {
+        "color": {
+          "colorSpace": "oklch",
+          "components": [
+            0.78,
+            0.133,
+            182
+          ],
+          "alpha": 0.24,
+          "hex": "#28d3be"
+        },
+        "offsetX": {
+          "value": 0,
+          "unit": "px"
+        },
+        "offsetY": {
+          "value": 0,
+          "unit": "px"
+        },
+        "blur": {
+          "value": 0,
+          "unit": "px"
+        },
+        "spread": {
+          "value": 3,
+          "unit": "px"
+        }
+      },
+      "$extensions": {
+        "com.doselos.eds": {
+          "css": "--accent-glow"
+        }
+      }
+    }
+  }
+}

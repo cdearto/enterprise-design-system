@@ -6,9 +6,12 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "typecheck": "tsc --noEmit"
+    "tokens": "node tools/tokens/build.ts",
+    "typecheck": "tsc --noEmit && tsc -p tools/tsconfig.json"
   },
   "devDependencies": {
+    "@types/node": "22.20.5",
     "typescript": "7.0.2"
-  }
+  },
+  "type": "module"
 }

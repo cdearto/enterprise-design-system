@@ -41,6 +41,29 @@ Light, dim, dark, and high-contrast. Every value is a token in `components/_shar
 
 A second axis, `data-accent`, swaps the brand color (blue, indigo, teal, violet, amber, slate) and composes with any mode.
 
+## Design tokens
+
+The tokens are exported as JSON in the [W3C Design Tokens format](https://www.designtokens.org) (DTCG 2025.10), generated from `tokens.css`, which stays the single source of truth:
+
+```
+tokens/modes/light.tokens.json      every token for one mode (blue accent)
+tokens/modes/dim.tokens.json
+tokens/modes/dark.tokens.json
+tokens/modes/hc.tokens.json
+tokens/accents/<accent>/<mode>.tokens.json   what an accent changes in that mode
+tokens/tokens-studio.json           the four modes as Tokens Studio sets and themes
+```
+
+Colors keep their exact OKLCH values, with a hex fallback for tools that read hex only. Radii are dimensions, shadows are shadow tokens, and each token records the CSS custom property it comes from. Values that are formulas in the CSS (the dark mode tints are `color-mix()` against a per-mode multiplier) are resolved through the same cascade a browser applies, for every mode and accent.
+
+`tokens-studio.json` holds the four modes as token sets, each a theme in a "Mode" group. Import it into [Tokens Studio](https://tokens.studio) to sync the tokens to Figma variables, one mode per theme.
+
+```sh
+npm run tokens   # regenerates tokens/ from components/_shared/tokens.css
+```
+
+CI regenerates the tokens on every push and fails when the committed files are out of date.
+
 ## Accessibility
 
 Built to WCAG AA. The Standards page sets the rules every component follows: color contrast, focus and keyboard behavior, reduced motion, and screen readers, plus interaction states and voice and tone.
@@ -76,6 +99,8 @@ components/_shared/
   docs.css              the documentation page layout
   docs.js               compiled from src/docs.ts; don't edit
 src/docs.ts             the documentation runtime, in TypeScript
+tokens/                 the design tokens as JSON, generated from tokens.css
+tools/tokens/           the token generator, in TypeScript
 ```
 
 ## License

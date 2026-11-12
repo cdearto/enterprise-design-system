@@ -1,0 +1,112 @@
+{
+  "$description": "The slate accent in light mode: the tokens it changes from modes/light.tokens.json. Generated from components/_shared/tokens.css.",
+  "color": {
+    "btn-primary": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "oklch",
+        "components": [
+          0.45,
+          0.037,
+          257
+        ],
+        "hex": "#48566a"
+      },
+      "$extensions": {
+        "com.doselos.eds": {
+          "css": "--btn-primary"
+        }
+      }
+    },
+    "btn-primary-hover": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "oklch",
+        "components": [
+          0.37,
+          0.039,
+          257
+        ],
+        "hex": "#334154"
+      },
+      "$extensions": {
+        "com.doselos.eds": {
+          "css": "--btn-primary-hover"
+        }
+      }
+    },
+    "row-selected-bg": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "oklch",
+        "components": [
+          0.45,
+          0.037,
+          257
+        ],
+        "alpha": 0.1,
+        "hex": "#48566a"
+      },
+      "$extensions": {
+        "com.doselos.eds": {
+          "css": "--row-selected-bg"
+        }
+      }
+    },
+    "link": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "oklch",
+        "components": [
+          0.45,
+          0.037,
+          257
+        ],
+        "hex": "#48566a"
+      },
+      "$extensions": {
+        "com.doselos.eds": {
+          "css": "--link"
+        }
+      }
+    }
+  },
+  "shadow": {
+    "accent-glow": {
+      "$type": "shadow",
+      "$value": {
+        "color": {
+          "colorSpace": "oklch",
+          "components": [
+            0.45,
+            0.037,
+            257
+          ],
+          "alpha": 0.2,
+          "hex": "#48566a"
+        },
+        "offsetX": {
+          "value": 0,
+          "unit": "px"
+        },
+        "offsetY": {
+          "value": 0,
+          "unit": "px"
+        },
+        "blur": {
+          "value": 0,
+          "unit": "px"
+        },
+        "spread": {
+          "value": 3,
+          "unit": "px"
+        }
+      },
+      "$extensions": {
+        "com.doselos.eds": {
+          "css": "--accent-glow"
+        }
+      }
+    }
+  }
+}
