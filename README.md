@@ -1,6 +1,6 @@
 # Enterprise Design System
 
-A hand-authored HTML and CSS design system for dense product UI, where every component page is its own reference implementation.
+A hand-authored HTML and CSS design system for dense product UI, where every component page is its own reference implementation. The documentation runtime is written in strict TypeScript.
 
 ![The Button page: the component list at the left, the documentation in the middle, the live example and its code at the right](docs/screenshot.png)
 
@@ -47,12 +47,24 @@ Built to WCAG AA. The Standards page sets the rules every component follows: col
 
 ## Run it locally
 
-No build step and no dependencies. Clone the repo and open `index.html` in a browser, or serve the folder:
+The pages need no build and no dependencies. Clone the repo and open `index.html` in a browser, or serve the folder:
 
 ```sh
 python3 -m http.server 8000
 # then open http://localhost:8000
 ```
+
+## The TypeScript runtime
+
+`src/docs.ts` is the script every page loads: it builds the masthead, the sidebar nav with its search and saved state, the related-components chips, the Previous / Next pager, the "On this page" strip, and the example panel (search, code and usage blocks, copy, expand, drag to resize). It compiles to `components/_shared/docs.js`, which is committed so the pages still open straight from disk.
+
+```sh
+npm install
+npm run typecheck   # strict mode, no emit
+npm run build       # writes components/_shared/docs.js
+```
+
+Edit `src/docs.ts`, never `docs.js`. CI typechecks every push and fails if the committed `docs.js` doesn't match a fresh build.
 
 ## Structure
 
@@ -62,7 +74,8 @@ components/*.html       one page per component, composition, and reading page
 components/_shared/
   tokens.css            tokens and component styles for all four modes
   docs.css              the documentation page layout
-  docs.js               navigation, search, example panel, page chrome
+  docs.js               compiled from src/docs.ts; don't edit
+src/docs.ts             the documentation runtime, in TypeScript
 ```
 
 ## License

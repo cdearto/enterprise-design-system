@@ -1,0 +1,14 @@
+{
+  "name": "enterprise-design-system",
+  "version": "2026.5.0",
+  "private": true,
+  "description": "Hand-authored design system for dense product UI. 10 components, 4 modes, WCAG AA.",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "7.0.2"
+  }
+}
