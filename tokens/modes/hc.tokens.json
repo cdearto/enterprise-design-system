@@ -272,11 +272,11 @@
       "$value": {
         "colorSpace": "oklch",
         "components": [
-          0.48,
-          0.201,
-          260
+          0.38,
+          0.138,
+          257
         ],
-        "hex": "#0052cc"
+        "hex": "#003f89"
       },
       "$extensions": {
         "com.doselos.eds": {

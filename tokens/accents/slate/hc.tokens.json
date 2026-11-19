@@ -6,11 +6,11 @@
       "$value": {
         "colorSpace": "oklch",
         "components": [
-          0.45,
-          0.037,
+          0.37,
+          0.025,
           257
         ],
-        "hex": "#48566a"
+        "hex": "#37404d"
       },
       "$extensions": {
         "com.doselos.eds": {
@@ -23,11 +23,11 @@
       "$value": {
         "colorSpace": "oklch",
         "components": [
-          0.37,
-          0.039,
+          0.3,
+          0.02,
           257
         ],
-        "hex": "#334154"
+        "hex": "#272e38"
       },
       "$extensions": {
         "com.doselos.eds": {
@@ -40,12 +40,11 @@
       "$value": {
         "colorSpace": "oklch",
         "components": [
-          0.45,
-          0.037,
+          0.85,
+          0.009,
           257
         ],
-        "alpha": 0.1,
-        "hex": "#48566a"
+        "hex": "#caced4"
       },
       "$extensions": {
         "com.doselos.eds": {
@@ -58,11 +57,11 @@
       "$value": {
         "colorSpace": "oklch",
         "components": [
-          0.45,
-          0.037,
+          0.37,
+          0.025,
           257
         ],
-        "hex": "#48566a"
+        "hex": "#37404d"
       },
       "$extensions": {
         "com.doselos.eds": {
@@ -78,12 +77,11 @@
         "color": {
           "colorSpace": "oklch",
           "components": [
-            0.45,
-            0.037,
+            0.37,
+            0.025,
             257
           ],
-          "alpha": 0.2,
-          "hex": "#48566a"
+          "hex": "#37404d"
         },
         "offsetX": {
           "value": 0,

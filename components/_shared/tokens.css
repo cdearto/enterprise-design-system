@@ -915,6 +915,7 @@ kbd {
   --text-help: oklch(30% 0 0);
   --btn-primary: oklch(38% 0.138 257);
   --btn-primary-hover: oklch(31% 0.108 256);
+  --link: oklch(38% 0.138 257);
   --btn-danger: oklch(40% 0.164 29);
   --row-hover: oklch(93% 0.018 258);
   --row-selected-bg: oklch(85% 0.049 254);
@@ -954,7 +955,10 @@ kbd {
 /* ─── Accent overrides ───
    Each accent retargets the same 5 tokens — primary, primary-hover,
    link, row-selected-bg, and accent-glow — leaving every other token
-   alone. Pair freely with any mode. */
+   alone. Pair freely with any mode: dark and high contrast each carry
+   their own cut. A high-contrast cut keeps the accent's hue and matches
+   high-contrast blue's strength (white text on the button at 10:1 or
+   more, 13:1 on hover), solid where light and dark use tints. */
 [data-accent="indigo"] {
   --btn-primary: oklch(51% 0.23 277);
   --btn-primary-hover: oklch(46% 0.215 277);
@@ -969,6 +973,14 @@ kbd {
   --link: oklch(68% 0.158 277);
   --row-selected-bg: oklch(68% 0.158 277 / 0.14);
   --accent-glow: 0 0 0 3px oklch(68% 0.158 277 / 0.24);
+}
+[data-mode="hc"][data-accent="indigo"],
+[data-mode="hc"] [data-accent="indigo"] {
+  --btn-primary: oklch(38% 0.158 277);
+  --btn-primary-hover: oklch(31% 0.124 277);
+  --link: oklch(38% 0.158 277);
+  --row-selected-bg: oklch(85% 0.056 277);
+  --accent-glow: 0 0 0 3px oklch(38% 0.158 277);
 }
 
 [data-accent="teal"] {
@@ -986,6 +998,14 @@ kbd {
   --row-selected-bg: oklch(78% 0.133 182 / 0.14);
   --accent-glow: 0 0 0 3px oklch(78% 0.133 182 / 0.24);
 }
+[data-mode="hc"][data-accent="teal"],
+[data-mode="hc"] [data-accent="teal"] {
+  --btn-primary: oklch(36% 0.063 185);
+  --btn-primary-hover: oklch(30% 0.052 185);
+  --link: oklch(36% 0.063 185);
+  --row-selected-bg: oklch(85% 0.025 185);
+  --accent-glow: 0 0 0 3px oklch(36% 0.063 185);
+}
 
 [data-accent="violet"] {
   --btn-primary: oklch(54% 0.247 293);
@@ -1001,6 +1021,14 @@ kbd {
   --link: oklch(71% 0.159 294);
   --row-selected-bg: oklch(71% 0.159 294 / 0.14);
   --accent-glow: 0 0 0 3px oklch(71% 0.159 294 / 0.24);
+}
+[data-mode="hc"][data-accent="violet"],
+[data-mode="hc"] [data-accent="violet"] {
+  --btn-primary: oklch(39% 0.17 293);
+  --btn-primary-hover: oklch(32% 0.133 293);
+  --link: oklch(39% 0.17 293);
+  --row-selected-bg: oklch(85% 0.06 293);
+  --accent-glow: 0 0 0 3px oklch(39% 0.17 293);
 }
 
 [data-accent="amber"] {
@@ -1018,6 +1046,14 @@ kbd {
   --row-selected-bg: oklch(84% 0.164 84 / 0.14);
   --accent-glow: 0 0 0 3px oklch(84% 0.164 84 / 0.26);
 }
+[data-mode="hc"][data-accent="amber"],
+[data-mode="hc"] [data-accent="amber"] {
+  --btn-primary: oklch(38% 0.1 49);
+  --btn-primary-hover: oklch(31% 0.078 49);
+  --link: oklch(38% 0.1 49);
+  --row-selected-bg: oklch(85% 0.036 49);
+  --accent-glow: 0 0 0 3px oklch(38% 0.1 49);
+}
 
 [data-accent="slate"] {
   --btn-primary: oklch(45% 0.037 257);
@@ -1033,6 +1069,14 @@ kbd {
   --link: oklch(71% 0.035 257);
   --row-selected-bg: oklch(71% 0.035 257 / 0.14);
   --accent-glow: 0 0 0 3px oklch(71% 0.035 257 / 0.24);
+}
+[data-mode="hc"][data-accent="slate"],
+[data-mode="hc"] [data-accent="slate"] {
+  --btn-primary: oklch(37% 0.025 257);
+  --btn-primary-hover: oklch(30% 0.02 257);
+  --link: oklch(37% 0.025 257);
+  --row-selected-bg: oklch(85% 0.009 257);
+  --accent-glow: 0 0 0 3px oklch(37% 0.025 257);
 }
 
 /* ─── Theme picker chrome (the interactive control) ─── */
