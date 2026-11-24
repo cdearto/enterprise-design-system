@@ -36,6 +36,10 @@ export function readRules(css: string): Rule[] {
     const selector = (m[1] ?? '').trim().replace(/\s+/g, ' ');
     const body = m[2] ?? '';
     if (!THEMING_SELECTOR.test(selector) || !/--[\w-]+\s*:/.test(body)) continue;
+    // Inside @media, @supports and the like, a rule only sometimes applies;
+    // the tokens can't say when, so refuse rather than treat it as always.
+    const before = text.slice(0, m.index);
+    if (before.split('{').length !== before.split('}').length) throw new Error(`Tokens inside an @-rule aren't supported: ${selector}`);
     const decls = new Map<string, string>();
     for (const d of body.matchAll(/(--[\w-]+)\s*:\s*([^;]+);/g)) {
       decls.set(d[1] as string, (d[2] as string).trim().replace(/\s+/g, ' '));
@@ -142,5 +146,6 @@ export function evaluate(name: string, declared: Map<string, string>): Value {
   if (/^-?[\d.]+$/.test(text)) return { type: 'number', n: Number(text) };
   if (/^[\d.]+px$/.test(text)) return { type: 'dimension', px: parseLength(text) };
   if (/^(oklch|color-mix)\(/.test(text)) return { type: 'color', color: parseColor(text) };
-  return { type: 'shadow', layers: parseShadow(text) };
+  if (/^(0|[\d.]+px)\s/.test(text)) return { type: 'shadow', layers: parseShadow(text) };
+  throw new Error(`${name}: not a type the token export knows (number, px, oklch color or shadow): ${text}`);
 }

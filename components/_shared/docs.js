@@ -195,7 +195,9 @@
     }
     function readAccordionState() {
         try {
-            return JSON.parse(localStorage.getItem(ACCORDION_KEY) || '{}') || {};
+            const saved = JSON.parse(localStorage.getItem(ACCORDION_KEY) || '{}');
+            // Anything but a plain object (a stray number, a string) is ignored.
+            return saved && typeof saved === 'object' && !Array.isArray(saved) ? saved : {};
         }
         catch {
             return {};

@@ -18,4 +18,4 @@ jobs:
       - run: npm run build
       - run: npm run tokens
       - name: The committed docs.js and tokens match their sources
-        run: git diff --exit-code components/_shared/docs.js tokens
+        run: test -z "$(git status --porcelain components/_shared/docs.js tokens)" || { git status --short components/_shared/docs.js tokens; exit 1; }

@@ -219,8 +219,11 @@ interface Window {
     return label.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
   }
   function readAccordionState(): AccordionState {
-    try { return (JSON.parse(localStorage.getItem(ACCORDION_KEY) || '{}') as AccordionState | null) || {}; }
-    catch { return {}; }
+    try {
+      const saved: unknown = JSON.parse(localStorage.getItem(ACCORDION_KEY) || '{}');
+      // Anything but a plain object (a stray number, a string) is ignored.
+      return saved && typeof saved === 'object' && !Array.isArray(saved) ? (saved as AccordionState) : {};
+    } catch { return {}; }
   }
   function writeAccordionState(state: AccordionState): void {
     try { localStorage.setItem(ACCORDION_KEY, JSON.stringify(state)); } catch { /* storage unavailable */ }

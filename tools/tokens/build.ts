@@ -97,27 +97,22 @@ function tree(tokens: Tokens, token: (cssName: string, v: Value) => Json): { [k:
   return out;
 }
 
-function write(path: string, data: Json): void {
-  const file = join(ROOT, path);
-  mkdirSync(dirname(file), { recursive: true });
-  writeFileSync(file, JSON.stringify(data, null, 2) + '\n');
-}
-
 const rules = readRules(readFileSync(join(ROOT, SOURCE), 'utf8'));
 const base = rules[0];
 if (!base || base.specificity !== 1) throw new Error(SOURCE + ' must open its theming with the :root tokens');
 const names = [...base.decls.keys()];
 
-rmSync(join(ROOT, 'tokens'), { recursive: true, force: true });
+// Everything is resolved before anything is written, so a value the export
+// can't read stops the run with the committed tokens/ left as it was.
+const outputs = new Map<string, Json>();
+const write = (path: string, data: Json): void => { outputs.set(path, data); };
 const studio: { [k: string]: Json } = {};
-let files = 0;
 for (const mode of MODES) {
   const blue = resolveAll(mode, 'blue', rules, names);
   write(`tokens/modes/${mode}.tokens.json`, {
     $description: `Enterprise Design System, ${MODE_NAMES[mode].toLowerCase()} mode, blue accent. Generated from ${SOURCE}; edit the CSS, not this file.`,
     ...tree(blue, dtcgToken),
   });
-  files++;
   studio[mode] = tree(blue, (_, v) => studioToken(v));
   for (const accent of ACCENTS.filter((a) => a !== 'blue')) {
     const changed: Tokens = new Map([...resolveAll(mode, accent, rules, names)]
@@ -126,11 +121,16 @@ for (const mode of MODES) {
       $description: `The ${accent} accent in ${MODE_NAMES[mode].toLowerCase()} mode: the tokens it changes from modes/${mode}.tokens.json. Generated from ${SOURCE}.`,
       ...tree(changed, dtcgToken),
     });
-    files++;
   }
 }
 studio['$themes'] = MODES.map((m) => ({ id: m, name: MODE_NAMES[m], group: 'Mode', selectedTokenSets: { [m]: 'enabled' } }));
 studio['$metadata'] = { tokenSetOrder: [...MODES] };
 write('tokens/tokens-studio.json', studio);
-files++;
-console.log(`${names.length} tokens, ${MODES.length} modes, ${ACCENTS.length - 1} accents: wrote ${files} files to tokens/`);
+
+rmSync(join(ROOT, 'tokens'), { recursive: true, force: true });
+for (const [path, data] of outputs) {
+  const file = join(ROOT, path);
+  mkdirSync(dirname(file), { recursive: true });
+  writeFileSync(file, JSON.stringify(data, null, 2) + '\n');
+}
+console.log(`${names.length} tokens, ${MODES.length} modes, ${ACCENTS.length - 1} accents: wrote ${outputs.size} files to tokens/`);
